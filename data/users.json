@@ -2,5 +2,9 @@
   "lucia.nistal.01@uie.edu": {
     "password": "e1ac5de02d627a8202a96ad396bf2b411ccbdf57e70017fc482d811f7837e2f3",
     "created_at": "2025-11-27T18:48:14.261758"
+  },
+  "lucia.nistal@uie.edu": {
+    "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "created_at": "2026-04-01T19:11:58.143007"
   }
 }

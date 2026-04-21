@@ -1,442 +1,141 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Armario Inteligente - Tu Asistente Personal de Moda</title>
+    <title>Smart Wardrobe - Your Personal Fashion Assistant</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        .welcome-page {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #F3EBF9 0%, #FAFAFA 100%);
-        }
-
-        .welcome-header {
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .welcome-nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-        }
-
-        .nav-brand {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--accent-purple);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-purple);
-        }
-
-        .hero-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 40px;
-            text-align: center;
-        }
-
-        .hero-title {
-            font-size: 56px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero-gradient {
-            background: linear-gradient(135deg, var(--accent-purple), #C8A2E0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-description {
-            font-size: 20px;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .info-section {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 40px;
-        }
-
-        .section-title {
-            font-size: 36px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 50px;
-            color: var(--text-dark);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 30px rgba(155, 126, 189, 0.2);
-        }
-
-        .feature-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .feature-title {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-
-        .feature-description {
-            font-size: 15px;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .carousel-section {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 40px;
-            position: relative;
-        }
-
-        .carousel-container {
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-        }
-
-        .carousel-items {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-
-        .carousel-item {
-            min-width: 100%;
-            height: 400px;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .carousel-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(155, 126, 189, 0.7), rgba(200, 162, 224, 0.7));
-        }
-
-        .carousel-text {
-            position: relative;
-            color: white;
-            font-size: 32px;
-            font-weight: 700;
-            text-align: center;
-            z-index: 1;
-            padding: 20px;
-        }
-
-        .carousel-control {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: var(--accent-purple);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        .carousel-control:hover {
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-        }
-
-        .carousel-control.left {
-            left: 20px;
-        }
-
-        .carousel-control.right {
-            right: 20px;
-        }
-
-        .footer {
-            background: white;
-            text-align: center;
-            padding: 30px;
-            margin-top: 80px;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        @media (max-width: 768px) {
-            .welcome-nav {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .hero-title {
-                font-size: 36px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .carousel-item {
-                height: 300px;
-            }
-        }
+        .welcome-page { min-height: 100vh; background: linear-gradient(135deg, #F3EBF9 0%, #FAFAFA 100%); }
+        .welcome-header { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .welcome-nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; }
+        .nav-brand { font-size: 24px; font-weight: 700; color: var(--accent-purple); display: flex; align-items: center; gap: 10px; }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; display: flex; align-items: center; gap: 8px; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--accent-purple); }
+        .hero-section { max-width: 1200px; margin: 0 auto; padding: 80px 40px; text-align: center; }
+        .hero-title { font-size: 56px; font-weight: 700; color: var(--text-dark); margin-bottom: 20px; line-height: 1.2; }
+        .hero-gradient { background: linear-gradient(135deg, var(--accent-purple), #C8A2E0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-description { font-size: 20px; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; line-height: 1.6; }
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .info-section { max-width: 1200px; margin: 60px auto; padding: 0 40px; }
+        .section-title { font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 50px; color: var(--text-dark); }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 60px; }
+        .feature-card { background: white; padding: 40px 30px; border-radius: 20px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 8px 30px rgba(155,126,189,0.2); }
+        .feature-title { font-size: 22px; font-weight: 600; margin-bottom: 12px; color: var(--text-dark); }
+        .feature-description { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+        .carousel-section { max-width: 1200px; margin: 60px auto; padding: 0 40px; position: relative; }
+        .carousel-container { position: relative; border-radius: 24px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+        .carousel-items { display: flex; transition: transform 0.5s ease; }
+        .carousel-item { min-width: 100%; height: 400px; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; position: relative; }
+        .carousel-item::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(135deg, rgba(155,126,189,0.7), rgba(200,162,224,0.7)); }
+        .carousel-text { position: relative; color: white; font-size: 32px; font-weight: 700; text-align: center; z-index: 1; padding: 20px; }
+        .carousel-control { position: absolute; top: 50%; transform: translateY(-50%); background: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--accent-purple); box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease; z-index: 2; }
+        .carousel-control.left { left: 20px; }
+        .carousel-control.right { right: 20px; }
+        .footer { background: white; text-align: center; padding: 30px; margin-top: 80px; color: var(--text-muted); font-size: 14px; }
+        @media (max-width: 768px) { .welcome-nav { flex-direction: column; gap: 20px; } .hero-title { font-size: 36px; } .features-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <div class="welcome-page">
-        <!-- Header Navigation -->
-        <header class="welcome-header">
-            <nav class="welcome-nav">
-                <div class="nav-brand">
-                    <i class="fas fa-tshirt"></i>
-                    Armario Inteligente
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li><a href="#caracteristicas"><i class="fas fa-star"></i> Características</a></li>
-                    <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a></li>
-                    <li><a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Registro</a></li>
-                </ul>
-            </nav>
-        </header>
+<div class="welcome-page">
+    <header class="welcome-header">
+        <nav class="welcome-nav">
+            <div class="nav-brand"><i class="fas fa-tshirt"></i> Smart Wardrobe</div>
+            <ul class="nav-links">
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#features"><i class="fas fa-star"></i> Features</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Log In</a></li>
+                <li><a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <!-- Hero Section -->
-        <section class="hero-section" id="inicio">
-            <h1 class="hero-title">
-                Bienvenido a tu<br>
-                <span class="hero-gradient">Armario Inteligente</span>
-            </h1>
-            <p class="hero-description">
-                Tu asistente personal de moda que analiza tu colorimetría, 
-                considera el clima y tus preferencias para recomendarte 
-                el outfit perfecto en cada ocasión.
-            </p>
-            <div class="hero-buttons">
-                <a href="{{ url_for('register') }}" class="btn btn-primary" style="padding: 18px 48px; font-size: 18px;">
-                    <i class="fas fa-rocket"></i> Comenzar Ahora
-                </a>
-                <a href="#caracteristicas" class="btn btn-secondary" style="padding: 18px 48px; font-size: 18px;">
-                    <i class="fas fa-info-circle"></i> Más Información
-                </a>
+    <section class="hero-section" id="home">
+        <h1 class="hero-title">Welcome to your<br><span class="hero-gradient">Smart Wardrobe</span></h1>
+        <p class="hero-description">Your personal fashion assistant that analyses your colourimetry, considers the weather and your preferences to recommend the perfect outfit for every occasion.</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('register') }}" class="btn btn-primary" style="padding:18px 48px;font-size:18px;"><i class="fas fa-rocket"></i> Get Started</a>
+            <a href="#features" class="btn btn-secondary" style="padding:18px 48px;font-size:18px;"><i class="fas fa-info-circle"></i> Learn More</a>
+        </div>
+    </section>
+
+    <section class="info-section" id="features">
+        <h2 class="section-title">What makes Smart Wardrobe special?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3 class="feature-title">Colourimetry Analysis</h3>
+                <p class="feature-description">We detect your skin undertone, eye colour and hair colour using computer vision to classify you into one of the 4 seasons (Spring, Summer, Autumn, Winter).</p>
             </div>
-        </section>
+            <div class="feature-card">
+                <h3 class="feature-title">Climate-Aware</h3>
+                <p class="feature-description">We factor in the temperature and rain probability for your location to recommend garments appropriate for every day.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Every Occasion</h3>
+                <p class="feature-description">Personalised outfits for formal events, everyday casual looks or sportswear. You will always look your best!</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Fully Personalised</h3>
+                <p class="feature-description">We respect your fit preferences and garments you prefer to avoid. Your comfort is our priority.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Voice Recommendations</h3>
+                <p class="feature-description">Listen to your recommendations narrated with detailed explanations about why each garment suits you.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Your Virtual Wardrobe</h3>
+                <p class="feature-description">Add photos of your own garments and receive personalised combinations using what you already own.</p>
+            </div>
+        </div>
+    </section>
 
-        <!-- Features Section -->
-        <section class="info-section" id="caracteristicas">
-            <h2 class="section-title">¿Qué hace especial a Armario Inteligente?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3 class="feature-title">Análisis de Colorimetría</h3>
-                    <p class="feature-description">
-                        Detectamos tu subtono de piel, color de ojos y cabello 
-                        usando visión por computadora para clasificarte en una 
-                        de las 4 estaciones (Primavera, Verano, Otoño, Invierno).
-                    </p>
+    <section class="carousel-section">
+        <h2 class="section-title">Discover Your Style</h2>
+        <div class="carousel-container">
+            <button class="carousel-control left" onclick="moveCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+            <div class="carousel-items" id="carouselItems">
+                <div class="carousel-item" style="background-image: linear-gradient(135deg, rgba(255,182,193,0.9), rgba(255,218,185,0.9));">
+                    <div class="carousel-text">Spring: Warm and Vibrant Tones</div>
                 </div>
-
-                <div class="feature-card">
-                    <h3 class="feature-title">Adaptado al Clima</h3>
-                    <p class="feature-description">
-                        Consideramos la temperatura y probabilidad de lluvia 
-                        de tu ubicación para recomendarte prendas apropiadas 
-                        para cada día.
-                    </p>
+                <div class="carousel-item" style="background-image: linear-gradient(135deg, rgba(176,224,230,0.9), rgba(176,196,222,0.9));">
+                    <div class="carousel-text">Summer: Soft and Cool Colours</div>
                 </div>
-
-                <div class="feature-card">
-                    <h3 class="feature-title">Para Toda Ocasión</h3>
-                    <p class="feature-description">
-                        Outfits personalizados para eventos formales, 
-                        looks casuales del día a día, o atuendos deportivos. 
-                        ¡Siempre estarás perfecto!
-                    </p>
+                <div class="carousel-item" style="background-image: linear-gradient(135deg, rgba(210,105,30,0.9), rgba(139,69,19,0.9));">
+                    <div class="carousel-text">Autumn: Deep Earthy Tones</div>
                 </div>
-
-                <div class="feature-card">
-                    <h3 class="feature-title">Totalmente Personalizado</h3>
-                    <p class="feature-description">
-                        Respetamos tus preferencias de ajuste y prendas que 
-                        prefieres evitar. Tu comodidad es nuestra prioridad.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <h3 class="feature-title">Recomendaciones con Voz</h3>
-                    <p class="feature-description">
-                        Escucha tus recomendaciones narradas con explicaciones 
-                        detalladas sobre por qué cada prenda te favorece.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <h3 class="feature-title">Tu Armario Virtual</h3>
-                    <p class="feature-description">
-                        Próximamente: añade fotos de tus prendas y recibe 
-                        combinaciones personalizadas con lo que ya tienes.
-                    </p>
+                <div class="carousel-item" style="background-image: linear-gradient(135deg, rgba(0,0,139,0.9), rgba(112,128,144,0.9));">
+                    <div class="carousel-text">Winter: Intense Contrasting Colours</div>
                 </div>
             </div>
-        </section>
+            <button class="carousel-control right" onclick="moveCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
 
-        <!-- Carousel Section -->
-        <section class="carousel-section">
-            <h2 class="section-title">Descubre Tu Estilo</h2>
-            <div class="carousel-container">
-                <button class="carousel-control left" onclick="moveCarousel(-1)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                
-                <div class="carousel-items" id="carouselItems">
-                    <div class="carousel-item" style="background-image: linear-gradient(135deg, rgba(255, 182, 193, 0.9), rgba(255, 218, 185, 0.9)), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200');">
-                        <div class="carousel-text">Primavera: Tonos Cálidos y Vibrantes</div>
-                    </div>
-                    <div class="carousel-item" style="background-image: linear-gradient(135deg, rgba(176, 224, 230, 0.9), rgba(176, 196, 222, 0.9)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200');">
-                        <div class="carousel-text">Verano: Colores Suaves y Frescos</div>
-                    </div>
-                    <div class="carousel-item" style="background-image: linear-gradient(135deg, rgba(210, 105, 30, 0.9), rgba(139, 69, 19, 0.9)), url('https://images.unsplash.com/photo-1445205170230-053b83016050?w=1200');">
-                        <div class="carousel-text">Otoño: Tonos Tierra y Profundos</div>
-                    </div>
-                    <div class="carousel-item" style="background-image: linear-gradient(135deg, rgba(0, 0, 139, 0.9), rgba(112, 128, 144, 0.9)), url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200');">
-                        <div class="carousel-text">Invierno: Colores Intensos y Contrastantes</div>
-                    </div>
-                </div>
+    <section class="info-section" style="text-align:center;">
+        <h2 class="section-title">Ready to discover your perfect style?</h2>
+        <p style="font-size:18px;color:var(--text-muted);margin-bottom:30px;">Join thousands of people who already trust Smart Wardrobe</p>
+        <a href="{{ url_for('register') }}" class="btn btn-primary" style="padding:20px 60px;font-size:20px;"><i class="fas fa-user-plus"></i> Create Free Account</a>
+    </section>
 
-                <button class="carousel-control right" onclick="moveCarousel(1)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- Call to Action -->
-        <section class="info-section" style="text-align: center;">
-            <h2 class="section-title">¿Listo para descubrir tu estilo perfecto?</h2>
-            <p style="font-size: 18px; color: var(--text-muted); margin-bottom: 30px;">
-                Únete a miles de personas que ya confían en Armario Inteligente
-            </p>
-            <a href="{{ url_for('register') }}" class="btn btn-primary" style="padding: 20px 60px; font-size: 20px;">
-                <i class="fas fa-user-plus"></i> Crear Cuenta Gratis
-            </a>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2025 Armario Inteligente - Universidad Intercontinental de la Empresa UIE</p>
-            <p style="margin-top: 8px; font-size: 12px;">
-                Sistemas Interactivos Inteligentes | Proyecto Académico
-            </p>
-        </footer>
-    </div>
-
-    <script>
-        let currentCarouselIndex = 0;
-        const carouselItems = document.querySelectorAll('.carousel-item');
-        const totalItems = carouselItems.length;
-
-        function moveCarousel(direction) {
-            currentCarouselIndex += direction;
-            
-            if (currentCarouselIndex < 0) {
-                currentCarouselIndex = totalItems - 1;
-            } else if (currentCarouselIndex >= totalItems) {
-                currentCarouselIndex = 0;
-            }
-            
-            const carousel = document.getElementById('carouselItems');
-            carousel.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
-        }
-
-        // Carrusel de fotos avanza cada 5 segundos
-        setInterval(() => {
-            moveCarousel(1);
-        }, 5000);
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
+    <footer class="footer">
+        <p>&copy; 2025 Smart Wardrobe - Universidad Intercontinental de la Empresa UIE</p>
+        <p style="margin-top:8px;font-size:12px;">Intelligent Systems | Academic Project</p>
+    </footer>
+</div>
+<script>
+    let idx = 0;
+    const total = document.querySelectorAll('.carousel-item').length;
+    function moveCarousel(d) {
+        idx = (idx + d + total) % total;
+        document.getElementById('carouselItems').style.transform = `translateX(-${idx * 100}%)`;
+    }
+    setInterval(() => moveCarousel(1), 5000);
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'}); });
+    });
+</script>
 </body>
 </html>

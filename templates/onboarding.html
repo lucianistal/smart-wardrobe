@@ -1,288 +1,195 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuéntanos sobre ti - Armario Inteligente</title>
+    <title>Tell us about you - Smart Wardrobe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="onboarding-container">
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressBar"></div>
-        </div>
-        
-        <div class="step-counter">
-            <span id="currentStep">1</span> / <span id="totalSteps">8</span>
-        </div>
-        
-        <form id="onboardingForm" enctype="multipart/form-data">
-            <!-- Step 1: Nombre -->
-            <div class="step active" data-step="1">
-                <h2 class="step-title">Bienvenido a tu Armario Inteligente</h2>
-                <p class="step-subtitle">Cuéntame sobre ti</p>
-                
-                <div class="form-group">
-                    <label>NOMBRE</label>
-                    <input type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre" required>
-                </div>
-                
-                <button type="button" class="btn btn-primary" onclick="nextStep()">Continuar</button>
-            </div>
-            
-            <!-- Step 2: Género -->
-            <div class="step" data-step="2">
-                <h2 class="step-title">Cuéntame sobre ti</h2>
-                <p class="step-subtitle">¿HOMBRE O MUJER?</p>
-                
-                <div class="options-grid">
-                    <div class="option-card" onclick="selectOption(this, 'genero', 'Hombre')">
-                        <span class="option-text">HOMBRE</span>
-                    </div>
-                    <div class="option-card" onclick="selectOption(this, 'genero', 'Mujer')">
-                        <span class="option-text">MUJER</span>
-                    </div>
-                    <div class="option-card" onclick="selectOption(this, 'genero', 'Prefiero no decirlo')">
-                        <span class="option-text">PREFIERO NO DECIRLO</span>
-                    </div>
-                </div>
-                <input type="hidden" name="genero" id="genero" value="">
-                
-                <div style="margin-top: 20px;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Atrás</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continuar</button>
-                </div>
-            </div>
-            
-            <!-- Step 3: Clima -->
-            <div class="step" data-step="3">
-                <h2 class="step-title">Clima</h2>
-                
-                <div class="form-group">
-                    <label>PROVINCIA</label>
-                    <select name="provincia" id="provincia" required>
-                        <option value="">Seleccionar</option>
-                        <option value="A Coruña">A Coruña</option>
-                        <option value="Álava">Álava</option>
-                        <option value="Albacete">Albacete</option>
-                        <option value="Alicante">Alicante</option>
-                        <option value="Almerí­a">Almerí­a</option>
-                        <option value="Asturias">Asturias</option>
-                        <option value="Ávila">Ávila</option>
-                        <option value="Badajoz">Badajoz</option>
-                        <option value="Barcelona">Barcelona</option>
-                        <option value="Burgos">Burgos</option>
-                        <option value="Cáceres">Cáceres</option>
-                        <option value="Cádiz">Cádiz</option>
-                        <option value="Cantabria">Cantabria</option>
-                        <option value="Castellón">Castellón</option>
-                        <option value="Ciudad Real">Ciudad Real</option>
-                        <option value="Córdoba">Córdoba</option>
-                        <option value="Cuenca">Cuenca</option>
-                        <option value="Girona">Girona</option>
-                        <option value="Granada">Granada</option>
-                        <option value="Guadalajara">Guadalajara</option>
-                        <option value="Guipúzcoa">Guipúzcoa</option>
-                        <option value="Huelva">Huelva</option>
-                        <option value="Huesca">Huesca</option>
-                        <option value="Islas Baleares">Islas Baleares</option>
-                        <option value="Jaén">Jaén</option>
-                        <option value="La Rioja">La Rioja</option>
-                        <option value="Las Palmas">Las Palmas</option>
-                        <option value="León">León</option>
-                        <option value="Lleida">Lleida</option>
-                        <option value="Lugo">Lugo</option>
-                        <option value="Madrid">Madrid</option>
-                        <option value="Málaga">Málaga</option>
-                        <option value="Murcia">Murcia</option>
-                        <option value="Navarra">Navarra</option>
-                        <option value="Ourense">Ourense</option>
-                        <option value="Palencia">Palencia</option>
-                        <option value="Pontevedra">Pontevedra</option>
-                        <option value="Salamanca">Salamanca</option>
-                        <option value="Santa Cruz de Tenerife">Santa Cruz de Tenerife</option>
-                        <option value="Segovia">Segovia</option>
-                        <option value="Sevilla">Sevilla</option>
-                        <option value="Soria">Soria</option>
-                        <option value="Tarragona">Tarragona</option>
-                        <option value="Teruel">Teruel</option>
-                        <option value="Toledo">Toledo</option>
-                        <option value="Valencia">Valencia</option>
-                        <option value="Valladolid">Valladolid</option>
-                        <option value="Vizcaya">Vizcaya</option>
-                        <option value="Zamora">Zamora</option>
-                        <option value="Zaragoza">Zaragoza</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>MES</label>
-                    <select name="mes" id="mes" required>
-                        <option value="">Seleccionar</option>
-                        <option value="Enero">Enero</option>
-                        <option value="Febrero">Febrero</option>
-                        <option value="Marzo">Marzo</option>
-                        <option value="Abril">Abril</option>
-                        <option value="Mayo">Mayo</option>
-                        <option value="Junio">Junio</option>
-                        <option value="Julio">Julio</option>
-                        <option value="Agosto">Agosto</option>
-                        <option value="Septiembre">Septiembre</option>
-                        <option value="Octubre">Octubre</option>
-                        <option value="Noviembre">Noviembre</option>
-                        <option value="Diciembre">Diciembre</option>
-                    </select>
-                </div>
-                
-                <div style="margin-top: 20px;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Atrás</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continuar</button>
-                </div>
-            </div>
-            
-            <!-- Step 4: Ocasión -->
-            <div class="step" data-step="4">
-                <h2 class="step-title">¿Para qué ocasión necesitas mi ayuda?</h2>
-                <p class="step-subtitle">OCASIÓN</p>
-                
-                <div class="options-grid">
-                    <div class="option-card" onclick="selectOption(this, 'ocasion', 'Formal')">
-                        <span class="option-text">FORMAL</span>
-                    </div>
-                    <div class="option-card" onclick="selectOption(this, 'ocasion', 'Casual')">
-                        <span class="option-text">CASUAL</span>
-                    </div>
-                    <div class="option-card" onclick="selectOption(this, 'ocasion', 'Deportiva')">
-                        <span class="option-text">DEPORTIVA</span>
-                    </div>
-                </div>
-                <input type="hidden" name="ocasion" id="ocasion" value="">
-                
-                <div style="margin-top: 20px;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Atrás</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continuar</button>
-                </div>
-            </div>
-            
-            <!-- Step 5: Preferencia de Fit -->
-            <div class="step" data-step="5">
-                <h2 class="step-title">Gustos</h2>
-                <p class="step-subtitle">Cuentame acerca de tus preferencias</p>
-                <label>¿QUÉ PREFIERES?</label>
-                
-                <div class="options-grid">
-                    <div class="option-card" onclick="selectOption(this, 'fit', 'Ajustada')">
-                        <span class="option-text">AJUSTADA</span>
-                    </div>
-                    <div class="option-card" onclick="selectOption(this, 'fit', 'Normal')">
-                        <span class="option-text">NORMAL</span>
-                    </div>
-                    <div class="option-card" onclick="selectOption(this, 'fit', 'Holgada')">
-                        <span class="option-text">HOLGADA</span>
-                    </div>
-                </div>
-                <input type="hidden" name="fit" id="fit" value="">
-                
-                <div style="margin-top: 20px;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Atrás</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continuar</button>
-                </div>
-            </div>
-            
-            <!-- Step 6: Incomodidades -->
-            <div class="step" data-step="6">
-                <h2 class="step-title">Gustos</h2>
-                <p class="step-subtitle">¿HAY ALGO CON LO QUE NO TE SIENTAS CÓMODO?</p>
-                
-                <div class="checkbox-group">
-                    <label class="checkbox-option">
-                        <input type="checkbox" name="no_vestidos" value="true">
-                        <span>VESTIDOS</span>
-                    </label>
-                    <label class="checkbox-option">
-                        <input type="checkbox" name="no_faldas" value="true">
-                        <span>FALDAS</span>
-                    </label>
-                    <label class="checkbox-option">
-                        <input type="checkbox" name="no_tops" value="true">
-                        <span>TOPS</span>
-                    </label>
-                    <label class="checkbox-option">
-                        <input type="checkbox" name="no_pantalones" value="true">
-                        <span>PANTALONES</span>
-                    </label>
-                    <label class="checkbox-option">
-                        <input type="checkbox" name="ninguna" value="true">
-                        <span>NINGUNA OPCIÓN</span>
-                    </label>
-                </div>
-                
-                <div style="margin-top: 20px;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Atrás</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continuar</button>
-                </div>
-            </div>
-            
-            <!-- Step 7: Foto -->
-            <div class="step" data-step="7">
-                <h2 class="step-title">Análisis de Colorimetría</h2>
-                <p class="step-subtitle">Sube una foto de tu rostro para un análisis personalizado</p>
-                
-                <div class="photo-upload-area">
-                    <div id="photoPreview" class="photo-preview">
-                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: #ccc;">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="4"></circle>
-                        </svg>
-                        <p style="margin-top: 12px; color: #999; font-size: 14px;">Sin foto seleccionada</p>
-                    </div>
-                    
-                    <div class="upload-buttons">
-                        <label for="photoInput" class="btn btn-secondary">
-                            Seleccionar Archivo
-                            <input type="file" id="photoInput" name="photo" accept="image/*" style="display: none;" onchange="previewPhoto(this)">
-                        </label>
-                        
-                        <button type="button" class="btn btn-secondary" onclick="openCamera()">Usar Cámara</button>
-                    </div>
-                    
-                    <p style="text-align: center; color: #888; font-size: 13px; margin-top: 16px;">
-                        Mejores resultados con buena iluminación natural
-                    </p>
-                </div>
-                
-                <div style="margin-top: 20px;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Atrás</button>
-                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continuar</button>
-                </div>
-            </div>
-            
-            <!-- Step 8: Resumen -->
-            <div class="step" data-step="8">
-                <h2 class="step-title">¡Casi listo!</h2>
-                <p class="step-subtitle">Confirma tu información antes de continuar</p>
-                
-                <div class="summary-box" id="summaryBox">
-                    <!-- JavaScript -->
-                </div>
-                
-                <p style="text-align: center; color: #666; font-size: 14px; margin-top: 20px;">
-                    Al continuar, analizaremos tu colorimetría y consultaremos el clima en tiempo real
-                </p>
-                
-                <div style="margin-top: 20px;">
-                    <button type="button" class="btn btn-secondary" onclick="prevStep()">Atrás</button>
-                    <button type="submit" class="btn btn-primary btn-large">Generar Mi Recomendación</button>
-                </div>
-            </div>
-        </form>
-        
-        <div id="loading" class="loading-overlay" style="display: none;">
-            <div class="spinner"></div>
-            <p>Analizando tu perfil...</p>
-        </div>
-    </div>
+<div class="onboarding-container">
+    <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="step-counter"><span id="currentStep">1</span> / <span id="totalSteps">8</span></div>
 
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <form id="onboardingForm" enctype="multipart/form-data">
+
+        <!-- Step 1: Name -->
+        <div class="step active" data-step="1">
+            <h2 class="step-title">Welcome to your Smart Wardrobe</h2>
+            <p class="step-subtitle">Tell me about yourself</p>
+            <div class="form-group">
+                <label>NAME</label>
+                <input type="text" name="nombre" id="nombre" placeholder="Enter your name" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
+        </div>
+
+        <!-- Step 2: Gender -->
+        <div class="step" data-step="2">
+            <h2 class="step-title">Tell me about yourself</h2>
+            <p class="step-subtitle">GENDER</p>
+            <div class="options-grid">
+                <div class="option-card" onclick="selectOption(this,'genero','Hombre')"><span class="option-text">MALE</span></div>
+                <div class="option-card" onclick="selectOption(this,'genero','Mujer')"><span class="option-text">FEMALE</span></div>
+                <div class="option-card" onclick="selectOption(this,'genero','Prefiero no decirlo')"><span class="option-text">PREFER NOT TO SAY</span></div>
+            </div>
+            <input type="hidden" name="genero" id="genero" value="">
+            <div style="margin-top:20px;">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Climate -->
+        <div class="step" data-step="3">
+            <h2 class="step-title">Climate</h2>
+            <div class="form-group">
+                <label>PROVINCE</label>
+                <select name="provincia" id="provincia" required>
+                    <option value="">Select</option>
+                    <option value="A Coruña">A Coruña</option><option value="Álava">Álava</option>
+                    <option value="Albacete">Albacete</option><option value="Alicante">Alicante</option>
+                    <option value="Almería">Almería</option><option value="Asturias">Asturias</option>
+                    <option value="Ávila">Ávila</option><option value="Badajoz">Badajoz</option>
+                    <option value="Barcelona">Barcelona</option><option value="Burgos">Burgos</option>
+                    <option value="Cáceres">Cáceres</option><option value="Cádiz">Cádiz</option>
+                    <option value="Cantabria">Cantabria</option><option value="Castellón">Castellón</option>
+                    <option value="Ciudad Real">Ciudad Real</option><option value="Córdoba">Córdoba</option>
+                    <option value="Cuenca">Cuenca</option><option value="Girona">Girona</option>
+                    <option value="Granada">Granada</option><option value="Guadalajara">Guadalajara</option>
+                    <option value="Guipúzcoa">Guipúzcoa</option><option value="Huelva">Huelva</option>
+                    <option value="Huesca">Huesca</option><option value="Islas Baleares">Islas Baleares</option>
+                    <option value="Jaén">Jaén</option><option value="La Rioja">La Rioja</option>
+                    <option value="Las Palmas">Las Palmas</option><option value="León">León</option>
+                    <option value="Lleida">Lleida</option><option value="Lugo">Lugo</option>
+                    <option value="Madrid">Madrid</option><option value="Málaga">Málaga</option>
+                    <option value="Murcia">Murcia</option><option value="Navarra">Navarra</option>
+                    <option value="Ourense">Ourense</option><option value="Palencia">Palencia</option>
+                    <option value="Pontevedra">Pontevedra</option><option value="Salamanca">Salamanca</option>
+                    <option value="Santa Cruz de Tenerife">Santa Cruz de Tenerife</option>
+                    <option value="Segovia">Segovia</option><option value="Sevilla">Sevilla</option>
+                    <option value="Soria">Soria</option><option value="Tarragona">Tarragona</option>
+                    <option value="Teruel">Teruel</option><option value="Toledo">Toledo</option>
+                    <option value="Valencia">Valencia</option><option value="Valladolid">Valladolid</option>
+                    <option value="Vizcaya">Vizcaya</option><option value="Zamora">Zamora</option>
+                    <option value="Zaragoza">Zaragoza</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>MONTH</label>
+                <select name="mes" id="mes" required>
+                    <option value="">Select</option>
+                    <option value="Enero">January</option><option value="Febrero">February</option>
+                    <option value="Marzo">March</option><option value="Abril">April</option>
+                    <option value="Mayo">May</option><option value="Junio">June</option>
+                    <option value="Julio">July</option><option value="Agosto">August</option>
+                    <option value="Septiembre">September</option><option value="Octubre">October</option>
+                    <option value="Noviembre">November</option><option value="Diciembre">December</option>
+                </select>
+            </div>
+            <div style="margin-top:20px;">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Occasion -->
+        <div class="step" data-step="4">
+            <h2 class="step-title">What occasion do you need help with?</h2>
+            <p class="step-subtitle">OCCASION</p>
+            <div class="options-grid">
+                <div class="option-card" onclick="selectOption(this,'ocasion','Formal')"><span class="option-text">FORMAL</span></div>
+                <div class="option-card" onclick="selectOption(this,'ocasion','Casual')"><span class="option-text">CASUAL</span></div>
+                <div class="option-card" onclick="selectOption(this,'ocasion','Deportiva')"><span class="option-text">SPORT</span></div>
+            </div>
+            <input type="hidden" name="ocasion" id="ocasion" value="">
+            <div style="margin-top:20px;">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Fit -->
+        <div class="step" data-step="5">
+            <h2 class="step-title">Your Preferences</h2>
+            <p class="step-subtitle">Tell me about your style preferences</p>
+            <label>WHAT FIT DO YOU PREFER?</label>
+            <div class="options-grid">
+                <div class="option-card" onclick="selectOption(this,'fit','Ajustada')"><span class="option-text">FITTED</span></div>
+                <div class="option-card" onclick="selectOption(this,'fit','Normal')"><span class="option-text">REGULAR</span></div>
+                <div class="option-card" onclick="selectOption(this,'fit','Holgada')"><span class="option-text">LOOSE</span></div>
+            </div>
+            <input type="hidden" name="fit" id="fit" value="">
+            <div style="margin-top:20px;">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 6: Avoidances -->
+        <div class="step" data-step="6">
+            <h2 class="step-title">Your Preferences</h2>
+            <p class="step-subtitle">IS THERE ANYTHING YOU FEEL UNCOMFORTABLE WEARING?</p>
+            <div class="checkbox-group">
+                <label class="checkbox-option"><input type="checkbox" name="no_vestidos" value="true"><span>DRESSES</span></label>
+                <label class="checkbox-option"><input type="checkbox" name="no_faldas"   value="true"><span>SKIRTS</span></label>
+                <label class="checkbox-option"><input type="checkbox" name="no_tops"     value="true"><span>TOPS</span></label>
+                <label class="checkbox-option"><input type="checkbox" name="no_pantalones" value="true"><span>TROUSERS</span></label>
+                <label class="checkbox-option"><input type="checkbox" name="ninguna"     value="true"><span>NONE OF THE ABOVE</span></label>
+            </div>
+            <div style="margin-top:20px;">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 7: Photo -->
+        <div class="step" data-step="7">
+            <h2 class="step-title">Colourimetry Analysis</h2>
+            <p class="step-subtitle">Upload a photo of your face for a personalised analysis</p>
+            <div class="photo-upload-area">
+                <div id="photoPreview" class="photo-preview">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#ccc;">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                    <p style="margin-top:12px;color:#999;font-size:14px;">No photo selected</p>
+                </div>
+                <div class="upload-buttons">
+                    <label for="photoInput" class="btn btn-secondary">
+                        Select File
+                        <input type="file" id="photoInput" name="photo" accept="image/*" style="display:none;" onchange="previewPhoto(this)">
+                    </label>
+                    <button type="button" class="btn btn-secondary" onclick="openCamera()">Use Camera</button>
+                </div>
+                <p style="text-align:center;color:#888;font-size:13px;margin-top:16px;">Best results with good natural lighting</p>
+            </div>
+            <div style="margin-top:20px;">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 8: Summary -->
+        <div class="step" data-step="8">
+            <h2 class="step-title">Almost there!</h2>
+            <p class="step-subtitle">Confirm your information before continuing</p>
+            <div class="summary-box" id="summaryBox"></div>
+            <p style="text-align:center;color:#666;font-size:14px;margin-top:20px;">
+                By continuing, we will analyse your colourimetry and look up the climate data for your location
+            </p>
+            <div style="margin-top:20px;">
+                <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button type="submit" class="btn btn-primary btn-large">Generate My Recommendation</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="loading" class="loading-overlay" style="display:none;">
+        <div class="spinner"></div>
+        <p>Analysing your profile...</p>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

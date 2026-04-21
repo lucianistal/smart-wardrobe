@@ -1,499 +1,242 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Armario - Armario Inteligente</title>
+    <title>My Wardrobe - Smart Wardrobe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
-        .wardrobe-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        .wardrobe-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-        
-        .btn-add-item {
-            background: var(--accent-purple);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        
-        .item-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
-        }
-        
-        .item-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .item-image {
-            width: 100%;
-            height: 200px;
-            background: var(--background);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-            font-size: 48px;
-            overflow: hidden;
-        }
-
-        .item-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .item-name {
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .item-details {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-        
-        .item-actions {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .btn-icon {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        
-        .btn-edit {
-            background: var(--primary-color);
-            color: var(--text-dark);
-        }
-        
-        .btn-delete {
-            background: var(--error);
-            color: white;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        
-        .modal.active {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        .stats-section {
-            background: linear-gradient(135deg, #F3EBF9, #FAF8FC);
-            padding: 24px;
-            border-radius: 12px;
-            margin-bottom: 40px;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
-        }
-        
-        .stat-card {
-            background: white;
-            padding: 16px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--accent-purple);
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .image-upload-area {
-            border: 2px dashed var(--accent-purple);
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 16px;
-        }
-
-        .image-upload-area:hover {
-            background: #F3EBF9;
-            border-color: #8A6DAD;
-        }
-
-        .image-preview {
-            max-width: 100%;
-            max-height: 200px;
-            margin-top: 12px;
-            border-radius: 8px;
-        }
+        .wardrobe-container { max-width:1400px; margin:0 auto; padding:40px 20px; }
+        .wardrobe-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; }
+        .btn-add-item { background:var(--accent-purple); color:white; padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-weight:600; }
+        .items-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:20px; margin-bottom:40px; }
+        .item-card { background:white; border-radius:12px; padding:20px; box-shadow:var(--shadow-sm); transition:all 0.3s; }
+        .item-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); }
+        .item-image { width:100%; height:200px; background:var(--background); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-bottom:12px; font-size:48px; overflow:hidden; }
+        .item-image img { width:100%; height:100%; object-fit:cover; }
+        .item-name { font-weight:600; margin-bottom:8px; }
+        .item-details { font-size:13px; color:var(--text-muted); margin-bottom:12px; }
+        .item-actions { display:flex; gap:8px; }
+        .btn-icon { padding:6px 12px; border:none; border-radius:6px; cursor:pointer; font-size:12px; }
+        .btn-delete { background:var(--error); color:white; }
+        .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:9999; }
+        .modal.active { display:flex; }
+        .modal-content { background:white; border-radius:16px; padding:40px; max-width:500px; width:90%; max-height:90vh; overflow-y:auto; }
+        .stats-section { background:linear-gradient(135deg,#F3EBF9,#FAF8FC); padding:24px; border-radius:12px; margin-bottom:40px; }
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; margin-top:16px; }
+        .stat-card { background:white; padding:16px; border-radius:8px; text-align:center; }
+        .stat-number { font-size:28px; font-weight:700; color:var(--accent-purple); }
+        .stat-label { font-size:12px; color:var(--text-muted); margin-top:4px; }
+        .image-upload-area { border:2px dashed var(--accent-purple); border-radius:12px; padding:30px; text-align:center; cursor:pointer; transition:all 0.3s; margin-bottom:16px; }
+        .image-upload-area:hover { background:#F3EBF9; }
+        .image-preview { max-width:100%; max-height:200px; margin-top:12px; border-radius:8px; }
     </style>
 </head>
 <body>
-    <div class="results-container">
-        <nav class="navbar">
-            <h1 class="nav-logo"> Mi Armario Virtual</h1>
-            <div>
-                <a href="/dashboard" class="btn btn-secondary"> Centro de Cuenta</a>
-                <a href="/recommendation" class="btn btn-primary"> Nueva Consulta</a>
-                <a href="/logout" class="btn-logout">Cerrar Sesión</a>
-            </div>
-        </nav>
-        
-        <div class="wardrobe-container">
-            <div class="wardrobe-header">
-                <h1>Mis Prendas</h1>
-                <button class="btn-add-item" onclick="openAddModal()"> + Añadir Prenda</button>
-            </div>
-            
-            <!-- Estadísticas -->
-            <div class="stats-section">
-                <h3>Estadísticas de tu Armario</h3>
-                <div class="stats-grid" id="statsGrid">
-                    <!-- JavaScript -->
-                </div>
-                <div id="suggestions" style="margin-top: 16px; font-size: 14px;">
-                    <!-- Sugerencias  -->
-                </div>
-            </div>
-            
-            <!-- Grid de prendas -->
-            <div class="items-grid" id="itemsGrid">
-                <!-- JavaScript -->
-            </div>
+<div class="results-container">
+    <nav class="navbar">
+        <h1 class="nav-logo">My Virtual Wardrobe</h1>
+        <div>
+            <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
+            <a href="/recommendation" class="btn btn-primary">New Query</a>
+            <a href="/logout" class="btn-logout">Log Out</a>
         </div>
-    </div>
-    
-    <!-- Modal para añadir/editar prenda -->
-    <div class="modal" id="itemModal">
-        <div class="modal-content">
-            <h2 id="modalTitle">Añadir Prenda</h2>
-            <form id="itemForm" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label>Foto de la prenda (opcional)</label>
-                    <div class="image-upload-area" onclick="document.getElementById('imageInput').click()">
-                        <i class="fas fa-camera" style="font-size: 32px; color: var(--accent-purple); margin-bottom: 8px;"></i>
-                        <p>Haz clic para subir una foto</p>
-                        <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="previewImage(this)">
-                    </div>
-                    <img id="imagePreview" class="image-preview" style="display: none;">
-                </div>
+    </nav>
 
-                <div class="form-group">
-                    <label>Nombre de la prenda</label>
-                    <input type="text" id="itemName" required placeholder="Ej: Camisa blanca de algodón">
-                </div>
-                
-                <div class="form-group">
-                    <label>Tipo</label>
-                    <select id="itemType" required>
-                        <option value="">Seleccionar</option>
-                        <option value="superior">Superior (camiseta, camisa, blusa)</option>
-                        <option value="inferior">Inferior (pantalón, falda)</option>
-                        <option value="vestido">Vestido</option>
-                        <option value="calzado">Calzado</option>
-                        <option value="complemento">Complemento</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>Color(es)</label>
-                    <input type="text" id="itemColor" required placeholder="Ej: blanco, azul">
-                    <small>Separa múltiples colores con comas</small>
-                </div>
-                
-                <div class="form-group">
-                    <label>Ocasión</label>
-                    <div class="checkbox-group">
-                        <label class="checkbox-option">
-                            <input type="checkbox" name="ocasion" value="formal">
-                            <span>Formal</span>
-                        </label>
-                        <label class="checkbox-option">
-                            <input type="checkbox" name="ocasion" value="casual">
-                            <span>Casual</span>
-                        </label>
-                        <label class="checkbox-option">
-                            <input type="checkbox" name="ocasion" value="deportiva">
-                            <span>Deportiva</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Clima apropiado</label>
-                    <div class="checkbox-group">
-                        <label class="checkbox-option">
-                            <input type="checkbox" name="clima" value="calor">
-                            <span>Calor</span>
-                        </label>
-                        <label class="checkbox-option">
-                            <input type="checkbox" name="clima" value="templado">
-                            <span>Templado</span>
-                        </label>
-                        <label class="checkbox-option">
-                            <input type="checkbox" name="clima" value="frio">
-                            <span>Frío</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Ajuste</label>
-                    <select id="itemFit">
-                        <option value="">No especificado</option>
-                        <option value="ajustada">Ajustada</option>
-                        <option value="normal">Normal</option>
-                        <option value="holgada">Holgada</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>Notas (opcional)</label>
-                    <textarea id="itemNotes" rows="3" placeholder="Marca, talla, combinaciones que te gustan..."></textarea>
-                </div>
-                
-                <div style="display: flex; gap: 12px; margin-top: 24px;">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-                </div>
-            </form>
+    <div class="wardrobe-container">
+        <div class="wardrobe-header">
+            <h1>My Garments</h1>
+            <button class="btn-add-item" onclick="openAddModal()">+ Add Garment</button>
         </div>
-    </div>
-    
-    <script>
-        let currentItemId = null;
-        let selectedImage = null;
-        
-        // Cargar prendas al inicio
-        document.addEventListener('DOMContentLoaded', () => {
-            loadItems();
-            loadStats();
-        });
 
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('imagePreview');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                    selectedImage = input.files[0];
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        
-        async function loadItems() {
-            const response = await fetch('/api/wardrobe/items');
-            const data = await response.json();
-            
-            if (data.success) {
-                const grid = document.getElementById('itemsGrid');
-                
-                if (data.items.length === 0) {
-                    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No hay prendas en tu armario. ¡Añade la primera!</p>';
-                    return;
-                }
-                
-                grid.innerHTML = data.items.map(item => {
-                    const imageHtml = item.imagen 
-                        ? `<img src="/static/user_clothing/${item.imagen}" alt="${item.nombre}" onerror="this.parentElement.innerHTML='${getItemEmoji(item.tipo)}'">`
-                        : getItemEmoji(item.tipo);
-                    
-                    return `
-                    <div class="item-card">
-                        <div class="item-image">${imageHtml}</div>
-                        <div class="item-name">${item.nombre}</div>
-                        <div class="item-details">
-                            <div> ${item.tipo}</div>
-                            <div> ${Array.isArray(item.color) ? item.color.join(', ') : item.color}</div>
-                            <div> ${Array.isArray(item.ocasion) ? item.ocasion.join(', ') : item.ocasion}</div>
-                        </div>
-                        <div class="item-actions">
-                            <button class="btn-icon btn-delete" onclick="deleteItem('${item.id}')">BORRAR</button>
-                        </div>
-                    </div>
-                `;
-                }).join('');
-            }
-        }
-        
-        async function loadStats() {
-            const response = await fetch('/api/wardrobe/stats');
-            const data = await response.json();
-            
-            if (data.success) {
-                const statsGrid = document.getElementById('statsGrid');
-                const stats = data.stats;
-                
-                statsGrid.innerHTML = `
-                    <div class="stat-card">
-                        <div class="stat-number">${stats.total_items}</div>
-                        <div class="stat-label">Total de Prendas</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">${Object.keys(stats.by_type).length}</div>
-                        <div class="stat-label">Tipos Diferentes</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">${Object.keys(stats.by_color).length}</div>
-                        <div class="stat-label">Colores</div>
-                    </div>
-                `;
-                
-                const suggestionsDiv = document.getElementById('suggestions');
-                if (data.suggestions.length > 0) {
-                    suggestionsDiv.innerHTML = '<strong> Sugerencias:</strong><ul>' + 
-                        data.suggestions.map(s => `<li>${s}</li>`).join('') + 
-                        '</ul>';
-                }
-            }
-        }
-        
-        function getItemEmoji(tipo) {
-            const emojis = {
-                'superior': '👕',
-                'inferior': '👖',
-                'vestido': '👗',
-                'calzado': '👟',
-                'complemento': '👜'
+        <!-- Stats -->
+        <div class="stats-section">
+            <h3>Wardrobe Statistics</h3>
+            <div class="stats-grid" id="statsGrid"></div>
+            <div id="suggestions" style="margin-top:16px;font-size:14px;"></div>
+        </div>
+
+        <!-- Items grid -->
+        <div class="items-grid" id="itemsGrid"></div>
+    </div>
+</div>
+
+<!-- Add / Edit modal -->
+<div class="modal" id="itemModal">
+    <div class="modal-content">
+        <h2 id="modalTitle">Add Garment</h2>
+        <form id="itemForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Garment photo (optional)</label>
+                <div class="image-upload-area" onclick="document.getElementById('imageInput').click()">
+                    <p>Click to upload a photo</p>
+                    <input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="previewImage(this)">
+                </div>
+                <img id="imagePreview" class="image-preview" style="display:none;">
+            </div>
+            <div class="form-group">
+                <label>Garment name</label>
+                <input type="text" id="itemName" required placeholder="e.g. White cotton shirt">
+            </div>
+            <div class="form-group">
+                <label>Type</label>
+                <select id="itemType" required>
+                    <option value="">Select</option>
+                    <option value="superior">Top (t-shirt, shirt, blouse)</option>
+                    <option value="inferior">Bottom (trousers, skirt)</option>
+                    <option value="vestido">Dress</option>
+                    <option value="calzado">Footwear</option>
+                    <option value="complemento">Accessory</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Colour(s)</label>
+                <input type="text" id="itemColor" required placeholder="e.g. white, blue">
+                <small>Separate multiple colours with commas</small>
+            </div>
+            <div class="form-group">
+                <label>Occasion</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-option"><input type="checkbox" name="ocasion" value="formal"><span>Formal</span></label>
+                    <label class="checkbox-option"><input type="checkbox" name="ocasion" value="casual"><span>Casual</span></label>
+                    <label class="checkbox-option"><input type="checkbox" name="ocasion" value="deportiva"><span>Sport</span></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Climate</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-option"><input type="checkbox" name="clima" value="calor"><span>Hot</span></label>
+                    <label class="checkbox-option"><input type="checkbox" name="clima" value="templado"><span>Mild</span></label>
+                    <label class="checkbox-option"><input type="checkbox" name="clima" value="frio"><span>Cold</span></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Fit</label>
+                <select id="itemFit">
+                    <option value="">Not specified</option>
+                    <option value="ajustada">Fitted</option>
+                    <option value="normal">Regular</option>
+                    <option value="holgada">Loose</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Notes (optional)</label>
+                <textarea id="itemNotes" rows="3" placeholder="Brand, size, favourite combinations..."></textarea>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:24px;">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    let currentItemId = null;
+    let selectedImage = null;
+
+    document.addEventListener('DOMContentLoaded', () => { loadItems(); loadStats(); });
+
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const p = document.getElementById('imagePreview');
+                p.src = e.target.result; p.style.display = 'block';
+                selectedImage = input.files[0];
             };
-            return emojis[tipo] || '👔';
+            reader.readAsDataURL(input.files[0]);
         }
-        
-        function openAddModal() {
-            currentItemId = null;
-            document.getElementById('modalTitle').textContent = 'Añadir Prenda';
-            document.getElementById('itemForm').reset();
-            document.getElementById('imagePreview').style.display = 'none';
-            selectedImage = null;
-            document.getElementById('itemModal').classList.add('active');
+    }
+
+    async function loadItems() {
+        const res  = await fetch('/api/wardrobe/items');
+        const data = await res.json();
+        if (data.success) {
+            const grid = document.getElementById('itemsGrid');
+            if (data.items.length === 0) {
+                grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted);">No garments in your wardrobe yet. Add the first one!</p>';
+                return;
+            }
+            grid.innerHTML = data.items.map(item => {
+                const img = item.imagen
+                    ? `<img src="/static/user_clothing/${item.imagen}" alt="${item.nombre}" onerror="this.parentElement.innerHTML='${getItemEmoji(item.tipo)}'">`
+                    : getItemEmoji(item.tipo);
+                return `<div class="item-card">
+                    <div class="item-image">${img}</div>
+                    <div class="item-name">${item.nombre}</div>
+                    <div class="item-details">
+                        <div>${item.tipo}</div>
+                        <div>${Array.isArray(item.color) ? item.color.join(', ') : item.color}</div>
+                        <div>${Array.isArray(item.ocasion) ? item.ocasion.join(', ') : item.ocasion}</div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-icon btn-delete" onclick="deleteItem('${item.id}')">DELETE</button>
+                    </div>
+                </div>`;
+            }).join('');
         }
-        
-        function closeModal() {
-            document.getElementById('itemModal').classList.remove('active');
-        }
-        
-        async function deleteItem(itemId) {
-            if (!confirm('¿Estás seguro de eliminar esta prenda?')) return;
-            
-            const response = await fetch(`/api/wardrobe/items/${itemId}`, {
-                method: 'DELETE'
-            });
-            
-            const data = await response.json();
-            
-            if (data.success) {
-                loadItems();
-                loadStats();
-            } else {
-                alert('Error al eliminar: ' + data.message);
+    }
+
+    async function loadStats() {
+        const res  = await fetch('/api/wardrobe/stats');
+        const data = await res.json();
+        if (data.success) {
+            const s = data.stats;
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card"><div class="stat-number">${s.total_items}</div><div class="stat-label">Total Items</div></div>
+                <div class="stat-card"><div class="stat-number">${Object.keys(s.by_type).length}</div><div class="stat-label">Different Types</div></div>
+                <div class="stat-card"><div class="stat-number">${Object.keys(s.by_color).length}</div><div class="stat-label">Colours</div></div>`;
+            if (data.suggestions.length > 0) {
+                document.getElementById('suggestions').innerHTML = '<strong>Suggestions:</strong><ul>' + data.suggestions.map(s => `<li>${s}</li>`).join('') + '</ul>';
             }
         }
-        
-        document.getElementById('itemForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData();
-            
-            // Añadir imagen si existe
-            if (selectedImage) {
-                formData.append('imagen', selectedImage);
-            }
-            
-            // Añadir datos del formulario
-            formData.append('nombre', document.getElementById('itemName').value);
-            formData.append('tipo', document.getElementById('itemType').value);
-            
-            const colors = document.getElementById('itemColor').value.split(',').map(c => c.trim());
-            formData.append('color', JSON.stringify(colors.length === 1 ? colors[0] : colors));
-            
-            const ocasiones = Array.from(document.querySelectorAll('input[name="ocasion"]:checked'))
-                .map(cb => cb.value);
-            formData.append('ocasion', JSON.stringify(ocasiones.length === 1 ? ocasiones[0] : ocasiones));
-            
-            const climas = Array.from(document.querySelectorAll('input[name="clima"]:checked'))
-                .map(cb => cb.value);
-            formData.append('clima_apropiado', JSON.stringify(climas.length === 1 ? climas[0] : climas));
-            
-            const fit = document.getElementById('itemFit').value;
-            if (fit) formData.append('fit', fit);
-            
-            const notes = document.getElementById('itemNotes').value;
-            if (notes) formData.append('notas', notes);
-            
-            const response = await fetch('/api/wardrobe/items', {
-                method: 'POST',
-                body: formData
-            });
-            
-            const data = await response.json();
-            
-            if (data.success) {
-                closeModal();
-                loadItems();
-                loadStats();
-            } else {
-                alert('Error: ' + data.message);
-            }
-        });
-    </script>
+    }
+
+    function getItemEmoji(tipo) {
+        return {'superior':'👕','inferior':'👖','vestido':'👗','calzado':'👟','complemento':'👜'}[tipo] || '👔';
+    }
+
+    function openAddModal() {
+        currentItemId = null;
+        document.getElementById('modalTitle').textContent = 'Add Garment';
+        document.getElementById('itemForm').reset();
+        document.getElementById('imagePreview').style.display = 'none';
+        selectedImage = null;
+        document.getElementById('itemModal').classList.add('active');
+    }
+
+    function closeModal() { document.getElementById('itemModal').classList.remove('active'); }
+
+    async function deleteItem(id) {
+        if (!confirm('Are you sure you want to delete this garment?')) return;
+        const res  = await fetch(`/api/wardrobe/items/${id}`, {method:'DELETE'});
+        const data = await res.json();
+        if (data.success) { loadItems(); loadStats(); }
+        else alert('Error: ' + data.message);
+    }
+
+    document.getElementById('itemForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fd = new FormData();
+        if (selectedImage) fd.append('imagen', selectedImage);
+        fd.append('nombre', document.getElementById('itemName').value);
+        fd.append('tipo',   document.getElementById('itemType').value);
+        const colors = document.getElementById('itemColor').value.split(',').map(c => c.trim());
+        fd.append('color', JSON.stringify(colors.length === 1 ? colors[0] : colors));
+        const occ = Array.from(document.querySelectorAll('input[name="ocasion"]:checked')).map(c => c.value);
+        fd.append('ocasion', JSON.stringify(occ.length === 1 ? occ[0] : occ));
+        const clm = Array.from(document.querySelectorAll('input[name="clima"]:checked')).map(c => c.value);
+        fd.append('clima_apropiado', JSON.stringify(clm.length === 1 ? clm[0] : clm));
+        const fit = document.getElementById('itemFit').value;
+        if (fit) fd.append('fit', fit);
+        const notes = document.getElementById('itemNotes').value;
+        if (notes) fd.append('notas', notes);
+        const res  = await fetch('/api/wardrobe/items', {method:'POST', body:fd});
+        const data = await res.json();
+        if (data.success) { closeModal(); loadItems(); loadStats(); }
+        else alert('Error: ' + data.message);
+    });
+</script>
 </body>
 </html>

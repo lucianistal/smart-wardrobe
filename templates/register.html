@@ -1,133 +1,67 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Armario Inteligente</title>
+    <title>Sign Up - Smart Wardrobe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="auth-container">
-        <div class="auth-card">
-            <div class="logo-section">
-                <div class="logo-title">Armario Inteligente</div>
-                <div class="logo-subtitle">Crea tu cuenta personal</div>
-            </div>
-            
-            <form class="auth-form" id="registerForm">
-                <h2>Registro</h2>
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="tu@email.com">
-                </div>
-                
-                <div class="form-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" name="password" required 
-                           placeholder="Mínimo 6 caracteres" minlength="6">
-                    <small style="color: var(--text-muted); font-size: 12px;">
-                        La contraseña debe tener al menos 6 caracteres
-                    </small>
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirm_password">Confirmar Contraseña</label>
-                    <input type="password" id="confirm_password" name="confirm_password" required 
-                           placeholder="Repite tu contraseña">
-                </div>
-                
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">
-                    Crear Cuenta
-                </button>
-                
-                <div id="message"></div>
-                
-                <div class="auth-switch">
-                    ¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Inicia sesión aquí</a>
-                </div>
-                
-                <div class="auth-switch" style="margin-top: 16px;">
-                    <a href="{{ url_for('welcome') }}" style="color: var(--text-muted); text-decoration: none;">
-                        ← Volver al inicio
-                    </a>
-                </div>
-            </form>
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="logo-section">
+            <div class="logo-title">Smart Wardrobe</div>
+            <div class="logo-subtitle">Create your personal account</div>
         </div>
+        <form class="auth-form" id="registerForm">
+            <h2>Sign Up</h2>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="you@email.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Minimum 6 characters" minlength="6">
+                <small style="color:var(--text-muted);font-size:12px;">Password must be at least 6 characters</small>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Repeat your password">
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:16px;">Create Account</button>
+            <div id="message"></div>
+            <div class="auth-switch">Already have an account? <a href="{{ url_for('login') }}">Log in here</a></div>
+            <div class="auth-switch" style="margin-top:16px;">
+                <a href="{{ url_for('welcome') }}" style="color:var(--text-muted);text-decoration:none;">← Back to home</a>
+            </div>
+        </form>
     </div>
-    
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm_password').value;
-            const messageDiv = document.getElementById('message');
-            
-            messageDiv.innerHTML = '';
-            
-            // Validaciones frontend
-            if (!email || !password || !confirmPassword) {
-                messageDiv.innerHTML = '<div class="message error">Por favor completa todos los campos</div>';
-                return;
-            }
-            
-            if (password.length < 6) {
-                messageDiv.innerHTML = '<div class="message error">La contraseña debe tener al menos 6 caracteres</div>';
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                messageDiv.innerHTML = '<div class="message error">Las contraseñas no coinciden</div>';
-                return;
-            }
-            
-            if (!email.includes('@') || !email.includes('.')) {
-                messageDiv.innerHTML = '<div class="message error">Email inválido</div>';
-                return;
-            }
-            
-            try {
-                const response = await fetch('/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 
-                        email, 
-                        password,
-                        confirm_password: confirmPassword
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    messageDiv.innerHTML = '<div class="message success">¡Registro exitoso! Redirigiendo...</div>';
-                    setTimeout(() => {
-                        window.location.href = '/dashboard';
-                    }, 1500);
-                } else {
-                    messageDiv.innerHTML = `<div class="message error">${data.message}</div>`;
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                messageDiv.innerHTML = '<div class="message error">Error de conexión. Intenta de nuevo.</div>';
-            }
-        });
-        
-        // Validación en tiempo real de coincidencia de contraseñas
-        document.getElementById('confirm_password').addEventListener('input', function() {
-            const password = document.getElementById('password').value;
-            const confirmPassword = this.value;
-            
-            if (confirmPassword && password !== confirmPassword) {
-                this.style.borderColor = '#E57373';
+</div>
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+        const msg = document.getElementById('message');
+        msg.innerHTML = '';
+        if (!email || !password || !confirmPassword) { msg.innerHTML = '<div class="message error">Please fill in all fields</div>'; return; }
+        if (password.length < 6) { msg.innerHTML = '<div class="message error">Password must be at least 6 characters</div>'; return; }
+        if (password !== confirmPassword) { msg.innerHTML = '<div class="message error">Passwords do not match</div>'; return; }
+        try {
+            const res  = await fetch('/register', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password, confirm_password: confirmPassword}) });
+            const data = await res.json();
+            if (data.success) {
+                msg.innerHTML = '<div class="message success">Registration successful! Redirecting...</div>';
+                setTimeout(() => window.location.href = '/dashboard', 1500);
             } else {
-                this.style.borderColor = '';
+                msg.innerHTML = `<div class="message error">${data.message}</div>`;
             }
-        });
-    </script>
+        } catch { msg.innerHTML = '<div class="message error">Connection error. Please try again.</div>'; }
+    });
+    document.getElementById('confirm_password').addEventListener('input', function() {
+        this.style.borderColor = this.value && document.getElementById('password').value !== this.value ? '#E57373' : '';
+    });
+</script>
 </body>
 </html>

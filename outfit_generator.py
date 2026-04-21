@@ -2,349 +2,347 @@ import random
 
 class OutfitGenerator:
     """
-    Generador SINCRONIZADO de outfits:
-    - outfit_simple: Texto escueto para mostrar con imágenes
-    - outfit_narrative: Narrativa detallada para audio
-    AMBOS COINCIDEN en las prendas recomendadas
+    Outfit generator using a rule-based Knowledge-Based System (KBS).
+
+    Knowledge Base: Fashion rules encoded in intros_audio, colour explanations,
+                    fit advice, and rain/temperature thresholds.
+    Fact Base:      Per-request user data (occasion, climate, colorimetry season,
+                    fit preference) passed into generate_outfit_complete().
+    Inference Engine: Forward-chaining scoring — occasion match (+50 pts),
+                      climate match (+30 pts), colorimetry season match (+20 pts).
+                      A garment is selected only if score >= 50 (occasion is mandatory).
+                      If no garment in the user wardrobe reaches the threshold,
+                      the system falls back to the generic clothing database.
+
+    Outputs:
+        - outfit_simple:    Short text listing selected garments (shown with images).
+        - outfit_narrative: Detailed narrative for text-to-speech audio.
+    Both outputs are always synchronised — they describe the same garments.
     """
-    
+
+    # Translation dictionary: Spanish garment/colour names → English
+    TRANSLATIONS = {
+        # garment types
+        'camiseta': 't-shirt', 'camisa': 'shirt', 'blusa': 'blouse',
+        'jersey': 'jumper', 'suéter': 'sweater', 'sudadera': 'sweatshirt',
+        'blazer': 'blazer', 'chaqueta': 'jacket', 'abrigo': 'coat',
+        'chaleco': 'vest', 'top': 'top', 'traje': 'suit',
+        # bottoms
+        'pantalón': 'trousers', 'pantalon': 'trousers', 'vaqueros': 'jeans',
+        'falda': 'skirt', 'shorts': 'shorts', 'mallas': 'leggings',
+        'leggings': 'leggings', 'pana': 'corduroy', 'bermudas': 'shorts',
+        # dresses
+        'vestido': 'dress',
+        # footwear
+        'zapatillas': 'trainers', 'botas': 'boots', 'tacones': 'heels',
+        'sandalias': 'sandals', 'mocasines': 'loafers', 'zapatos': 'shoes',
+        'botines': 'ankle boots', 'alpargatas': 'espadrilles',
+        # accessories
+        'bolso': 'handbag', 'bolsa': 'bag', 'cinturón': 'belt',
+        'bufanda': 'scarf', 'gorro': 'hat', 'sombrero': 'hat',
+        'gafas': 'sunglasses', 'collar': 'necklace', 'pendientes': 'earrings',
+        'mochila': 'backpack', 'pañuelo': 'scarf',
+        # colours
+        'blanco': 'white', 'negro': 'black', 'gris': 'grey',
+        'azul': 'blue', 'rojo': 'red', 'verde': 'green',
+        'marrón': 'brown', 'beige': 'beige', 'rosa': 'pink',
+        'coral': 'coral', 'dorado': 'gold', 'plateado': 'silver',
+        'naranja': 'orange', 'amarillo': 'yellow', 'morado': 'purple',
+        'marino': 'navy', 'oscuro': 'dark', 'claro': 'light',
+        # descriptors
+        'básica': 'basic', 'basica': 'basic', 'elegante': 'elegant',
+        'ligero': 'light', 'ligera': 'light', 'grueso': 'thick',
+        'midi': 'midi', 'larga': 'long', 'corta': 'short',
+        'deportivo': 'sports', 'deportiva': 'sports', 'térmica': 'thermal',
+        'técnica': 'technical', 'de vestir': 'dress', 'oxford': 'oxford',
+        'running': 'running', 'floral': 'floral', 'manga': 'sleeve',
+    }
+
+    def _translate_name(self, name):
+        """Translate a Spanish garment name to English word by word."""
+        if not name:
+            return name
+        words = name.lower().split()
+        translated = [self.TRANSLATIONS.get(w, w) for w in words]
+        return ' '.join(translated)
+
     def __init__(self):
+        # Knowledge Base: introductory phrases per occasion (used in audio narrative)
         self.intros_audio = {
             'formal': [
-                "Para tu evento formal, te recomiendo un look elegante:",
-                "Para lucir impecable en esta ocasión formal:",
-                "Un outfit sofisticado perfecto para ti sería:"
+                "For your formal event, here is an elegant look:",
+                "To look impeccable on this formal occasion:",
+                "A sophisticated outfit perfectly suited for you:"
             ],
             'casual': [
-                "Para tu día a día, te sugiero un look cómodo pero con estilo:",
-                "Para estar relajado y a la moda:",
-                "Mi recomendación casual para ti es:"
+                "For your everyday look, here is a comfortable yet stylish suggestion:",
+                "To stay relaxed and on trend:",
+                "My casual recommendation for you is:"
             ],
             'deportiva': [
-                "Para tu actividad deportiva, lo ideal es:",
-                "Para mantenerte activo con comodidad:",
-                "Un conjunto perfecto para tu entrenamiento:"
+                "For your sports activity, the ideal outfit is:",
+                "To stay active in comfort:",
+                "A perfect set for your workout:"
             ]
         }
-        
-        self.explicaciones_color = {
-            'Primavera': "Como tienes colorimetría de Primavera, te favorecen los tonos cálidos y vibrantes que iluminan tu tez.",
-            'Verano': "Tu colorimetría de Verano se lleva mejor con tonos suaves y fríos que crean armonía con tu subtono rosado.",
-            'Otoño': "Como Otoño, te sientan de maravilla los tonos tierra y cálidos que potencian tu calidez natural.",
-            'Invierno': "Tu colorimetría de Invierno brilla con colores intensos y fríos que realzan tu contraste natural."
+
+        # Knowledge Base: colorimetry season explanations
+        self.colour_explanations = {
+            'Primavera': "As a Spring type, warm and vibrant tones brighten your complexion.",
+            'Verano':    "Your Summer colouring works best with soft, cool tones that harmonise with your rosy undertone.",
+            'Otono':     "As an Autumn type, earthy and warm tones enhance your natural warmth.",
+            'Invierno':  "Your Winter colouring shines with intense, cool colours that highlight your natural contrast."
         }
 
     # =========================
-    # Asegurar prendas obligatorias
+    # ENSURE COMPLETE OUTFIT
     # =========================
-    def ensure_complete_outfit(self, outfit_items, genero='mujer'):
-        es_mujer = 'mujer' in genero.lower()
+    def ensure_complete_outfit(self, outfit_items, gender='mujer'):
+        """
+        Inference rule: every outfit must have at minimum a top (or dress),
+        a bottom (unless a dress is present), and footwear.
+        If any mandatory category is missing, a neutral fallback garment is added.
+        """
+        is_woman = 'mujer' in gender.lower()
 
-        # Vestido o superior
         if 'vestido' not in outfit_items and 'superior' not in outfit_items:
             outfit_items['superior'] = {
-                'nombre': 'blusa básica' if es_mujer else 'camisa básica',
-                'nombre_corto': 'blusa' if es_mujer else 'camisa',
-                'color': 'blanco'
+                'nombre': 'basic blouse' if is_woman else 'basic shirt',
+                'nombre_corto': 'blouse' if is_woman else 'shirt',
+                'color': 'white'
             }
 
-        # Inferior si no hay vestido
         if 'vestido' not in outfit_items and 'inferior' not in outfit_items:
             outfit_items['inferior'] = {
-                'nombre': 'falda negra' if es_mujer else 'pantalón negro',
-                'nombre_corto': 'falda' if es_mujer else 'pantalón',
-                'color': 'negro'
+                'nombre': 'black skirt' if is_woman else 'black trousers',
+                'nombre_corto': 'skirt' if is_woman else 'trousers',
+                'color': 'black'
             }
 
-        # Calzado obligatorio
         if 'calzado' not in outfit_items:
             outfit_items['calzado'] = {
-                'nombre': 'tacones' if es_mujer else 'zapatillas',
-                'nombre_corto': 'tacones' if es_mujer else 'zapatillas',
-                'color': 'blanco'
+                'nombre': 'heels' if is_woman else 'trainers',
+                'nombre_corto': 'heels' if is_woman else 'trainers',
+                'color': 'white'
             }
 
         return outfit_items
 
     # =========================
-    # Descripción de prenda con artículo según género y plural
+    # ARTICLE HELPER
     # =========================
-    def _get_prenda_descripcion(self, prenda, genero='mujer'):
-        if isinstance(prenda, dict):
-            nombre = prenda.get('nombre_corto') or prenda.get('nombre', 'prenda')
-            primera_palabra = nombre.split()[0].lower()
-            
-            # Palabras SIEMPRE plural (independiente de género)
-            plural_palabras = ['sandalias', 'botines', 'zapatillas', 'tacones', 'mocasines', 'zapatos', 
-                              'botas', 'vaqueros', 'leggings', 'pantalones', 'gafas']
-            
-            # Palabras SIEMPRE masculinas (terminan en 'o' o son excepciones)
-            masculinas = ['pantalón', 'jersey', 'abrigo', 'vestido', 'bolso', 'cinturón',
-                         'sombrero', 'gorro', 'zapato', 'mocasín', 'botín', 'collar']
-            
-            # Palabras SIEMPRE femeninas (terminan en 'a' generalmente)
-            femeninas = ['blusa', 'falda', 'camisa', 'chaqueta', 'camiseta', 'bufanda',
-                        'sandalia', 'zapatilla', 'bota', 'sudadera', 'mochila']
-            
-            # Determinar si es plural
-            es_plural = (primera_palabra.endswith('s') and not primera_palabra.endswith('és')) or primera_palabra in plural_palabras
-            
-            # Determinar el artículo correcto
-            if es_plural:
-                articulo = 'unos' if primera_palabra in masculinas or primera_palabra.endswith('os') else 'unas'
+    def _get_garment_description(self, garment, gender='mujer'):
+        """Returns a grammatically correct article + garment name in English."""
+        if isinstance(garment, dict):
+            raw_name = garment.get('nombre_corto') or garment.get('nombre', 'garment')
+            name = self._translate_name(raw_name)
+            first_word = name.split()[0].lower()
+            plural_words = ['sandals', 'boots', 'trainers', 'heels', 'loafers', 'shoes',
+                            'jeans', 'leggings', 'trousers', 'glasses', 'shorts', 'tights']
+            if first_word in plural_words or (first_word.endswith('s') and first_word not in ['dress', 'blouse']):
+                article = 'some'
             else:
-                # Singular
-                if primera_palabra in masculinas:
-                    articulo = 'un'
-                elif primera_palabra in femeninas:
-                    articulo = 'una'
-                elif primera_palabra.endswith('o'):
-                    articulo = 'un'
-                elif primera_palabra.endswith('a'):
-                    articulo = 'una'
-                else:
-                    # Por defecto, basarse en el género del usuario
-                    articulo = 'un' if genero.lower() == 'hombre' else 'una'
-            
-            return f"{articulo} {nombre}"
-        return "una prenda"
+                article = 'an' if name[0].lower() in ('a','e','i','o','u') else 'a'
+            return f"{article} {name}"
+        return "a garment"
 
     # =========================
-    # GENERACIÓN OUTFIT
+    # MAIN ENTRY POINT
     # =========================
-
     def generate_outfit_complete(self, user_data, clima_info, colorimetry_result, outfit_items):
-        ocasion = user_data.get('ocasion', 'casual').lower()
-        temperatura = clima_info.get('temperatura', 20)
-        prob_lluvia = clima_info.get('prob_lluvia', 30)
-        season = colorimetry_result.get('season', 'Primavera')
-        nombre = user_data.get('nombre', 'amigo')
-        fit = user_data.get('fit', 'Normal').lower()
-        
-        # Aseguramos prendas obligatorias
+        """Main KBS inference method."""
         outfit_items = self.ensure_complete_outfit(outfit_items, user_data.get('genero', 'mujer'))
-
-        #  GENERAR OUTFIT SIMPLE
-        outfit_simple = self._generate_outfit_simple(outfit_items, user_data.get('genero', 'mujer'))
-        
-        #  GENERAR NARRATIVA
+        outfit_simple    = self._generate_outfit_simple(outfit_items, user_data.get('genero', 'mujer'))
         outfit_narrative = self._generate_outfit_narrative(
             outfit_items=outfit_items,
             user_data=user_data,
             clima_info=clima_info,
             colorimetry_result=colorimetry_result
         )
-        
         return {
-            'outfit_simple': outfit_simple,
+            'outfit_simple':    outfit_simple,
             'outfit_narrative': outfit_narrative,
-            'outfit_items': outfit_items
+            'outfit_items':     outfit_items
         }
-    
-    def _generate_outfit_simple(self, outfit_items, genero='mujer'):
+
+    # =========================
+    # OUTFIT SIMPLE TEXT
+    # =========================
+    def _generate_outfit_simple(self, outfit_items, gender='mujer'):
         if not outfit_items:
-            return "Outfit personalizado"
-        
+            return "Personalised outfit"
         parts = []
         if 'vestido' in outfit_items:
-            parts.append(self._get_prenda_descripcion(outfit_items['vestido'], genero))
+            parts.append(self._get_garment_description(outfit_items['vestido'], gender))
         else:
             if 'superior' in outfit_items:
-                parts.append(self._get_prenda_descripcion(outfit_items['superior'], genero))
+                parts.append(self._get_garment_description(outfit_items['superior'], gender))
             if 'inferior' in outfit_items:
-                parts.append(self._get_prenda_descripcion(outfit_items['inferior'], genero))
-        
+                parts.append(self._get_garment_description(outfit_items['inferior'], gender))
         if 'calzado' in outfit_items:
-            parts.append(self._get_prenda_descripcion(outfit_items['calzado'], genero))
-        
+            parts.append(self._get_garment_description(outfit_items['calzado'], gender))
         if 'complemento' in outfit_items:
-            parts.append(self._get_prenda_descripcion(outfit_items['complemento'], genero))
-        
-        return " + ".join(parts) if parts else "Outfit personalizado"
-    
+            parts.append(self._get_garment_description(outfit_items['complemento'], gender))
+        return " + ".join(parts) if parts else "Personalised outfit"
+
     def _get_item_short_name(self, item):
         if isinstance(item, dict):
-            name = item.get('nombre_corto') or item.get('nombre', 'prenda')
-            words = name.lower().split()
-            return " ".join(words[:3])
+            raw = item.get('nombre_corto') or item.get('nombre', 'garment')
+            name = self._translate_name(raw)
+            return " ".join(name.lower().split()[:3])
         return str(item).lower()
-    
+
+    # =========================
+    # OUTFIT NARRATIVE (audio)
+    # =========================
     def _generate_outfit_narrative(self, outfit_items, user_data, clima_info, colorimetry_result):
-        ocasion = user_data.get('ocasion', 'casual').lower()
-        temperatura = clima_info.get('temperatura', 20)
-        prob_lluvia = clima_info.get('prob_lluvia', 30)
-        season = colorimetry_result.get('season', 'Primavera')
-        nombre = user_data.get('nombre', 'amigo')
-        fit = user_data.get('fit', 'Normal').lower()
-        genero = user_data.get('genero', 'mujer')
+        """
+        Generates the audio narrative by applying KBS rules in sequence:
+          1. Occasion rule  — selects the introductory phrase.
+          2. Climate rules  — adds temperature context and rain warning (threshold > 60%).
+          3. Colorimetry rule — appends palette explanation based on detected season.
+          4. Fit rule       — appends style advice based on fit preference.
+        """
+        ocasion       = user_data.get('ocasion', 'casual').lower()
+        temperatura   = clima_info.get('temperatura', 20)
+        prob_lluvia   = clima_info.get('prob_lluvia', 30)
+        season        = colorimetry_result.get('season', 'Primavera')
+        nombre        = user_data.get('nombre', 'there')
+        fit           = user_data.get('fit', 'Normal').lower()
+        gender        = user_data.get('genero', 'mujer')
         palette_names = colorimetry_result.get('palette_names', [])
-        
+
+        # Climate category rule
         if temperatura > 25:
-            temp_cat = 'calor'
-            temp_desc = 'este día caluroso'
+            temp_desc = 'this warm day'
         elif temperatura > 15:
-            temp_cat = 'templado'
-            temp_desc = 'este clima agradable'
+            temp_desc = 'this mild weather'
         else:
-            temp_cat = 'frio'
-            temp_desc = 'este día frío'
-        
-        narrativa = f"Hola {nombre}. "
-        narrativa += random.choice(self.intros_audio[ocasion]) + "\n\n"
-        
+            temp_desc = 'this cold day'
+
+        narrative  = f"Hello {nombre}. "
+        narrative += random.choice(self.intros_audio.get(ocasion, self.intros_audio['casual'])) + "\n\n"
+
         if 'vestido' in outfit_items:
-            vestido = outfit_items['vestido']
-            narrativa += f"Te sugiero {self._get_prenda_descripcion(vestido, genero)}. "
+            narrative += f"I suggest {self._get_garment_description(outfit_items['vestido'], gender)}. "
         else:
             if 'superior' in outfit_items:
-                superior = outfit_items['superior']
-                narrativa += f"Combina {self._get_prenda_descripcion(superior, genero)} "
+                narrative += f"Pair {self._get_garment_description(outfit_items['superior'], gender)} "
             if 'inferior' in outfit_items:
-                inferior = outfit_items['inferior']
-                narrativa += f"con {self._get_prenda_descripcion(inferior, genero)}. "
-        
+                narrative += f"with {self._get_garment_description(outfit_items['inferior'], gender)}. "
+
         if 'calzado' in outfit_items:
-            calzado = outfit_items['calzado']
-            narrativa += f"Complétalo con {self._get_prenda_descripcion(calzado, genero)}. "
-        
+            narrative += f"Complete the look with {self._get_garment_description(outfit_items['calzado'], gender)}. "
         if 'complemento' in outfit_items:
-            comp = outfit_items['complemento']
-            narrativa += f"Y no olvides {self._get_prenda_descripcion(comp, genero)}. "
-        
-        narrativa += f"\n\nEste outfit es perfecto para {temp_desc}. "
-        
+            narrative += f"Don't forget {self._get_garment_description(outfit_items['complemento'], gender)}. "
+
+        narrative += f"\n\nThis outfit is perfect for {temp_desc}. "
+
+        # Rain threshold rule (Knowledge Base rule)
         if prob_lluvia > 60:
-            narrativa += f"Importante: hay {prob_lluvia}% de probabilidad de lluvia, lleva paraguas. "
+            narrative += f"Important: there is a {prob_lluvia}% chance of rain — bring an umbrella. "
         elif prob_lluvia > 30:
-            narrativa += f"Considera llevar paraguas, hay {prob_lluvia}% de probabilidad de lluvia. "
-        
+            narrative += f"Consider bringing an umbrella, there is a {prob_lluvia}% chance of rain. "
+
+        # Colorimetry palette rule
         if palette_names:
-            colores_texto = ", ".join(palette_names[:3])
-            narrativa += f"\n\n{self.explicaciones_color[season]} "
-            narrativa += f"Apuesta por colores como {colores_texto}. "
-        
+            colours_text = ", ".join(palette_names[:3])
+            narrative += f"\n\n{self.colour_explanations.get(season, '')} "
+            narrative += f"Go for colours like {colours_text}. "
+
+        # Fit preference rule
         fit_texts = {
-            'ajustada': "Como prefieres corte ajustado, busca prendas que marquen tu silueta sin perder comodidad.",
-            'holgada': "Como prefieres ropa holgada, elige prendas oversized que te den libertad de movimiento.",
-            'normal': "Un corte regular te permitirá jugar con diferentes estilos."
+            'ajustada': "Since you prefer a fitted cut, look for garments that define your silhouette without sacrificing comfort.",
+            'holgada':  "Since you prefer loose clothing, opt for oversized pieces that give you freedom of movement.",
+            'normal':   "A regular fit will let you play with different styles."
         }
-        narrativa += fit_texts.get(fit, "")
-        
-        return narrativa
-    
+        narrative += fit_texts.get(fit, "")
+
+        return narrative
+
     # =========================
-    # OUTFIT GENÉRICO COMPLETO
+    # GENERIC OUTFIT FALLBACK
     # =========================
-    def generate_generic_outfit(self, ocasion, temp_cat, genero, fit, no_v=None, no_f=None, no_t=None, no_p=None):
+    def generate_generic_outfit(self, ocasion, temp_cat, genero, fit,
+                                 no_v=None, no_f=None, no_t=None, no_p=None):
+        """
+        KBS fallback rule: if the user wardrobe contains no garment scoring >= 50,
+        return a predefined generic outfit based on occasion, temperature and gender.
+        """
         gender_key = 'mujer' if 'mujer' in genero.lower() else 'hombre'
-        
+
         generic_outfits = {
             'casual': {
                 'mujer': {
-                    'calor': {
-                        'superior': {'nombre': 'top ligero', 'nombre_corto': 'top ligero', 'color': 'blanco'},
-                        'inferior': {'nombre': 'shorts', 'nombre_corto': 'shorts', 'color': 'azul'},
-                        'calzado': {'nombre': 'sandalias', 'nombre_corto': 'sandalias', 'color': 'beige'}
-                    },
-                    'templado': {
-                        'superior': {'nombre': 'jersey liviano', 'nombre_corto': 'jersey', 'color': 'gris'},
-                        'inferior': {'nombre': 'vaqueros', 'nombre_corto': 'vaqueros', 'color': 'azul'},
-                        'calzado': {'nombre': 'zapatillas blancas', 'nombre_corto': 'zapatillas', 'color': 'blanco'}
-                    },
-                    'frio': {
-                        'superior': {'nombre': 'suéter grueso', 'nombre_corto': 'suéter', 'color': 'negro'},
-                        'inferior': {'nombre': 'pantalón de pana', 'nombre_corto': 'pantalón', 'color': 'marrón'},
-                        'calzado': {'nombre': 'botas', 'nombre_corto': 'botas', 'color': 'negro'}
-                    }
+                    'calor':    {'superior': {'nombre': 'light top',    'nombre_corto': 'light top',  'color': 'white'},
+                                 'inferior': {'nombre': 'shorts',        'nombre_corto': 'shorts',     'color': 'blue'},
+                                 'calzado':  {'nombre': 'sandals',       'nombre_corto': 'sandals',    'color': 'beige'}},
+                    'templado': {'superior': {'nombre': 'light jumper',  'nombre_corto': 'jumper',     'color': 'grey'},
+                                 'inferior': {'nombre': 'jeans',         'nombre_corto': 'jeans',      'color': 'blue'},
+                                 'calzado':  {'nombre': 'white trainers','nombre_corto': 'trainers',   'color': 'white'}},
+                    'frio':     {'superior': {'nombre': 'thick sweater', 'nombre_corto': 'sweater',    'color': 'black'},
+                                 'inferior': {'nombre': 'cord trousers', 'nombre_corto': 'trousers',   'color': 'brown'},
+                                 'calzado':  {'nombre': 'boots',         'nombre_corto': 'boots',      'color': 'black'}}
                 },
                 'hombre': {
-                    'calor': {
-                        'superior': {'nombre': 'camiseta básica', 'nombre_corto': 'camiseta', 'color': 'blanco'},
-                        'inferior': {'nombre': 'shorts', 'nombre_corto': 'shorts', 'color': 'beige'},
-                        'calzado': {'nombre': 'zapatillas', 'nombre_corto': 'zapatillas', 'color': 'blanco'}
-                    },
-                    'templado': {
-                        'superior': {'nombre': 'camiseta', 'nombre_corto': 'camiseta', 'color': 'gris'},
-                        'inferior': {'nombre': 'vaqueros', 'nombre_corto': 'vaqueros', 'color': 'azul'},
-                        'calzado': {'nombre': 'zapatillas', 'nombre_corto': 'zapatillas', 'color': 'blanco'}
-                    },
-                    'frio': {
-                        'superior': {'nombre': 'jersey', 'nombre_corto': 'jersey', 'color': 'negro'},
-                        'inferior': {'nombre': 'vaqueros', 'nombre_corto': 'vaqueros', 'color': 'azul oscuro'},
-                        'calzado': {'nombre': 'botas', 'nombre_corto': 'botas', 'color': 'marrón'}
-                    }
+                    'calor':    {'superior': {'nombre': 'basic t-shirt', 'nombre_corto': 't-shirt',   'color': 'white'},
+                                 'inferior': {'nombre': 'shorts',        'nombre_corto': 'shorts',    'color': 'beige'},
+                                 'calzado':  {'nombre': 'trainers',      'nombre_corto': 'trainers',  'color': 'white'}},
+                    'templado': {'superior': {'nombre': 't-shirt',       'nombre_corto': 't-shirt',   'color': 'grey'},
+                                 'inferior': {'nombre': 'jeans',         'nombre_corto': 'jeans',     'color': 'blue'},
+                                 'calzado':  {'nombre': 'trainers',      'nombre_corto': 'trainers',  'color': 'white'}},
+                    'frio':     {'superior': {'nombre': 'jumper',        'nombre_corto': 'jumper',    'color': 'black'},
+                                 'inferior': {'nombre': 'jeans',         'nombre_corto': 'jeans',     'color': 'dark blue'},
+                                 'calzado':  {'nombre': 'boots',         'nombre_corto': 'boots',     'color': 'brown'}}
                 }
             },
             'formal': {
                 'mujer': {
-                    'calor': {
-                        'vestido': {'nombre': 'vestido midi elegante', 'nombre_corto': 'vestido midi', 'color': 'azul'},
-                        'calzado': {'nombre': 'tacones', 'nombre_corto': 'tacones', 'color': 'beige'}
-                    },
-                    'templado': {
-                        'superior': {'nombre': 'blazer', 'nombre_corto': 'blazer', 'color': 'negro'},
-                        'inferior': {'nombre': 'pantalón de vestir', 'nombre_corto': 'pantalón', 'color': 'negro'},
-                        'calzado': {'nombre': 'tacones', 'nombre_corto': 'tacones', 'color': 'negro'}
-                    },
-                    'frio': {
-                        'superior': {'nombre': 'traje sastre', 'nombre_corto': 'traje', 'color': 'gris'},
-                        'inferior': {'nombre': 'pantalón de vestir', 'nombre_corto': 'pantalón', 'color': 'gris'},
-                        'calzado': {'nombre': 'botas de tacón', 'nombre_corto': 'botas', 'color': 'negro'}
-                    }
+                    'calor':    {'vestido':  {'nombre': 'elegant midi dress',   'nombre_corto': 'midi dress', 'color': 'blue'},
+                                 'calzado':  {'nombre': 'heels',                'nombre_corto': 'heels',      'color': 'beige'}},
+                    'templado': {'superior': {'nombre': 'blazer',               'nombre_corto': 'blazer',     'color': 'black'},
+                                 'inferior': {'nombre': 'dress trousers',       'nombre_corto': 'trousers',   'color': 'black'},
+                                 'calzado':  {'nombre': 'heels',                'nombre_corto': 'heels',      'color': 'black'}},
+                    'frio':     {'superior': {'nombre': 'tailored suit jacket', 'nombre_corto': 'jacket',     'color': 'grey'},
+                                 'inferior': {'nombre': 'dress trousers',       'nombre_corto': 'trousers',   'color': 'grey'},
+                                 'calzado':  {'nombre': 'heeled boots',         'nombre_corto': 'boots',      'color': 'black'}}
                 },
                 'hombre': {
-                    'calor': {
-                        'superior': {'nombre': 'camisa de lino', 'nombre_corto': 'camisa', 'color': 'blanco'},
-                        'inferior': {'nombre': 'pantalón ligero', 'nombre_corto': 'pantalón', 'color': 'beige'},
-                        'calzado': {'nombre': 'mocasines', 'nombre_corto': 'mocasines', 'color': 'marrón'}
-                    },
-                    'templado': {
-                        'superior': {'nombre': 'traje', 'nombre_corto': 'traje', 'color': 'azul marino'},
-                        'inferior': {'nombre': 'pantalón de vestir', 'nombre_corto': 'pantalón', 'color': 'azul marino'},
-                        'calzado': {'nombre': 'zapatos oxford', 'nombre_corto': 'zapatos', 'color': 'negro'}
-                    },
-                    'frio': {
-                        'superior': {'nombre': 'traje', 'nombre_corto': 'traje', 'color': 'negro'},
-                        'inferior': {'nombre': 'pantalón de vestir', 'nombre_corto': 'pantalón', 'color': 'negro'},
-                        'calzado': {'nombre': 'zapatos', 'nombre_corto': 'zapatos', 'color': 'negro'}
-                    }
+                    'calor':    {'superior': {'nombre': 'linen shirt',    'nombre_corto': 'shirt',    'color': 'white'},
+                                 'inferior': {'nombre': 'light trousers', 'nombre_corto': 'trousers', 'color': 'beige'},
+                                 'calzado':  {'nombre': 'loafers',        'nombre_corto': 'loafers',  'color': 'brown'}},
+                    'templado': {'superior': {'nombre': 'suit jacket',    'nombre_corto': 'jacket',   'color': 'navy'},
+                                 'inferior': {'nombre': 'dress trousers', 'nombre_corto': 'trousers', 'color': 'navy'},
+                                 'calzado':  {'nombre': 'oxford shoes',   'nombre_corto': 'shoes',    'color': 'black'}},
+                    'frio':     {'superior': {'nombre': 'suit jacket',    'nombre_corto': 'jacket',   'color': 'black'},
+                                 'inferior': {'nombre': 'dress trousers', 'nombre_corto': 'trousers', 'color': 'black'},
+                                 'calzado':  {'nombre': 'dress shoes',    'nombre_corto': 'shoes',    'color': 'black'}}
                 }
             },
             'deportiva': {
                 'mujer': {
-                    'calor': {
-                        'superior': {'nombre': 'top deportivo', 'nombre_corto': 'top deportivo', 'color': 'negro'},
-                        'inferior': {'nombre': 'leggings cortos', 'nombre_corto': 'leggings', 'color': 'negro'},
-                        'calzado': {'nombre': 'zapatillas running', 'nombre_corto': 'zapatillas', 'color': 'blanco'}
-                    },
-                    'templado': {
-                        'superior': {'nombre': 'camiseta técnica', 'nombre_corto': 'camiseta', 'color': 'gris'},
-                        'inferior': {'nombre': 'mallas', 'nombre_corto': 'mallas', 'color': 'negro'},
-                        'calzado': {'nombre': 'zapatillas', 'nombre_corto': 'zapatillas', 'color': 'blanco'}
-                    },
-                    'frio': {
-                        'superior': {'nombre': 'camiseta térmica', 'nombre_corto': 'camiseta térmica', 'color': 'negro'},
-                        'inferior': {'nombre': 'mallas térmicas', 'nombre_corto': 'mallas', 'color': 'negro'},
-                        'calzado': {'nombre': 'zapatillas', 'nombre_corto': 'zapatillas', 'color': 'gris'}
-                    }
+                    'calor':    {'superior': {'nombre': 'sports top',     'nombre_corto': 'sports top', 'color': 'black'},
+                                 'inferior': {'nombre': 'short leggings', 'nombre_corto': 'leggings',   'color': 'black'},
+                                 'calzado':  {'nombre': 'running trainers','nombre_corto': 'trainers',  'color': 'white'}},
+                    'templado': {'superior': {'nombre': 'technical t-shirt','nombre_corto': 't-shirt',  'color': 'grey'},
+                                 'inferior': {'nombre': 'leggings',        'nombre_corto': 'leggings',  'color': 'black'},
+                                 'calzado':  {'nombre': 'trainers',        'nombre_corto': 'trainers',  'color': 'white'}},
+                    'frio':     {'superior': {'nombre': 'thermal top',     'nombre_corto': 'thermal top','color': 'black'},
+                                 'inferior': {'nombre': 'thermal leggings','nombre_corto': 'leggings',  'color': 'black'},
+                                 'calzado':  {'nombre': 'trainers',        'nombre_corto': 'trainers',  'color': 'grey'}}
                 },
                 'hombre': {
-                    'calor': {
-                        'superior': {'nombre': 'camiseta técnica', 'nombre_corto': 'camiseta', 'color': 'blanco'},
-                        'inferior': {'nombre': 'shorts', 'nombre_corto': 'shorts', 'color': 'negro'},
-                        'calzado': {'nombre': 'zapatillas', 'nombre_corto': 'zapatillas', 'color': 'blanco'}
-                    },
-                    'templado': {
-                        'superior': {'nombre': 'camiseta manga larga', 'nombre_corto': 'camiseta', 'color': 'gris'},
-                        'inferior': {'nombre': 'mallas', 'nombre_corto': 'mallas', 'color': 'negro'},
-                        'calzado': {'nombre': 'zapatillas', 'nombre_corto': 'zapatillas', 'color': 'blanco'}
-                    },
-                    'frio': {
-                        'superior': {'nombre': 'camiseta térmica', 'nombre_corto': 'camiseta térmica', 'color': 'negro'},
-                        'inferior': {'nombre': 'pantalón deportivo', 'nombre_corto': 'pantalón', 'color': 'negro'},
-                        'calzado': {'nombre': 'zapatillas', 'nombre_corto': 'zapatillas', 'color': 'negro'}
-                    }
+                    'calor':    {'superior': {'nombre': 'technical t-shirt',  'nombre_corto': 't-shirt',          'color': 'white'},
+                                 'inferior': {'nombre': 'shorts',             'nombre_corto': 'shorts',           'color': 'black'},
+                                 'calzado':  {'nombre': 'trainers',           'nombre_corto': 'trainers',         'color': 'white'}},
+                    'templado': {'superior': {'nombre': 'long-sleeve t-shirt','nombre_corto': 't-shirt',          'color': 'grey'},
+                                 'inferior': {'nombre': 'leggings',           'nombre_corto': 'leggings',         'color': 'black'},
+                                 'calzado':  {'nombre': 'trainers',           'nombre_corto': 'trainers',         'color': 'white'}},
+                    'frio':     {'superior': {'nombre': 'thermal top',        'nombre_corto': 'thermal top',      'color': 'black'},
+                                 'inferior': {'nombre': 'tracksuit bottoms',  'nombre_corto': 'tracksuit bottoms','color': 'black'},
+                                 'calzado':  {'nombre': 'trainers',           'nombre_corto': 'trainers',         'color': 'black'}}
                 }
             }
-        }  
+        }
+
         return generic_outfits.get(ocasion, generic_outfits['casual']).get(gender_key, {}).get(temp_cat, {})

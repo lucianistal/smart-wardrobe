@@ -1,0 +1,53 @@
+{
+  "saved_at": "2026-04-01T19:17:18.678467",
+  "colorimetry_result": {
+    "season": "Otoño",
+    "skin_tone": "neutral",
+    "skin_lightness": 172,
+    "skin_lab": {
+      "L": 172,
+      "a": 147,
+      "b": 151
+    },
+    "eye_color": {
+      "category": "marrón",
+      "hue": 177,
+      "saturation": 76,
+      "value": 115
+    },
+    "hair_color": {
+      "category": "rubio",
+      "hue": 1,
+      "saturation": 0,
+      "value": 254
+    },
+    "contrast": "high",
+    "saturation": "low",
+    "palette": [
+      "#8B4513",
+      "#FF8C00",
+      "#556B2F",
+      "#F5DEB3",
+      "#CD853F",
+      "#A0522D",
+      "#DC143C",
+      "#B8860B"
+    ],
+    "palette_description": "Tonos tierra y cálidos (marrones, naranjas, verdes oliva, beige, rojo, bronce)",
+    "palette_names": [
+      "marrón",
+      "naranja",
+      "verde oliva",
+      "beige cálido",
+      "rojo",
+      "bronce"
+    ],
+    "confidence": 0.9,
+    "detailed_analysis": {
+      "skin": "Subtono neutral",
+      "eyes": "Ojos marrón",
+      "hair": "Cabello rubio",
+      "conclusion": "Clasificación: Otoño"
+    }
+  }
+}

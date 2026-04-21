@@ -1,217 +1,79 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Historial - Armario Inteligente</title>
+    <title>My History - Smart Wardrobe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        .history-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .history-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .history-grid {
-            display: grid;
-            gap: 24px;
-        }
-
-        .history-card {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .history-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(155, 126, 189, 0.2);
-        }
-
-        .history-date {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-
-        .history-season {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--accent-purple), #C8A2E0);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .history-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
-        }
-
-        .history-detail {
-            text-align: center;
-            padding: 12px;
-            background: linear-gradient(135deg, #F3EBF9, #FAF8FC);
-            border-radius: 8px;
-        }
-
-        .detail-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .detail-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .detail-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .history-outfit {
-            margin-top: 16px;
-            padding: 16px;
-            background: #FAFAFA;
-            border-radius: 12px;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        .empty-history {
-            text-align: center;
-            padding: 80px 20px;
-            color: var(--text-muted);
-        }
-
-        .empty-history i {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-
-        .colorimetry-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 12px;
-            background: #E8F5E9;
-            color: #2E7D32;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: 12px;
-        }
+        .history-container { max-width:1200px; margin:0 auto; padding:40px 20px; }
+        .history-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; }
+        .history-grid { display:grid; gap:24px; }
+        .history-card { background:white; border-radius:16px; padding:30px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:all 0.3s; cursor:pointer; }
+        .history-card:hover { transform:translateY(-4px); box-shadow:0 8px 30px rgba(155,126,189,0.2); }
+        .history-date { font-size:14px; color:var(--text-muted); margin-bottom:12px; }
+        .history-season { display:inline-block; background:linear-gradient(135deg,var(--accent-purple),#C8A2E0); color:white; padding:8px 16px; border-radius:8px; font-weight:600; margin-bottom:16px; }
+        .history-details { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; margin-top:16px; }
+        .history-detail { text-align:center; padding:12px; background:linear-gradient(135deg,#F3EBF9,#FAF8FC); border-radius:8px; }
+        .detail-label { font-size:11px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; }
+        .detail-value { font-size:16px; font-weight:600; color:var(--text-dark); }
+        .history-outfit { margin-top:16px; padding:16px; background:#FAFAFA; border-radius:12px; font-size:15px; line-height:1.6; }
+        .empty-history { text-align:center; padding:80px 20px; color:var(--text-muted); }
+        .empty-history i { font-size:64px; margin-bottom:20px; opacity:0.3; }
+        .colorimetry-badge { display:inline-flex; align-items:center; gap:8px; padding:6px 12px; background:#E8F5E9; color:#2E7D32; border-radius:6px; font-size:12px; font-weight:600; margin-left:12px; }
     </style>
 </head>
 <body>
-    <div class="results-container">
-        <nav class="navbar">
-            <h1 class="nav-logo"> Mi Historial</h1>
-            <div>
-                <a href="/dashboard" class="btn btn-secondary"> Dashboard</a>
-                <a href="/recommendation" class="btn btn-primary"> Nueva Consulta</a>
-                <a href="/logout" class="btn-logout">Cerrar sesión</a>
-            </div>
-        </nav>
-
-        <div class="history-container">
-            <div class="history-header">
-                <h1>Historial de Consultas</h1>
-                <p style="color: var(--text-muted);">{{ history|length }} consultas guardadas</p>
-            </div>
-
-            {% if history|length > 0 %}
-            <div class="history-grid">
-                {% for entry in history|reverse %}
-                <div class="history-card" onclick="viewHistoryDetail('{{ entry.timestamp }}')">
-                    <div class="history-date">
-                        <i class="fas fa-calendar"></i> 
-                        {{ entry.timestamp[:10] }} a las {{ entry.timestamp[11:16] }}
-                    </div>
-
-                    <div class="history-season">
-                        Colorimetrí­a: {{ entry.result.colorimetria }}
-                        {% if entry.result.colorimetry_saved %}
-                        <span class="colorimetry-badge">
-                            <i class="fas fa-check-circle"></i> Guardada
-                        </span>
-                        {% endif %}
-                    </div>
-
-                    <div class="history-details">
-                        <div class="history-detail">
-                            <div class="detail-icon"></div>
-                            <div class="detail-label">Temperatura</div>
-                            <div class="detail-value">{{ entry.result.temperatura }}°C</div>
-                        </div>
-
-                        <div class="history-detail">
-                            <div class="detail-icon"></div>
-                            <div class="detail-label">Ubicación</div>
-                            <div class="detail-value">{{ entry.result.clima.split(',')[0][:15] }}</div>
-                        </div>
-
-                        <div class="history-detail">
-                            <div class="detail-icon"></div>
-                            <div class="detail-label">Ocasión</div>
-                            <div class="detail-value">{{ entry.result.ocasion }}</div>
-                        </div>
-
-                        <div class="history-detail">
-                            <div class="detail-icon"></div>
-                            <div class="detail-label">Preferencia</div>
-                            <div class="detail-value">{{ entry.result.preferencia }}</div>
-                        </div>
-                    </div>
-
-                    <div class="history-outfit">
-                        <strong> Outfit:</strong> {{ entry.result.outfit_simple }}
-                    </div>
-
-                    {% if entry.result.outfit_source == 'user' %}
-                    <div style="margin-top: 12px; font-size: 13px; color: var(--accent-purple); font-weight: 600;">
-                        <i class="fas fa-user-check"></i> Creado con tus prendas
-                    </div>
+<div class="results-container">
+    <nav class="navbar">
+        <h1 class="nav-logo">My History</h1>
+        <div>
+            <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
+            <a href="/recommendation" class="btn btn-primary">New Query</a>
+            <a href="/logout" class="btn-logout">Log Out</a>
+        </div>
+    </nav>
+    <div class="history-container">
+        <div class="history-header">
+            <h1>Recommendation History</h1>
+            <p style="color:var(--text-muted);">{{ history|length }} saved queries</p>
+        </div>
+        {% if history|length > 0 %}
+        <div class="history-grid">
+            {% for entry in history|reverse %}
+            <div class="history-card">
+                <div class="history-date"><i class="fas fa-calendar"></i> {{ entry.timestamp[:10] }} at {{ entry.timestamp[11:16] }}</div>
+                <div class="history-season">
+                    Colourimetry: {{ entry.result.colorimetria }}
+                    {% if entry.result.colorimetry_saved %}
+                    <span class="colorimetry-badge"><i class="fas fa-check-circle"></i> Saved</span>
                     {% endif %}
                 </div>
-                {% endfor %}
+                <div class="history-details">
+                    <div class="history-detail"><div class="detail-label">Temperature</div><div class="detail-value">{{ entry.result.temperatura }}°C</div></div>
+                    <div class="history-detail"><div class="detail-label">Location</div><div class="detail-value">{{ entry.result.clima.split(',')[0][:15] }}</div></div>
+                    <div class="history-detail"><div class="detail-label">Occasion</div><div class="detail-value">{{ entry.result.ocasion }}</div></div>
+                    <div class="history-detail"><div class="detail-label">Fit</div><div class="detail-value">{{ entry.result.preferencia }}</div></div>
+                </div>
+                <div class="history-outfit"><strong>Outfit:</strong> {{ entry.result.outfit_simple }}</div>
+                {% if entry.result.outfit_source == 'user' %}
+                <div style="margin-top:12px;font-size:13px;color:var(--accent-purple);font-weight:600;">
+                    <i class="fas fa-user-check"></i> Created with your own garments
+                </div>
+                {% endif %}
             </div>
-            {% else %}
-            <div class="empty-history">
-                <i class="fas fa-inbox"></i>
-                <h2>No hay consultas aún</h2>
-                <p>Realiza tu primera consulta para ver tu historial aquí</p>
-                <a href="/recommendation" class="btn btn-primary" style="margin-top: 20px;">
-                     Hacer Primera Consulta
-                </a>
-            </div>
-            {% endif %}
+            {% endfor %}
         </div>
+        {% else %}
+        <div class="empty-history">
+            <i class="fas fa-inbox"></i>
+            <h2>No queries yet</h2>
+            <p>Make your first query to see your history here</p>
+            <a href="/recommendation" class="btn btn-primary" style="margin-top:20px;">Make First Query</a>
+        </div>
+        {% endif %}
     </div>
-
-    <script>
-        function viewHistoryDetail(timestamp) {
-            console.log('Ver detalles de:', timestamp);
-        }
-    </script>
+</div>
 </body>
 </html>

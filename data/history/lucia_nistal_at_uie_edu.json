@@ -1,0 +1,379 @@
+[
+  {
+    "timestamp": "2026-04-01T19:12:57.331595",
+    "result": {
+      "success": true,
+      "usuario": "lucia",
+      "colorimetria": "Invierno",
+      "paleta": [
+        "#000000",
+        "#FFFFFF",
+        "#C0C0C0",
+        "#000080",
+        "#4682B4",
+        "#2E8B57",
+        "#696969",
+        "#191970"
+      ],
+      "outfit_narrative": "Hemos preparado un outfit personalizado para ti teniendo en cuenta el clima, la ocasión y tu colorimetría. ¡Esperamos que te encante!",
+      "outfit_simple": "vestido negro + botas negras + bolso negro",
+      "outfit_items": {
+        "vestido": {
+          "id": "ves_010",
+          "nombre": "Vestido Negro Invierno",
+          "nombre_corto": "vestido negro",
+          "color": [
+            "negro"
+          ],
+          "ocasion": [
+            "formal"
+          ],
+          "clima": [
+            "frio",
+            "templado"
+          ],
+          "estacion": [
+            "Invierno"
+          ],
+          "fit": "ajustada",
+          "imagen": "vestido/vestido_negro.jpg",
+          "tipo": "vestido"
+        },
+        "calzado": {
+          "id": "cal_010",
+          "nombre": "Botas Negras Invierno",
+          "nombre_corto": "botas negras",
+          "color": [
+            "negro"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "frio"
+          ],
+          "estacion": [
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "calzado/botas_negras.jpg",
+          "tipo": "calzado"
+        },
+        "complemento": {
+          "id": "com_012",
+          "nombre": "Bolso Negro Invierno",
+          "nombre_corto": "bolso negro",
+          "color": [
+            "negro"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "frio",
+            "templado"
+          ],
+          "estacion": [
+            "Invierno",
+            "Otoño"
+          ],
+          "fit": "normal",
+          "imagen": "complemento/bolso_negro.jpg",
+          "tipo": "complemento"
+        }
+      },
+      "outfit_source": "database",
+      "clima": "A Coruña, Noviembre",
+      "temperatura": 9,
+      "prob_lluvia": 64,
+      "ocasion": "Formal",
+      "preferencia": "Normal",
+      "audio_url": "/static/audio/recommendation_lucia.nistal@uie.edu_1775063576.523044.mp3",
+      "confidence": 0.9,
+      "colorimetry_saved": false,
+      "skin_analysis": {
+        "undertone": "neutral",
+        "lightness": 160,
+        "description": "Subtono neutral"
+      },
+      "eye_analysis": {
+        "category": "marrón",
+        "hue": 11,
+        "description": "Ojos marrón"
+      },
+      "hair_analysis": {
+        "category": "rubio",
+        "hue": 106,
+        "description": "Cabello rubio"
+      },
+      "detailed_explanation": {
+        "skin": "Subtono neutral",
+        "eyes": "Ojos marrón",
+        "hair": "Cabello rubio",
+        "conclusion": "Clasificación: Invierno"
+      }
+    }
+  },
+  {
+    "timestamp": "2026-04-01T19:16:17.216020",
+    "result": {
+      "success": true,
+      "usuario": "lucia",
+      "colorimetria": "Otoño",
+      "paleta": [
+        "#8B4513",
+        "#FF8C00",
+        "#556B2F",
+        "#F5DEB3",
+        "#CD853F",
+        "#A0522D",
+        "#DC143C",
+        "#B8860B"
+      ],
+      "outfit_narrative": "Hola Lucía, ¡te veo radiante! Me encanta el vestido marrón otoño que has seleccionado, ya que se ajusta perfectamente a tu paleta de colores recomendada y es ideal para una ocasión casual en un día cálido de julio en Asturias. Las sandalias y el bolso beige complementan tu look de manera armoniosa, creando un conjunto coherente y elegante dentro de la paleta de colores marrón, naranja, verde oliva y beige cálido que te sienta tan bien. Con una probabilidad de lluvia tan baja, no necesitas preocuparte por agregar capas adicionales. ¡Disfruta tu día con este look fresco y cómodo!",
+      "outfit_simple": "vestido marrón + sandalias beige + bolso beige",
+      "outfit_items": {
+        "vestido": {
+          "id": "ves_007",
+          "nombre": "Vestido Marrón Otoño",
+          "nombre_corto": "vestido marrón",
+          "color": [
+            "marrón"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "templado"
+          ],
+          "estacion": [
+            "Otoño"
+          ],
+          "fit": "normal",
+          "imagen": "vestido/vestido_marron.jpg",
+          "tipo": "vestido"
+        },
+        "calzado": {
+          "id": "cal_002",
+          "nombre": "Sandalias Beige Primavera",
+          "nombre_corto": "sandalias beige",
+          "color": [
+            "beige"
+          ],
+          "ocasion": [
+            "casual"
+          ],
+          "clima": [
+            "calor",
+            "templado"
+          ],
+          "estacion": [
+            "Primavera",
+            "Verano"
+          ],
+          "fit": "normal",
+          "imagen": "calzado/sandalias_beige.jpg",
+          "tipo": "calzado"
+        },
+        "complemento": {
+          "id": "com_001",
+          "nombre": "Bolso Beige Primavera",
+          "nombre_corto": "bolso beige",
+          "color": [
+            "beige"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "calor",
+            "templado"
+          ],
+          "estacion": [
+            "Primavera",
+            "Verano"
+          ],
+          "fit": "normal",
+          "imagen": "complemento/bolso_beige.jpg",
+          "tipo": "complemento"
+        }
+      },
+      "outfit_source": "database",
+      "clima": "Asturias, Julio",
+      "temperatura": 25,
+      "prob_lluvia": 10,
+      "ocasion": "Casual",
+      "preferencia": "Normal",
+      "audio_url": "/static/audio/recommendation_lucia.nistal@uie.edu_1775063773.520059.mp3",
+      "confidence": 0.9,
+      "colorimetry_saved": true,
+      "skin_analysis": {
+        "undertone": "warm",
+        "lightness": 159,
+        "description": "Subtono warm"
+      },
+      "eye_analysis": {
+        "category": "marrón",
+        "hue": 8,
+        "description": "Ojos marrón"
+      },
+      "hair_analysis": {
+        "category": "rubio",
+        "hue": 21,
+        "description": "Cabello rubio"
+      },
+      "detailed_explanation": {
+        "skin": "Subtono warm",
+        "eyes": "Ojos marrón",
+        "hair": "Cabello rubio",
+        "conclusion": "Clasificación: Otoño"
+      }
+    }
+  },
+  {
+    "timestamp": "2026-04-01T19:17:23.917362",
+    "result": {
+      "success": true,
+      "usuario": "luc",
+      "colorimetria": "Otoño",
+      "paleta": [
+        "#8B4513",
+        "#FF8C00",
+        "#556B2F",
+        "#F5DEB3",
+        "#CD853F",
+        "#A0522D",
+        "#DC143C",
+        "#B8860B"
+      ],
+      "outfit_narrative": "Hola Luc, te he preparado un outfit perfecto para este día casual en Álava. El jersey y pantalón marrón son una excelente elección, ya que se ajustan a tu paleta de colores de otoño y te mantendrán abrigado con este frio de 10°C. La bufanda verde es un toque perfecto, ya que aporta un contraste interesante a la monotonía del marrón. Debido a la alta probabilidad de lluvia, te recomiendo llevar un par de botas impermeables o un paraguas para complementar tus botas marrones. La paleta de colores marrón, naranja, verde oliva y beige cálido es ideal para ti, y en este outfit, el marrón y verde se combinan de manera armoniosa. ¡Espero que disfrutes de tu día!",
+      "outfit_simple": "jersey marrón + pantalón marrón + botas marrones + bufanda verde",
+      "outfit_items": {
+        "superior": {
+          "id": "sup_011",
+          "nombre": "Jersey Marrón Otoño",
+          "nombre_corto": "jersey marrón",
+          "color": [
+            "marrón"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "frio",
+            "templado"
+          ],
+          "estacion": [
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "superior/jersey_marron.jpg",
+          "tipo": "superior"
+        },
+        "inferior": {
+          "id": "inf_009",
+          "nombre": "Pantalón Marrón Otoño",
+          "nombre_corto": "pantalón marrón",
+          "color": [
+            "marrón"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "frio",
+            "templado"
+          ],
+          "estacion": [
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "inferior/pantalon_marron.jpg",
+          "tipo": "inferior"
+        },
+        "calzado": {
+          "id": "cal_007",
+          "nombre": "Botas Marrones Otoño",
+          "nombre_corto": "botas marrones",
+          "color": [
+            "marrón"
+          ],
+          "ocasion": [
+            "casual"
+          ],
+          "clima": [
+            "frio",
+            "templado"
+          ],
+          "estacion": [
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "calzado/botas_marrones.jpg",
+          "tipo": "calzado"
+        },
+        "complemento": {
+          "id": "com_009",
+          "nombre": "Bufanda Verde Otoño",
+          "nombre_corto": "bufanda verde",
+          "color": [
+            "verde"
+          ],
+          "ocasion": [
+            "casual"
+          ],
+          "clima": [
+            "frio",
+            "templado"
+          ],
+          "estacion": [
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "complemento/bufanda_verde.jpg",
+          "tipo": "complemento"
+        }
+      },
+      "outfit_source": "database",
+      "clima": "Álava, Enero",
+      "temperatura": 10,
+      "prob_lluvia": 58,
+      "ocasion": "Casual",
+      "preferencia": "Normal",
+      "audio_url": "/static/audio/recommendation_lucia.nistal@uie.edu_1775063839.755202.mp3",
+      "confidence": 0.9,
+      "colorimetry_saved": true,
+      "skin_analysis": {
+        "undertone": "neutral",
+        "lightness": 172,
+        "description": "Subtono neutral"
+      },
+      "eye_analysis": {
+        "category": "marrón",
+        "hue": 177,
+        "description": "Ojos marrón"
+      },
+      "hair_analysis": {
+        "category": "rubio",
+        "hue": 1,
+        "description": "Cabello rubio"
+      },
+      "detailed_explanation": {
+        "skin": "Subtono neutral",
+        "eyes": "Ojos marrón",
+        "hair": "Cabello rubio",
+        "conclusion": "Clasificación: Otoño"
+      }
+    }
+  }
+]

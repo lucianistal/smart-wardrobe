@@ -1,401 +1,130 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Panel - Armario Inteligente</title>
+    <title>My Dashboard - Smart Wardrobe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        .dashboard-container {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #F3EBF9 0%, #FAFAFA 100%);
-        }
-
-        .dashboard-header {
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            padding: 20px 0;
-        }
-
-        .dashboard-nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 40px;
-        }
-
-        .nav-brand {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--accent-purple);
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-            padding: 10px 20px;
-            border-radius: 8px;
-        }
-
-        .nav-menu a:hover {
-            color: var(--accent-purple);
-            background: #F5F3F7;
-        }
-
-        .nav-menu a.active {
-            color: white;
-            background: var(--accent-purple);
-        }
-
-        .dashboard-content {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 40px;
-        }
-
-        .welcome-banner {
-            background: linear-gradient(135deg, var(--accent-purple), #C8A2E0);
-            color: white;
-            padding: 50px;
-            border-radius: 24px;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 32px rgba(155, 126, 189, 0.3);
-        }
-
-        .welcome-banner h1 {
-            font-size: 42px;
-            margin-bottom: 12px;
-        }
-
-        .welcome-banner p {
-            font-size: 18px;
-            opacity: 0.95;
-        }
-
-        .action-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .action-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .action-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 40px rgba(155, 126, 189, 0.2);
-        }
-
-        .action-icon {
-            font-size: 64px;
-            margin-bottom: 24px;
-        }
-
-        .action-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-
-        .action-description {
-            font-size: 15px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .action-button {
-            background: var(--accent-purple);
-            color: white;
-            padding: 14px 32px;
-            border-radius: 12px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-
-        .action-button:hover {
-            background: #8A6DAD;
-            transform: scale(1.05);
-        }
-
-        .quick-stats {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .stats-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: var(--text-dark);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 24px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 24px;
-            background: linear-gradient(135deg, #F3EBF9, #FAF8FC);
-            border-radius: 16px;
-        }
-
-        .stat-icon {
-            font-size: 36px;
-            margin-bottom: 12px;
-        }
-
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--accent-purple);
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-nav {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .nav-menu {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .action-cards {
-                grid-template-columns: 1fr;
-            }
-        }
+        .dashboard-container { min-height:100vh; background:linear-gradient(135deg,#F3EBF9 0%,#FAFAFA 100%); }
+        .dashboard-header { background:white; box-shadow:0 2px 8px rgba(0,0,0,0.06); padding:20px 0; }
+        .dashboard-nav { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; padding:0 40px; }
+        .nav-brand { font-size:24px; font-weight:700; color:var(--accent-purple); }
+        .nav-menu { display:flex; gap:30px; list-style:none; }
+        .nav-menu a { text-decoration:none; color:var(--text-dark); font-weight:500; display:flex; align-items:center; gap:8px; transition:color 0.3s; padding:10px 20px; border-radius:8px; }
+        .nav-menu a:hover { color:var(--accent-purple); background:#F5F3F7; }
+        .nav-menu a.active { color:white; background:var(--accent-purple); }
+        .dashboard-content { max-width:1200px; margin:60px auto; padding:0 40px; }
+        .welcome-banner { background:linear-gradient(135deg,var(--accent-purple),#C8A2E0); color:white; padding:50px; border-radius:24px; margin-bottom:40px; box-shadow:0 8px 32px rgba(155,126,189,0.3); }
+        .welcome-banner h1 { font-size:42px; margin-bottom:12px; }
+        .action-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; margin-bottom:60px; }
+        .action-card { background:white; border-radius:20px; padding:40px; text-align:center; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition:all 0.3s; cursor:pointer; text-decoration:none; color:inherit; display:block; }
+        .action-card:hover { transform:translateY(-8px); box-shadow:0 12px 40px rgba(155,126,189,0.2); }
+        .action-title { font-size:24px; font-weight:700; margin-bottom:12px; color:var(--text-dark); }
+        .action-description { font-size:15px; color:var(--text-muted); line-height:1.6; margin-bottom:24px; }
+        .action-button { background:var(--accent-purple); color:white; padding:14px 32px; border-radius:12px; font-weight:600; border:none; cursor:pointer; display:inline-block; transition:all 0.3s; }
+        .action-button:hover { background:#8A6DAD; transform:scale(1.05); }
+        .quick-stats { background:white; border-radius:20px; padding:40px; box-shadow:0 4px 20px rgba(0,0,0,0.08); }
+        .stats-title { font-size:24px; font-weight:700; margin-bottom:30px; color:var(--text-dark); }
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:24px; }
+        .stat-item { text-align:center; padding:24px; background:linear-gradient(135deg,#F3EBF9,#FAF8FC); border-radius:16px; }
+        .stat-value { font-size:32px; font-weight:700; color:var(--accent-purple); margin-bottom:8px; }
+        .stat-label { font-size:13px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Header -->
-        <header class="dashboard-header">
-            <nav class="dashboard-nav">
-                <div class="nav-brand">
-                    <i class="fas fa-tshirt"></i> Armario Inteligente
+<div class="dashboard-container">
+    <header class="dashboard-header">
+        <nav class="dashboard-nav">
+            <div class="nav-brand"><i class="fas fa-tshirt"></i> Smart Wardrobe</div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('dashboard') }}" class="active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{{ url_for('recommendation') }}"><i class="fas fa-magic"></i> New Recommendation</a></li>
+                <li><a href="{{ url_for('wardrobe') }}"><i class="fas fa-tshirt"></i> My Wardrobe</a></li>
+                <li><a href="{{ url_for('logout') }}" style="color:var(--text-muted);"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="dashboard-content">
+        <div class="welcome-banner">
+            <h1>Welcome back!</h1>
+            <p>{{ user_email }}</p>
+            <p style="margin-top:20px;font-size:16px;">Ready to discover your perfect outfit for today?</p>
+        </div>
+        <div class="action-cards">
+            <a href="{{ url_for('recommendation') }}" class="action-card">
+                <h2 class="action-title">Colourimetry Analysis</h2>
+                <p class="action-description">Discover which colours suit you best based on your skin tone, eyes and hair. Receive your personalised palette.</p>
+                <div class="action-button"><i class="fas fa-camera"></i> Analyse Now</div>
+            </a>
+            <a href="{{ url_for('recommendation') }}" class="action-card">
+                <h2 class="action-title">Outfit Recommendation</h2>
+                <p class="action-description">Get personalised outfit suggestions based on the weather, occasion and your personal preferences.</p>
+                <div class="action-button"><i class="fas fa-magic"></i> Get Outfit</div>
+            </a>
+            <a href="{{ url_for('history') }}" class="action-card">
+                <h2 class="action-title">My History</h2>
+                <p class="action-description">Review your previous queries and saved outfits. Quickly access your past recommendations.</p>
+                <div class="action-button"><i class="fas fa-history"></i> View History</div>
+            </a>
+            <a href="{{ url_for('wardrobe') }}" class="action-card">
+                <h2 class="action-title">Manage My Wardrobe</h2>
+                <p class="action-description">Add your favourite garments and receive personalised combinations using what you already own.</p>
+                <div class="action-button"><i class="fas fa-plus"></i> Add Garments</div>
+            </a>
+        </div>
+        <div class="quick-stats">
+            <h3 class="stats-title"><i class="fas fa-chart-line"></i> Quick Stats</h3>
+            <div class="stats-grid">
+                <div class="stat-item"><div class="stat-value" id="consultasCount">0</div><div class="stat-label">Queries</div></div>
+                <div class="stat-item"><div class="stat-value" id="prendasCount">0</div><div class="stat-label">Saved Items</div></div>
+                <div class="stat-item"><div class="stat-value" id="outfitsCount">0</div><div class="stat-label">Outfits Created</div></div>
+                <div class="stat-item"><div class="stat-value" id="coloresCount">0</div><div class="stat-label">Favourable Colours</div></div>
+            </div>
+        </div>
+        <div style="margin-top:60px;text-align:center;">
+            <h3 style="font-size:28px;font-weight:700;margin-bottom:20px;color:var(--text-dark);">How does it work?</h3>
+            <p style="font-size:16px;color:var(--text-muted);max-width:700px;margin:0 auto 40px;line-height:1.7;">Smart Wardrobe combines colourimetry analysis, climate data and your personal preferences to recommend the perfect outfit. Just follow 3 simple steps:</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;max-width:900px;margin:0 auto;">
+                <div style="background:white;padding:30px;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+                    <div style="font-size:48px;margin-bottom:16px;">1.</div>
+                    <h4 style="font-size:18px;font-weight:600;margin-bottom:12px;">Upload your photo</h4>
+                    <p style="font-size:14px;color:var(--text-muted);">We automatically analyse your skin tone, eyes and hair</p>
                 </div>
-                <ul class="nav-menu">
-                    <li><a href="{{ url_for('dashboard') }}" class="active">
-                        <i class="fas fa-home"></i> Inicio
-                    </a></li>
-                    <li><a href="{{ url_for('recommendation') }}">
-                        <i class="fas fa-magic"></i> Nueva Recomendación
-                    </a></li>
-                    <li><a href="{{ url_for('wardrobe') }}">
-                        <i class="fas fa-tshirt"></i> Mi Armario
-                    </a></li>
-                    <li><a href="{{ url_for('logout') }}" style="color: var(--text-muted);">
-                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                    </a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <!-- Content -->
-        <div class="dashboard-content">
-            <!-- Welcome Banner -->
-            <div class="welcome-banner">
-                <h1>¡Bienvenido de nuevo! </h1>
-                <p>{{ user_email }}</p>
-                <p style="margin-top: 20px; font-size: 16px;">
-                    ¿Listo para descubrir tu outfit perfecto para hoy?
-                </p>
-            </div>
-
-            <!-- Action Cards -->
-            <div class="action-cards">
-                <a href="{{ url_for('recommendation') }}" class="action-card">
-                    <h2 class="action-title">Análisis de Colorimetría</h2>
-                    <p class="action-description">
-                        Descubre qué colores te favorecen más según tu tono de piel, 
-                        ojos y cabello. Recibe tu paleta personalizada.
-                    </p>
-                    <div class="action-button">
-                        <i class="fas fa-camera"></i> Analizar Ahora
-                    </div>
-                </a>
-
-                <a href="{{ url_for('recommendation') }}" class="action-card">
-                    <h2 class="action-title">Recomendación de Outfit</h2>
-                    <p class="action-description">
-                        Obtén sugerencias personalizadas de vestuario basadas en 
-                        el clima, ocasión y tus preferencias personales.
-                    </p>
-                    <div class="action-button">
-                        <i class="fas fa-magic"></i> Obtener Outfit
-                    </div>
-                </a>
-
-                <a href="{{ url_for('history') }}" class="action-card">
-                    <h2 class="action-title">Mi Historial</h2>
-                    <p class="action-description">
-                        Revisa tus consultas anteriores y outfits guardados.
-                        Accede rápidamente a tus recomendaciones pasadas.
-                    </p>
-                    <div class="action-button">
-                        <i class="fas fa-history"></i> Ver Historial
-                    </div>
-                </a>
-
-
-                <a href="{{ url_for('wardrobe') }}" class="action-card">
-                    <h2 class="action-title">Gestionar Mi Armario</h2>
-                    <p class="action-description">
-                        Añade tus prendas favoritas y recibe combinaciones 
-                        personalizadas con lo que ya tienes en tu closet.
-                    </p>
-                    <div class="action-button">
-                        <i class="fas fa-plus"></i> Añadir Prendas
-                    </div>
-                </a>
-            </div>
-
-            <!-- Quick Stats -->
-            <div class="quick-stats">
-                <h3 class="stats-title">
-                    <i class="fas fa-chart-line"></i> Estadísticas Rápidas
-                </h3>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-value" id="consultasCount">0</div>
-                        <div class="stat-label">Consultas</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="prendasCount">0</div>
-                        <div class="stat-label">Prendas Guardadas</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="outfitsCount">0</div>
-                        <div class="stat-label">Outfits Creados</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="coloresCount">0</div>
-                        <div class="stat-label">Colores Favorables</div>
-                    </div>
+                <div style="background:white;padding:30px;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+                    <div style="font-size:48px;margin-bottom:16px;">2.</div>
+                    <h4 style="font-size:18px;font-weight:600;margin-bottom:12px;">Tell us your preferences</h4>
+                    <p style="font-size:14px;color:var(--text-muted);">Occasion, climate, preferred fit and garments you avoid</p>
                 </div>
-            </div>
-
-            <!-- Info Boxes -->
-            <div style="margin-top: 60px; text-align: center;">
-                <h3 style="font-size: 28px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark);">
-                    ¿Cómo funciona?
-                </h3>
-                <p style="font-size: 16px; color: var(--text-muted); max-width: 700px; margin: 0 auto 40px; line-height: 1.7;">
-                    Armario Inteligente combina análisis de colorimetría, datos climáticos 
-                    y tus preferencias personales para recomendarte el outfit perfecto. 
-                    Solo necesitas seguir 3 simples pasos:
-                </p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 900px; margin: 0 auto;">
-                    <div style="background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.06);">
-                        <div style="font-size: 48px; margin-bottom: 16px;">1.</div>
-                        <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 12px;">Sube tu foto</h4>
-                        <p style="font-size: 14px; color: var(--text-muted);">
-                            Analizamos tu tono de piel, ojos y cabello automáticamente
-                        </p>
-                    </div>
-                    
-                    <div style="background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.06);">
-                        <div style="font-size: 48px; margin-bottom: 16px;">2.</div>
-                        <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 12px;">Dinos tus preferencias</h4>
-                        <p style="font-size: 14px; color: var(--text-muted);">
-                            Ocasión, clima, ajuste preferido y prendas que evitas
-                        </p>
-                    </div>
-                    
-                    <div style="background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.06);">
-                        <div style="font-size: 48px; margin-bottom: 16px;">3.</div>
-                        <h4 style="font-size: 18px; font-weight: 600; margin-bottom: 12px;">Recibe tu outfit</h4>
-                        <p style="font-size: 14px; color: var(--text-muted);">
-                            Paleta de colores + outfit personalizado + recomendación de voz
-                        </p>
-                    </div>
+                <div style="background:white;padding:30px;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+                    <div style="font-size:48px;margin-bottom:16px;">3.</div>
+                    <h4 style="font-size:18px;font-weight:600;margin-bottom:12px;">Receive your outfit</h4>
+                    <p style="font-size:14px;color:var(--text-muted);">Colour palette + personalised outfit + voice recommendation</p>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // Cargar estadísticas reales del backend
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const response = await fetch('/api/dashboard/stats');
-                const data = await response.json();
-                
-                if (data.success) {
-                    const stats = data.stats;
-                    
-                    // Animar contadores
-                    animateCounter(document.getElementById('consultasCount'), stats.consultas || 0);
-                    animateCounter(document.getElementById('prendasCount'), stats.prendas || 0);
-                    animateCounter(document.getElementById('outfitsCount'), stats.outfits || 0);
-                    animateCounter(document.getElementById('coloresCount'), stats.colores || 0);
-                } else {
-                    console.error('Error cargando stats:', data.message);
-                }
-            } catch (error) {
-                console.error('Error:', error);
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const res  = await fetch('/api/dashboard/stats');
+            const data = await res.json();
+            if (data.success) {
+                const s = data.stats;
+                animateCounter(document.getElementById('consultasCount'), s.consultas || 0);
+                animateCounter(document.getElementById('prendasCount'),   s.prendas   || 0);
+                animateCounter(document.getElementById('outfitsCount'),   s.outfits   || 0);
+                animateCounter(document.getElementById('coloresCount'),   s.colores   || 0);
             }
-            
-            function animateCounter(element, target) {
-                if (!element) return;
-                let current = 0;
-                const increment = target / 50;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        element.textContent = target;
-                        clearInterval(timer);
-                    } else {
-                        element.textContent = Math.floor(current);
-                    }
-                }, 20);
-            }
-        });
-    </script>
+        } catch {}
+        function animateCounter(el, target) {
+            if (!el) return;
+            let current = 0, inc = target / 50;
+            const t = setInterval(() => { current += inc; if (current >= target) { el.textContent = target; clearInterval(t); } else { el.textContent = Math.floor(current); } }, 20);
+        }
+    });
+</script>
 </body>
 </html>

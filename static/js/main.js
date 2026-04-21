@@ -2,13 +2,13 @@ let currentStep = 1;
 const totalSteps = 8;
 const formData = {};
 
-// ==== Inicialización ====
+// ==== Initialisation ====
 document.addEventListener('DOMContentLoaded', () => {
     updateProgress();
     updateStepCounter();
 });
 
-// ==== Funciones de progreso ====
+// ==== Progress functions ====
 function updateProgress() {
     const progress = (currentStep / totalSteps) * 100;
     document.getElementById('progressBar').style.width = progress + '%';
@@ -45,13 +45,13 @@ function prevStep() {
     }
 }
 
-// ==== Validación ====
+// ==== Validation ====
 function validateCurrentStep() {
     const currentStepElement = document.querySelector(`.step[data-step="${currentStep}"]`);
     const requiredInputs = currentStepElement.querySelectorAll('input[required], select[required]');
     for (let input of requiredInputs) {
         if (!input.value) {
-            alert('Por favor completa todos los campos requeridos');
+            alert('Please complete all required fields');
             return false;
         }
     }
@@ -59,14 +59,14 @@ function validateCurrentStep() {
     const hiddenInputs = currentStepElement.querySelectorAll('input[type="hidden"]');
     for (let input of hiddenInputs) {
         if (input.hasAttribute('required') && !input.value) {
-            alert('Por favor selecciona una opción');
+            alert('Please select an option');
             return false;
         }
     }
     return true;
 }
 
-// ==== Guardar datos ====
+// ==== Save step data ====
 function saveCurrentStepData() {
     const currentStepElement = document.querySelector(`.step[data-step="${currentStep}"]`);
     const inputs = currentStepElement.querySelectorAll('input, select');
@@ -79,7 +79,7 @@ function saveCurrentStepData() {
     });
 }
 
-// ==== Selección de opción ====
+// ==== Option selection ====
 function selectOption(element, fieldName, value) {
     const parent = element.parentElement;
     parent.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
@@ -88,7 +88,7 @@ function selectOption(element, fieldName, value) {
     formData[fieldName] = value;
 }
 
-// ==== Preview foto ====
+// ==== Photo preview ====
 function previewPhoto(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
@@ -100,7 +100,7 @@ function previewPhoto(input) {
     }
 }
 
-// ==== Cámara ====
+// ==== Camera ====
 function openCamera() {
     const modal = document.createElement('div');
     modal.id = 'cameraModal';
@@ -119,12 +119,12 @@ function openCamera() {
 
     const captureBtn = document.createElement('button');
     captureBtn.className = 'btn';
-    captureBtn.innerText = 'Tomar foto';
+    captureBtn.innerText = 'Take photo';
     modal.appendChild(captureBtn);
 
     const closeBtn = document.createElement('button');
     closeBtn.className = 'btn btn-secondary';
-    closeBtn.innerText = 'Cancelar';
+    closeBtn.innerText = 'Cancel';
     closeBtn.style.marginTop = '10px';
     modal.appendChild(closeBtn);
 
@@ -159,12 +159,12 @@ function openCamera() {
             };
         })
         .catch(err => {
-            alert('No se pudo acceder a la cámara: ' + err);
+            alert('Could not access camera: ' + err);
             modal.remove();
         });
 }
 
-// Convierte DataURL a Blob
+// Converts DataURL to Blob
 function dataURLToBlob(dataURL) {
     const [meta, content] = dataURL.split(',');
     const mime = meta.match(/:(.*?);/)[1];
@@ -174,39 +174,83 @@ function dataURLToBlob(dataURL) {
     return new Blob([new Uint8Array(array)], { type: mime });
 }
 
-// ==== Mostrar resumen ====
+// ==== Translation dictionary for garment names ====
+// Maps Spanish internal names to English display names
+const garmentTranslations = {
+    // tops
+    'camiseta': 't-shirt', 'camisa': 'shirt', 'blusa': 'blouse',
+    'jersey': 'jumper', 'suéter': 'sweater', 'sudadera': 'sweatshirt',
+    'blazer': 'blazer', 'chaqueta': 'jacket', 'abrigo': 'coat',
+    'top': 'top', 'chaleco': 'vest',
+    // bottoms
+    'pantalón': 'trousers', 'pantalon': 'trousers', 'vaqueros': 'jeans',
+    'falda': 'skirt', 'shorts': 'shorts', 'mallas': 'leggings',
+    'leggings': 'leggings', 'pana': 'corduroy trousers',
+    // dresses
+    'vestido': 'dress',
+    // footwear
+    'zapatillas': 'trainers', 'botas': 'boots', 'tacones': 'heels',
+    'sandalias': 'sandals', 'mocasines': 'loafers', 'zapatos': 'shoes',
+    'botines': 'ankle boots',
+    // accessories
+    'bolso': 'handbag', 'bolsa': 'bag', 'cinturón': 'belt',
+    'bufanda': 'scarf', 'gorro': 'hat', 'gafas': 'sunglasses',
+    'collar': 'necklace', 'pendientes': 'earrings',
+    // colours
+    'blanco': 'white', 'negro': 'black', 'gris': 'grey',
+    'azul': 'blue', 'rojo': 'red', 'verde': 'green',
+    'marrón': 'brown', 'beige': 'beige', 'rosa': 'pink',
+    'coral': 'coral', 'dorado': 'gold', 'plateado': 'silver',
+    // fit
+    'ajustada': 'fitted', 'normal': 'regular', 'holgada': 'loose',
+    // gender
+    'hombre': 'male', 'mujer': 'female', 'prefiero no decirlo': 'prefer not to say',
+    // occasion
+    'formal': 'formal', 'casual': 'casual', 'deportiva': 'sport',
+    // climate
+    'calor': 'hot', 'templado': 'mild', 'frio': 'cold',
+    // seasons
+    'primavera': 'Spring', 'verano': 'Summer', 'otoño': 'Autumn', 'invierno': 'Winter'
+};
+
+function translateValue(value) {
+    if (!value) return value;
+    const lower = value.toLowerCase().trim();
+    return garmentTranslations[lower] || value;
+}
+
+// ==== Show summary ====
 function showSummary() {
     const summaryBox = document.getElementById('summaryBox');
     let summaryHTML = `
-        <h3 style="margin-bottom:20px; color:#7B68EE; text-align:center;">Resumen de tu perfil</h3>
+        <h3 style="margin-bottom:20px; color:#7B68EE; text-align:center;">Your profile summary</h3>
         <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 16px;">
     `;
 
     if (formData.nombre) {
-        summaryHTML += `<p style="margin: 8px 0;"><strong>Nombre:</strong> ${formData.nombre}</p>`;
+        summaryHTML += `<p style="margin: 8px 0;"><strong>Name:</strong> ${formData.nombre}</p>`;
     }
     if (formData.genero) {
-        summaryHTML += `<p style="margin: 8px 0;"><strong>Género:</strong> ${formData.genero}</p>`;
+        summaryHTML += `<p style="margin: 8px 0;"><strong>Gender:</strong> ${translateValue(formData.genero)}</p>`;
     }
     if (formData.provincia && formData.mes) {
-        summaryHTML += `<p style="margin: 8px 0;"><strong>Ubicación:</strong> ${formData.provincia}, ${formData.mes}</p>`;
+        summaryHTML += `<p style="margin: 8px 0;"><strong>Location:</strong> ${formData.provincia}, ${formData.mes}</p>`;
     }
     if (formData.ocasion) {
-        summaryHTML += `<p style="margin: 8px 0;"><strong>Ocasión:</strong> ${formData.ocasion}</p>`;
+        summaryHTML += `<p style="margin: 8px 0;"><strong>Occasion:</strong> ${translateValue(formData.ocasion)}</p>`;
     }
     if (formData.fit) {
-        summaryHTML += `<p style="margin: 8px 0;"><strong>Preferencia de ajuste:</strong> ${formData.fit}</p>`;
+        summaryHTML += `<p style="margin: 8px 0;"><strong>Fit preference:</strong> ${translateValue(formData.fit)}</p>`;
     }
 
     summaryHTML += `</div>`;
 
-    // Mensaje informativo
     summaryHTML += `
         <div style="background: #e8f4f8; padding: 16px; border-radius: 12px; border-left: 4px solid #7B68EE; margin-top: 16px;">
             <p style="margin: 0; color: #555; font-size: 14px;">
-                <strong> Analizaremos tu foto</strong> para determinar tu colorimetría personalizada y 
-                <strong consultaremos el clima real</strong> de ${formData.provincia || 'tu ubicación'} 
-                en ${formData.mes || 'el mes seleccionado'} para crear tu recomendación perfecta.
+                <strong>We will analyse your photo</strong> to determine your personalised colourimetry and
+                <strong>look up the climate data</strong> for ${formData.provincia || 'your location'}
+                in ${formData.mes || 'the selected month'} to create your perfect recommendation.
             </p>
         </div>
     `;
@@ -214,7 +258,7 @@ function showSummary() {
     summaryBox.innerHTML = summaryHTML;
 }
 
-// ==== Envío del formulario ====
+// ==== Form submission ====
 document.getElementById('onboardingForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     document.getElementById('loading').style.display = 'flex';
@@ -234,7 +278,7 @@ document.getElementById('onboardingForm').addEventListener('submit', async (e) =
             document.getElementById('loading').style.display = 'none';
         }
     } catch (error) {
-        alert('Error al procesar la solicitud');
+        alert('Error processing the request');
         console.error(error);
         document.getElementById('loading').style.display = 'none';
     }

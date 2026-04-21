@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Armario Inteligente</title>
+  <title>Smart Wardrobe</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
   <div class="container">
-    <h1>Bienvenido a tu<br><span>Armario Inteligente</span></h1>
+    <h1>Welcome to your<br><span>Smart Wardrobe</span></h1>
     <form action="{% if session.user %}/onboarding{% else %}/login{% endif %}" method="get">
-        <button type="submit" class="btn">EMPEZAR</button>
-      </form>            
+      <button type="submit" class="btn">GET STARTED</button>
+    </form>
   </div>
 </body>
 </html>

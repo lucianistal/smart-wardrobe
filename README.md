@@ -1,147 +1,159 @@
-#  Sistema de Recomendación de Moda Inteligente
+# Smart Wardrobe - Intelligent Outfit Recommendation System
 
-Se trata de un sistema web que analiza tu colorimetría personal mediante una foto y te recomienda outfits adaptados al clima y a tus preferencias.
-
-
-## ¿Qué hace?
-
-1. **Analiza tu foto**  Detecta tu tono de piel, color de ojos y cabello
-2. **Determina tu colorimetría**  Te clasifica en Primavera, Verano, Otoño o Invierno
-3. **Recomienda outfits** Sugiere prendas según el clima, ocasión y colores que te favorecen
-4. **Te lo explica por voz**  Genera audio describiendo el outfit recomendado
+A web application that analyses your personal colourimetry from a photo and recommends outfits adapted to the weather and your preferences.
 
 ---
 
-##  Instalación Rápida
+## What does it do?
 
-### 1. Requisitos
-- Archivo : requirements.txt
+1. Analyses your photo - Detects your skin tone, eye colour and hair colour
+2. Determines your colourimetry - Classifies you as Spring, Summer, Autumn or Winter
+3. Recommends outfits - Suggests garments based on climate, occasion and your flattering colours
+4. Explains it by voice - Generates audio describing the recommended outfit
 
+---
 
-### 2. Instalar
+## Quick Installation
+
+### 1. Requirements
+See `requirements.txt`
+
+### 2. Install
 
 ```bash
-# Clonar repositorio
+# Clone the repository
 git clone https://github.com/lucianistal/armario-inteligente.git
 cd armario-inteligente
 
-# Crear entorno virtual
+# Create virtual environment
 python3 -m venv venv
-source venv/bin/activate  
+source venv/bin/activate        # Windows: venv\Scripts\activate
 
-# Instalar dependencias
+# Install dependencies
 pip install -r requirements.txt
 
-# Crear las carpetas que sean necesarias
+# Create required directories
 mkdir -p data/wardrobes data/history data/colorimetry
 mkdir -p static/audio static/user_clothing
 ```
 
-### 3. Ejecutar
+### 3. Run
 
 ```bash
 python3 app.py
 ```
 
-Abrir navegador en: `http://localhost:5003`
+Open your browser at: `http://localhost:5003`
 
 ---
 
-##  Estructura del Proyecto
+## Project Structure
 
 ```
-armario-inteligente/
-├── app.py                      # Servidor Flask
-├── colorimetry_analyzer.py     # Análisis de colorimetría
-├── clothing_database.py        # Base de datos de prendas
-├── outfit_generator.py         # Generación de outfits + voz
-├── wardrobe_manager.py         # Armario virtual
-├── requirements.txt            # Dependencias
+smart-wardrobe/
+├── app.py                      # Flask server + KBS inference engine
+├── colorimetry_analyzer.py     # Colourimetry analysis (OpenCV + K-means + CIELAB)
+├── clothing_database.py        # Generic clothing database (91 items)
+├── outfit_generator.py         # Rule-based outfit generation + TTS audio
+├── wardrobe_manager.py         # Virtual wardrobe CRUD
+├── requirements.txt
 │
 ├── data/
-│   ├── clothing_items.json    # casi 100 prendas
-│   ├── clima_provincias.xlsx  # Datos climáticos por meses y provincias
-│   └── wardrobes/             # Armarios de usuarios
+│   ├── clothing_items.json    # ~91 clothing items
+│   ├── clima_provincias.xlsx  # Historical climate data (52 Spanish provinces)
+│   └── wardrobes/             # Per-user wardrobe files
 │
 ├── static/
 │   ├── css/style.css
 │   ├── js/main.js
-│   ├── clothing_images/       # Fotos de prendas
-│   └── audio/                 # Audios generados
+│   ├── clothing_images/       # Garment images
+│   └── audio/                 # Generated audio files
 │
 └── templates/
-    └── *.html                 # Páginas 
+    └── *.html                 # 9 pages
 ```
 
 ---
 
-##  Cómo Funciona
+## How It Works
 
-### Análisis de Colorimetría
+### Colourimetry Analysis
 
-El sistema analiza tres características de tu rostro:
+The system analyses three facial features:
 
-1. **Tono de piel** → Usa CIELAB para detectar si es cálido o frío
-2. **Color de ojos** → Clasifica en claro u oscuro
-3. **Color de cabello** → Determina rubio, castaño, negro, pelirrojo
+1. Skin tone - Uses CIELAB colour space to detect warm or cool undertone
+2. Eye colour - Classified using K-means clustering on the iris region
+3. Hair colour - Determines blonde, brown, black or red
 
-Con esta información calcula:
-- **Contraste:** Diferencia entre piel y cabello
-- **Saturación:** Intensidad de los colores
+With this information it calculates:
+- Contrast: Difference in lightness between skin and hair
+- Saturation: Intensity of eye and hair colours
 
-Y te clasifica en una estación:
+And classifies you into a season:
 
-| Estación | Características |
-|----------|----------------|
-| **Primavera** | Cálido + bajo contraste + alta saturación |
-| **Verano** | Frío + bajo contraste + baja saturación |
-| **Otoño** | Cálido + alto contraste + baja saturación |
-| **Invierno** | Frío + alto contraste + alta saturación |
+| Season | Characteristics |
+|--------|----------------|
+| Spring  | Warm + low contrast + high saturation |
+| Summer  | Cool + low contrast + low saturation  |
+| Autumn  | Warm + high contrast + low saturation |
+| Winter  | Cool + high contrast + high saturation |
 
-### Generación de Outfits
+### KBS Outfit Generation (Forward Chaining)
 
-El sistema:
-1. Busca primero en TU armario virtual (es decir, si has añadido una prenda la priorizará ante otras)
-2. Si no encuentra, usa la base de datos 
-3. Filtra por género, clima y ocasión
-4. Prioriza colores de tu paleta 
-5. Genera narrativa y la convierte a audio 
+The inference engine applies rules in the following order:
 
----
-
-## Tecnologías
-
-- **Python 3.8+** - Lenguaje principal
-- **Flask** - Servidor web
-- **OpenCV** - Análisis de imagen
-- **NumPy** - Procesamiento numérico
-- **scikit-learn** - Clustering K-means
-- **gTTS** - Síntesis de voz
-- **pandas** - Datos climáticos
+1. Searches your virtual wardrobe first (priority)
+2. Scores each candidate garment: occasion (+50 pts) + climate (+30 pts) + season (+20 pts)
+3. A garment is selected only if score >= 50 (occasion is mandatory)
+4. If no user garment qualifies, falls back to the generic database
+5. Applies gender filter rules and special climate rules (rain / cold)
+6. Generates narrative and converts it to audio
 
 ---
 
-##  Uso Básico
+## Technologies
 
-### 1. Registro
-Crea una cuenta con tu email y contraseña.
+| Technology | Purpose |
+|---|---|
+| Python 3.8+ | Main language |
+| Flask | Web server |
+| OpenCV | Image analysis |
+| NumPy | Numerical processing |
+| scikit-learn | K-means clustering |
+| gTTS | Text-to-speech |
+| pandas | Climate data |
 
-### 2. Cuestionario (8 pasos)
-- Nombre y género
-- Provincia y mes
-- Ocasión (formal/casual/deportiva)
-- Preferencias de ajuste
-- Prendas a evitar
-- Foto de tu rostro
-- Confirmar
+---
 
-### 3. Ver Resultados
-- Paleta de colores personalizada
-- Outfit recomendado con imágenes
-- Explicación por voz
-- Detalles del análisis
+## Basic Usage
 
-### 4. Armario Virtual (Opcional)
-- Añade tus propias prendas
-- El sistema priorizará esas prendas en recomendaciones
+### 1. Register
+Create an account with your email and password.
 
+### 2. Questionnaire (8 steps)
+- Name and gender
+- Province and month
+- Occasion (formal / casual / sport)
+- Fit preference
+- Garments to avoid
+- Face photo
+- Confirm
+
+### 3. View Results
+- Personalised colour palette
+- Recommended outfit with images
+- Voice explanation
+- Analysis details
+
+### 4. Virtual Wardrobe (optional)
+- Add your own garments
+- The system will prioritise them in future recommendations
+
+---
+
+## Academic Context
+
+Course: Intelligent Systems - Spring 2026
+University: Universidad Intercontinental de la Empresa (UIE)
+Unit: IV - Logical Agents and Knowledge-Based Systems
+Professor: Yago Fontenla Seco 

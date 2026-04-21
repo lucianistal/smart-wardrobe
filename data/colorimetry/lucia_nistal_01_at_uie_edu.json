@@ -1,27 +1,27 @@
 {
-  "saved_at": "2025-11-27T19:01:23.663754",
+  "saved_at": "2026-04-21T22:48:53.919416",
   "colorimetry_result": {
-    "season": "Otoño",
+    "season": "Otono",
     "skin_tone": "warm",
-    "skin_lightness": 168,
+    "skin_lightness": 172,
     "skin_lab": {
-      "L": 168,
-      "a": 137,
-      "b": 145
+      "L": 172,
+      "a": 147,
+      "b": 151
     },
     "eye_color": {
-      "category": "avellana",
-      "hue": 52,
-      "saturation": 43,
-      "value": 84
+      "category": "brown",
+      "hue": 177,
+      "saturation": 76,
+      "value": 115
     },
     "hair_color": {
-      "category": "castaño oscuro",
-      "hue": 33,
-      "saturation": 30,
-      "value": 59
+      "category": "blonde",
+      "hue": 1,
+      "saturation": 0,
+      "value": 254
     },
-    "contrast": "medium",
+    "contrast": "high",
     "saturation": "low",
     "palette": [
       "#8B4513",
@@ -33,21 +33,21 @@
       "#DC143C",
       "#B8860B"
     ],
-    "palette_description": "Tonos tierra y cálidos (marrones, naranjas, verdes oliva, beige, rojo, bronce)",
+    "palette_description": "Earthy and warm tones (brown, orange, olive green, warm beige, red, bronze)",
     "palette_names": [
-      "marrón",
-      "naranja",
-      "verde oliva",
-      "beige cálido",
-      "rojo",
-      "bronce"
+      "brown",
+      "orange",
+      "olive green",
+      "warm beige",
+      "red",
+      "bronze"
     ],
     "confidence": 0.9,
     "detailed_analysis": {
-      "skin": "Subtono warm",
-      "eyes": "Ojos avellana",
-      "hair": "Cabello castaño oscuro",
-      "conclusion": "Clasificación: Otoño"
+      "skin": "Undertone: warm",
+      "eyes": "Eyes: brown",
+      "hair": "Hair: blonde",
+      "conclusion": "Season: Otono"
     }
   }
 }
