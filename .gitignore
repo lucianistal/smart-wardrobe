@@ -1,0 +1,10 @@
+static/uploads/*.jpg
+static/audio/*.mp3
+static/user_clothing/*.jpg
+data/wardrobes/*.json
+data/history/*.json
+data/colorimetry/*.json
+__pycache__/
+venv/
+*.pyc
+~
