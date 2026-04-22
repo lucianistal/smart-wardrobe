@@ -319,11 +319,16 @@ def results():
 def detect_masculine_preference(no_dresses, no_skirts, no_tops, gender=None):
     """
     KBS rule: detect masculine garment preference.
-    Triggered when the user explicitly marks dresses + skirts + tops as unwanted,
-    or when gender is set to 'hombre'.
+
+    Triggered only when the user explicitly marks all three typically feminine
+    garment types (dresses, skirts, tops) as unwanted. Gender self-report alone
+    is not sufficient: a user who identifies as male but does not flag any
+    garment type as uncomfortable is assumed to have no restriction preference,
+    so the filter is not applied.
+
+    This design avoids hardcoding gender assumptions into the recommendation
+    logic — garment preferences drive the inference, not the gender field.
     """
-    if gender and gender.lower() == 'hombre':
-        return True
     if no_dresses and no_skirts and no_tops:
         print("    Masculine preference detected (no dresses + no skirts + no tops)")
         return True
