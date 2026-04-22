@@ -706,33 +706,55 @@ def translate_garment_name(name):
         return name
     translations = {
         'camiseta': 't-shirt', 'camisa': 'shirt', 'blusa': 'blouse',
-        'jersey': 'jumper', 'suéter': 'sweater', 'sudadera': 'sweatshirt',
-        'blazer': 'blazer', 'chaqueta': 'jacket', 'abrigo': 'coat',
-        'chaleco': 'vest', 'top': 'top', 'traje': 'suit',
-        'pantalón': 'trousers', 'pantalon': 'trousers', 'vaqueros': 'jeans',
-        'falda': 'skirt', 'shorts': 'shorts', 'mallas': 'leggings',
-        'leggings': 'leggings', 'bermudas': 'shorts', 'vestido': 'dress',
+        'jersey': 'jumper', 'sudadera': 'sweatshirt', 'blazer': 'blazer',
+        'chaqueta': 'jacket', 'abrigo': 'coat', 'chaleco': 'vest',
+        'top': 'top', 'traje': 'suit', 'pantalon': 'trousers',
+        'vaqueros': 'jeans', 'falda': 'skirt', 'shorts': 'shorts',
+        'mallas': 'leggings', 'leggings': 'leggings', 'vestido': 'dress',
         'zapatillas': 'trainers', 'botas': 'boots', 'tacones': 'heels',
         'sandalias': 'sandals', 'mocasines': 'loafers', 'zapatos': 'shoes',
         'botines': 'ankle boots', 'alpargatas': 'espadrilles',
         'bolso': 'handbag', 'bolsa': 'bag', 'cinturón': 'belt',
         'bufanda': 'scarf', 'gorro': 'hat', 'sombrero': 'hat',
-        'gafas': 'sunglasses', 'collar': 'necklace', 'mochila': 'backpack',
+        'pañuelo': 'scarf', 'gafas': 'sunglasses', 'collar': 'necklace',
+        'mochila': 'backpack', 'reloj': 'watch',
         'blanco': 'white', 'negro': 'black', 'gris': 'grey',
         'azul': 'blue', 'rojo': 'red', 'verde': 'green',
-        'marrón': 'brown', 'beige': 'beige', 'rosa': 'pink',
+        'marron': 'brown', 'beige': 'beige', 'rosa': 'pink',
         'coral': 'coral', 'dorado': 'gold', 'marino': 'navy',
         'naranja': 'orange', 'amarillo': 'yellow', 'morado': 'purple',
-        'oscuro': 'dark', 'claro': 'light', 'básica': 'basic',
-        'basica': 'basic', 'elegante': 'elegant', 'ligero': 'light',
-        'ligera': 'light', 'grueso': 'thick', 'midi': 'midi',
-        'deportivo': 'sports', 'deportiva': 'sports', 'térmica': 'thermal',
-        'técnica': 'technical', 'running': 'running', 'floral': 'floral',
-        'lino': 'linen', 'pana': 'corduroy', 'manga': 'sleeve',
-        'larga': 'long', 'corta': 'short', 'oxford': 'oxford',
+        'oscuro': 'dark', 'claro': 'light', 'nude': 'nude',
+        'bronce': 'bronze', 'lavanda': 'lavender', 'esmeralda': 'emerald',
+        'turquesa': 'turquoise', 'plata': 'silver', 'acero': 'steel',
+        'oliva': 'olive', 'blanca': 'white', 'negra': 'black',
+        'roja': 'red', 'amarilla': 'yellow',
+        'blancos': 'white', 'negros': 'black', 'grises': 'grey',
+        'azules': 'blue', 'rojos': 'red', 'verdes': 'green',
+        'marrones': 'brown', 'beiges': 'beige', 'rosas': 'pink',
+        'corales': 'coral', 'dorados': 'gold', 'marinos': 'navy',
+        'naranjas': 'orange', 'amarillos': 'yellow', 'morados': 'purple',
+        'negras': 'black', 'blancas': 'white', 'rojas': 'red',
+        'basica': 'basic', 'basico': 'basic', 'elegante': 'elegant',
+        'deportivo': 'sports', 'deportiva': 'sports',
+        'deportivos': 'sports', 'deportivas': 'sports',
+        'formal': 'formal', 'formales': 'formal',
+        'tecnica': 'technical', 'running': 'running', 'floral': 'floral',
+        'lino': 'linen', 'oxford': 'oxford', 'pana': 'corduroy',
+        'pastel': 'pastel', 'midi': 'midi', 'larga': 'long',
+        'corta': 'short', 'clasico': 'classic',
+        'verano': '', 'otoño': '', 'invierno': '', 'primavera': '',
+        'de': '', 'sol': 'sun',
     }
+    import unicodedata
+    def strip_accents(s):
+        return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
     words = name.lower().split()
-    return ' '.join(translations.get(w, w) for w in words)
+    result = []
+    for w in words:
+        t = translations.get(w) or translations.get(strip_accents(w), w)
+        if t:
+            result.append(t)
+    return ' '.join(result).strip()
 
 def translate_type(tipo):
     """Translate garment category key to English label."""
@@ -906,4 +928,4 @@ if __name__ == '__main__':
     print("  Access at: http://localhost:5003")
     print("=" * 60)
 
-    app.run(debug=True, port=5003)
+    app.run(debug=True, port=5003) 

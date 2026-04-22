@@ -22,49 +22,63 @@ class OutfitGenerator:
 
     # Translation dictionary: Spanish garment/colour names → English
     TRANSLATIONS = {
-        # garment types
         'camiseta': 't-shirt', 'camisa': 'shirt', 'blusa': 'blouse',
-        'jersey': 'jumper', 'suéter': 'sweater', 'sudadera': 'sweatshirt',
-        'blazer': 'blazer', 'chaqueta': 'jacket', 'abrigo': 'coat',
-        'chaleco': 'vest', 'top': 'top', 'traje': 'suit',
-        # bottoms
-        'pantalón': 'trousers', 'pantalon': 'trousers', 'vaqueros': 'jeans',
-        'falda': 'skirt', 'shorts': 'shorts', 'mallas': 'leggings',
-        'leggings': 'leggings', 'pana': 'corduroy', 'bermudas': 'shorts',
-        # dresses
-        'vestido': 'dress',
-        # footwear
+        'jersey': 'jumper', 'sudadera': 'sweatshirt', 'blazer': 'blazer',
+        'chaqueta': 'jacket', 'abrigo': 'coat', 'chaleco': 'vest',
+        'top': 'top', 'traje': 'suit', 'pantalon': 'trousers',
+        'vaqueros': 'jeans', 'falda': 'skirt', 'shorts': 'shorts',
+        'mallas': 'leggings', 'leggings': 'leggings', 'vestido': 'dress',
         'zapatillas': 'trainers', 'botas': 'boots', 'tacones': 'heels',
         'sandalias': 'sandals', 'mocasines': 'loafers', 'zapatos': 'shoes',
         'botines': 'ankle boots', 'alpargatas': 'espadrilles',
-        # accessories
-        'bolso': 'handbag', 'bolsa': 'bag', 'cinturón': 'belt',
-        'bufanda': 'scarf', 'gorro': 'hat', 'sombrero': 'hat',
-        'gafas': 'sunglasses', 'collar': 'necklace', 'pendientes': 'earrings',
-        'mochila': 'backpack', 'pañuelo': 'scarf',
-        # colours
+        'bolso': 'handbag', 'bolsa': 'bag', 'cinturon': 'belt',
+        'bufanda': 'scarf', 'panuelo': 'scarf', 'gorro': 'hat',
+        'sombrero': 'hat', 'gafas': 'sunglasses', 'collar': 'necklace',
+        'mochila': 'backpack', 'reloj': 'watch',
         'blanco': 'white', 'negro': 'black', 'gris': 'grey',
         'azul': 'blue', 'rojo': 'red', 'verde': 'green',
-        'marrón': 'brown', 'beige': 'beige', 'rosa': 'pink',
-        'coral': 'coral', 'dorado': 'gold', 'plateado': 'silver',
+        'marron': 'brown', 'beige': 'beige', 'rosa': 'pink',
+        'coral': 'coral', 'dorado': 'gold', 'marino': 'navy',
         'naranja': 'orange', 'amarillo': 'yellow', 'morado': 'purple',
-        'marino': 'navy', 'oscuro': 'dark', 'claro': 'light',
-        # descriptors
-        'básica': 'basic', 'basica': 'basic', 'elegante': 'elegant',
-        'ligero': 'light', 'ligera': 'light', 'grueso': 'thick',
-        'midi': 'midi', 'larga': 'long', 'corta': 'short',
-        'deportivo': 'sports', 'deportiva': 'sports', 'térmica': 'thermal',
-        'técnica': 'technical', 'de vestir': 'dress', 'oxford': 'oxford',
-        'running': 'running', 'floral': 'floral', 'manga': 'sleeve',
+        'oscuro': 'dark', 'claro': 'light', 'nude': 'nude',
+        'bronce': 'bronze', 'lavanda': 'lavender', 'esmeralda': 'emerald',
+        'turquesa': 'turquoise', 'plata': 'silver', 'acero': 'steel',
+        'oliva': 'olive', 'blanca': 'white', 'negra': 'black',
+        'roja': 'red', 'amarilla': 'yellow',
+        'blancos': 'white', 'negros': 'black', 'grises': 'grey',
+        'azules': 'blue', 'rojos': 'red', 'verdes': 'green',
+        'marrones': 'brown', 'beiges': 'beige', 'rosas': 'pink',
+        'corales': 'coral', 'dorados': 'gold', 'marinos': 'navy',
+        'naranjas': 'orange', 'amarillos': 'yellow', 'morados': 'purple',
+        'negras': 'black', 'blancas': 'white', 'rojas': 'red',
+        'basica': 'basic', 'basico': 'basic', 'elegante': 'elegant',
+        'deportivo': 'sports', 'deportiva': 'sports',
+        'deportivos': 'sports', 'deportivas': 'sports',
+        'formal': 'formal', 'formales': 'formal',
+        'tecnica': 'technical', 'running': 'running', 'floral': 'floral',
+        'lino': 'linen', 'oxford': 'oxford', 'pana': 'corduroy',
+        'pastel': 'pastel', 'midi': 'midi', 'larga': 'long',
+        'corta': 'short', 'clasico': 'classic', 'plateado': 'silver',
+        'verano': '', 'otono': '', 'invierno': '', 'primavera': '',
+        'de': '', 'sol': 'sun',
     }
 
     def _translate_name(self, name):
         """Translate a Spanish garment name to English word by word."""
         if not name:
             return name
+        import unicodedata
+        def strip_accents(s):
+            return ''.join(c for c in unicodedata.normalize('NFD', s)
+                           if unicodedata.category(c) != 'Mn')
         words = name.lower().split()
-        translated = [self.TRANSLATIONS.get(w, w) for w in words]
-        return ' '.join(translated)
+        result = []
+        for w in words:
+            t = self.TRANSLATIONS.get(w) or self.TRANSLATIONS.get(strip_accents(w), w)
+            if t:
+                result.append(t)
+        return ' '.join(result).strip()
+
 
     def __init__(self):
         # Knowledge Base: introductory phrases per occasion (used in audio narrative)
@@ -345,4 +359,4 @@ class OutfitGenerator:
             }
         }
 
-        return generic_outfits.get(ocasion, generic_outfits['casual']).get(gender_key, {}).get(temp_cat, {})
+        return generic_outfits.get(ocasion, generic_outfits['casual']).get(gender_key, {}).get(temp_cat, {}) 

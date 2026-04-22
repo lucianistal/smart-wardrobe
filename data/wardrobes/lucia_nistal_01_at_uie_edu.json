@@ -1,12 +1,9 @@
 {
   "items": [
     {
-      "nombre": "Vestido blanco",
-      "tipo": "vestido",
-      "color": [
-        "blanco",
-        "negro"
-      ],
+      "nombre": "Beige top",
+      "tipo": "superior",
+      "color": "Beige",
       "ocasion": [
         "formal",
         "casual"
@@ -16,9 +13,9 @@
         "templado"
       ],
       "fit": "normal",
-      "imagen": "lucia.nistal.01uie.edu_1764112332.299346_Imagen_24-11-25_a_las_6.14_p._m..png",
-      "id": "item_1764112332303",
-      "added_at": "2025-11-26T00:12:12.303190"
+      "imagen": "lucia.nistal.01uie.edu_1776865036.288723_Imagen_27-10-25_a_las_5.50_p._m..png",
+      "id": "item_1776865036297",
+      "added_at": "2026-04-22T15:37:16.297064"
     }
   ],
   "created_at": "2025-11-24T16:05:13.298180"

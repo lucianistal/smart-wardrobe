@@ -1,822 +1,5 @@
 [
   {
-    "timestamp": "2025-11-26T01:44:48.571132",
-    "result": {
-      "success": true,
-      "usuario": "lu",
-      "colorimetria": "Otoño",
-      "paleta": [
-        "#8B4513",
-        "#FF8C00",
-        "#556B2F",
-        "#F5DEB3",
-        "#CD853F",
-        "#A0522D",
-        "#DC143C",
-        "#B8860B"
-      ],
-      "outfit_narrative": "Hola lu. Un conjunto perfecto para tu entrenamiento:\n\nCombina una sudadera azul con unas leggings. Complétalo con unas zapatillas running. Y no olvides una mochila. \n\nEste outfit es perfecto para este día frío. Importante: hay 68% de probabilidad de lluvia, lleva paraguas. \n\nComo Otoño, te sientan de maravilla los tonos tierra y cálidos que potencian tu calidez natural. Apuesta por colores como marrón, naranja, verde oliva. Un corte regular te permitirá jugar con diferentes estilos.",
-      "outfit_simple": "sudadera azul + leggings + zapatillas running + mochila",
-      "outfit_items": {
-        "superior": {
-          "id": "sup_025",
-          "nombre": "Sudadera Azul",
-          "nombre_corto": "sudadera azul",
-          "color": [
-            "azul"
-          ],
-          "ocasion": [
-            "deportiva",
-            "casual"
-          ],
-          "clima": [
-            "frio",
-            "templado"
-          ],
-          "estacion": [
-            "Otoño",
-            "Invierno"
-          ],
-          "fit": "holgada",
-          "tipo": "superior"
-        },
-        "inferior": {
-          "id": "inf_019",
-          "nombre": "Leggings Negros",
-          "nombre_corto": "leggings",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "deportiva"
-          ],
-          "clima": [
-            "calor",
-            "templado",
-            "frio"
-          ],
-          "estacion": [
-            "Primavera",
-            "Verano",
-            "Otoño",
-            "Invierno"
-          ],
-          "fit": "ajustada",
-          "tipo": "inferior"
-        },
-        "calzado": {
-          "id": "calz_014",
-          "nombre": "Zapatillas Running",
-          "nombre_corto": "zapatillas running",
-          "color": [
-            "negro",
-            "blanco"
-          ],
-          "ocasion": [
-            "deportiva"
-          ],
-          "clima": [
-            "calor",
-            "templado",
-            "frio"
-          ],
-          "estacion": [
-            "Primavera",
-            "Verano",
-            "Otoño",
-            "Invierno"
-          ],
-          "tipo": "calzado"
-        },
-        "complemento": {
-          "id": "comp_018",
-          "nombre": "Mochila Negra",
-          "nombre_corto": "mochila",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "casual",
-            "deportiva"
-          ],
-          "clima": [
-            "calor",
-            "templado",
-            "frio"
-          ],
-          "estacion": [
-            "Primavera",
-            "Verano",
-            "Otoño",
-            "Invierno"
-          ],
-          "tipo": "complemento"
-        }
-      },
-      "outfit_source": "database",
-      "clima": "Álava, Febrero",
-      "temperatura": 7,
-      "prob_lluvia": 68,
-      "ocasion": "Deportiva",
-      "preferencia": "Normal",
-      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1764117883.911713.mp3",
-      "confidence": 0.9,
-      "colorimetry_saved": true,
-      "skin_analysis": {
-        "undertone": "warm",
-        "lightness": 170,
-        "description": "Subtono warm"
-      },
-      "eye_analysis": {
-        "category": "marrón",
-        "hue": 12,
-        "description": "Ojos marrón"
-      },
-      "hair_analysis": {
-        "category": "castaño",
-        "hue": 70,
-        "description": "Cabello castaño"
-      },
-      "detailed_explanation": {
-        "skin": "Subtono warm",
-        "eyes": "Ojos marrón",
-        "hair": "Cabello castaño",
-        "conclusion": "Clasificación: Otoño"
-      }
-    }
-  },
-  {
-    "timestamp": "2025-11-26T11:11:32.493393",
-    "result": {
-      "success": true,
-      "usuario": "LU",
-      "colorimetria": "Invierno",
-      "paleta": [
-        "#000000",
-        "#FFFFFF",
-        "#C0C0C0",
-        "#000080",
-        "#4682B4",
-        "#2E8B57",
-        "#696969",
-        "#191970"
-      ],
-      "outfit_narrative": "Hola LU. Un outfit sofisticado perfecto para ti sería:\n\nCombina un jersey negro con un pantalón negro. Complétalo con unas botas negras. Y no olvides un bolso negro. \n\nEste outfit es perfecto para este día frío. \n\nTu colorimetría de Invierno brilla con colores intensos y fríos que realzan tu contraste natural. Apuesta por colores como negro, blanco, gris. Un corte regular te permitirá jugar con diferentes estilos.",
-      "outfit_simple": "jersey negro + pantalón negro + botas negras + bolso negro",
-      "outfit_items": {
-        "superior": {
-          "id": "sup_017",
-          "nombre": "Jersey Negro",
-          "nombre_corto": "jersey negro",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "casual",
-            "formal"
-          ],
-          "clima": [
-            "frio"
-          ],
-          "estacion": [
-            "Invierno"
-          ],
-          "fit": "normal",
-          "tipo": "superior"
-        },
-        "inferior": {
-          "id": "inf_014",
-          "nombre": "Pantalón Negro",
-          "nombre_corto": "pantalón negro",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "formal",
-            "casual"
-          ],
-          "clima": [
-            "frio",
-            "templado"
-          ],
-          "estacion": [
-            "Invierno"
-          ],
-          "fit": "normal",
-          "tipo": "inferior"
-        },
-        "calzado": {
-          "id": "calz_010",
-          "nombre": "Botas Negras",
-          "nombre_corto": "botas negras",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "casual",
-            "formal"
-          ],
-          "clima": [
-            "frio"
-          ],
-          "estacion": [
-            "Invierno"
-          ],
-          "tipo": "calzado"
-        },
-        "complemento": {
-          "id": "comp_012",
-          "nombre": "Bolso Negro",
-          "nombre_corto": "bolso negro",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "formal",
-            "casual"
-          ],
-          "clima": [
-            "frio",
-            "templado"
-          ],
-          "estacion": [
-            "Invierno"
-          ],
-          "tipo": "complemento"
-        }
-      },
-      "outfit_source": "database",
-      "clima": "Córdoba, Junio",
-      "temperatura": 13,
-      "prob_lluvia": 9,
-      "ocasion": "Formal",
-      "preferencia": "Normal",
-      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1764151888.855074.mp3",
-      "confidence": 0.9,
-      "colorimetry_saved": true,
-      "skin_analysis": {
-        "undertone": "neutral",
-        "lightness": 160,
-        "description": "Subtono neutral"
-      },
-      "eye_analysis": {
-        "category": "marrón",
-        "hue": 11,
-        "description": "Ojos marrón"
-      },
-      "hair_analysis": {
-        "category": "rubio",
-        "hue": 106,
-        "description": "Cabello rubio"
-      },
-      "detailed_explanation": {
-        "skin": "Subtono neutral",
-        "eyes": "Ojos marrón",
-        "hair": "Cabello rubio",
-        "conclusion": "Clasificación: Invierno"
-      }
-    }
-  },
-  {
-    "timestamp": "2025-11-26T11:14:56.998000",
-    "result": {
-      "success": true,
-      "usuario": "lu",
-      "colorimetria": "Invierno",
-      "paleta": [
-        "#000000",
-        "#FFFFFF",
-        "#C0C0C0",
-        "#000080",
-        "#4682B4",
-        "#2E8B57",
-        "#696969",
-        "#191970"
-      ],
-      "outfit_narrative": "Hola lu. Para tu evento formal, te recomiendo un look elegante:\n\nCombina un jersey negro con un pantalón negro. Complétalo con unas botas negras. Y no olvides un bolso negro. \n\nEste outfit es perfecto para este día frío. \n\nTu colorimetría de Invierno brilla con colores intensos y fríos que realzan tu contraste natural. Apuesta por colores como negro, blanco, gris. Un corte regular te permitirá jugar con diferentes estilos.",
-      "outfit_simple": "jersey negro + pantalón negro + botas negras + bolso negro",
-      "outfit_items": {
-        "superior": {
-          "id": "sup_017",
-          "nombre": "Jersey Negro",
-          "nombre_corto": "jersey negro",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "casual",
-            "formal"
-          ],
-          "clima": [
-            "frio"
-          ],
-          "estacion": [
-            "Invierno"
-          ],
-          "fit": "normal",
-          "tipo": "superior"
-        },
-        "inferior": {
-          "id": "inf_014",
-          "nombre": "Pantalón Negro",
-          "nombre_corto": "pantalón negro",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "formal",
-            "casual"
-          ],
-          "clima": [
-            "frio",
-            "templado"
-          ],
-          "estacion": [
-            "Invierno"
-          ],
-          "fit": "normal",
-          "tipo": "inferior"
-        },
-        "calzado": {
-          "id": "calz_010",
-          "nombre": "Botas Negras",
-          "nombre_corto": "botas negras",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "casual",
-            "formal"
-          ],
-          "clima": [
-            "frio"
-          ],
-          "estacion": [
-            "Invierno"
-          ],
-          "tipo": "calzado"
-        },
-        "complemento": {
-          "id": "comp_012",
-          "nombre": "Bolso Negro",
-          "nombre_corto": "bolso negro",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "formal",
-            "casual"
-          ],
-          "clima": [
-            "frio",
-            "templado"
-          ],
-          "estacion": [
-            "Invierno"
-          ],
-          "tipo": "complemento"
-        }
-      },
-      "outfit_source": "database",
-      "clima": "Cádiz, Junio",
-      "temperatura": 13,
-      "prob_lluvia": 10,
-      "ocasion": "Formal",
-      "preferencia": "Normal",
-      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1764152092.629806.mp3",
-      "confidence": 0.9,
-      "colorimetry_saved": true,
-      "skin_analysis": {
-        "undertone": "neutral",
-        "lightness": 160,
-        "description": "Subtono neutral"
-      },
-      "eye_analysis": {
-        "category": "marrón",
-        "hue": 11,
-        "description": "Ojos marrón"
-      },
-      "hair_analysis": {
-        "category": "rubio",
-        "hue": 106,
-        "description": "Cabello rubio"
-      },
-      "detailed_explanation": {
-        "skin": "Subtono neutral",
-        "eyes": "Ojos marrón",
-        "hair": "Cabello rubio",
-        "conclusion": "Clasificación: Invierno"
-      }
-    }
-  },
-  {
-    "timestamp": "2025-11-26T11:28:21.501123",
-    "result": {
-      "success": true,
-      "usuario": "lu",
-      "colorimetria": "Invierno",
-      "paleta": [
-        "#000000",
-        "#FFFFFF",
-        "#C0C0C0",
-        "#000080",
-        "#4682B4",
-        "#2E8B57",
-        "#696969",
-        "#191970"
-      ],
-      "outfit_narrative": "Hola lu. Para tu evento formal, te recomiendo un look elegante:\n\nTe sugiero un Vestido blanco. Complétalo con unos zapatos negros. Y no olvides un bolso negro. \n\nEste outfit es perfecto para este clima agradable. \n\nTu colorimetría de Invierno brilla con colores intensos y fríos que realzan tu contraste natural. Apuesta por colores como negro, blanco, gris. Un corte regular te permitirá jugar con diferentes estilos.",
-      "outfit_simple": "Vestido blanco + zapatos negros + bolso negro",
-      "outfit_items": {
-        "vestido": {
-          "nombre": "Vestido blanco",
-          "tipo": "vestido",
-          "color": [
-            "blanco",
-            "negro"
-          ],
-          "ocasion": [
-            "formal",
-            "casual"
-          ],
-          "clima_apropiado": [
-            "calor",
-            "templado"
-          ],
-          "fit": "normal",
-          "imagen": "lucia.nistal.01uie.edu_1764112332.299346_Imagen_24-11-25_a_las_6.14_p._m..png",
-          "id": "item_1764112332303",
-          "added_at": "2025-11-26T00:12:12.303190"
-        },
-        "calzado": {
-          "id": "cal_011",
-          "nombre": "Zapatos Negros Formales",
-          "nombre_corto": "zapatos negros",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "formal"
-          ],
-          "clima": [
-            "frio",
-            "templado"
-          ],
-          "estacion": [
-            "Invierno",
-            "Otoño"
-          ],
-          "fit": "ajustada",
-          "imagen": "calzado/zapatos_negros.jpg",
-          "tipo": "calzado"
-        },
-        "complemento": {
-          "id": "com_012",
-          "nombre": "Bolso Negro Invierno",
-          "nombre_corto": "bolso negro",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "casual",
-            "formal"
-          ],
-          "clima": [
-            "frio",
-            "templado"
-          ],
-          "estacion": [
-            "Invierno",
-            "Otoño"
-          ],
-          "fit": "normal",
-          "imagen": "complemento/bolso_negro.jpg",
-          "tipo": "complemento"
-        }
-      },
-      "outfit_source": "user",
-      "clima": "A Coruña, Julio",
-      "temperatura": 24,
-      "prob_lluvia": 18,
-      "ocasion": "Formal",
-      "preferencia": "Normal",
-      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1764152897.634554.mp3",
-      "confidence": 0.9,
-      "colorimetry_saved": true,
-      "skin_analysis": {
-        "undertone": "neutral",
-        "lightness": 160,
-        "description": "Subtono neutral"
-      },
-      "eye_analysis": {
-        "category": "marrón",
-        "hue": 11,
-        "description": "Ojos marrón"
-      },
-      "hair_analysis": {
-        "category": "rubio",
-        "hue": 106,
-        "description": "Cabello rubio"
-      },
-      "detailed_explanation": {
-        "skin": "Subtono neutral",
-        "eyes": "Ojos marrón",
-        "hair": "Cabello rubio",
-        "conclusion": "Clasificación: Invierno"
-      }
-    }
-  },
-  {
-    "timestamp": "2025-11-26T11:29:07.961867",
-    "result": {
-      "success": true,
-      "usuario": "rafa",
-      "colorimetria": "Invierno",
-      "paleta": [
-        "#000000",
-        "#FFFFFF",
-        "#C0C0C0",
-        "#000080",
-        "#4682B4",
-        "#2E8B57",
-        "#696969",
-        "#191970"
-      ],
-      "outfit_narrative": "Hola rafa. Para tu evento formal, te recomiendo un look elegante:\n\nCombina un jersey negro con un pantalón negro. Complétalo con unas botas negras. Y no olvides un bolso negro. \n\nEste outfit es perfecto para este día frío. \n\nTu colorimetría de Invierno brilla con colores intensos y fríos que realzan tu contraste natural. Apuesta por colores como negro, blanco, gris. Un corte regular te permitirá jugar con diferentes estilos.",
-      "outfit_simple": "jersey negro + pantalón negro + botas negras + bolso negro",
-      "outfit_items": {
-        "superior": {
-          "id": "sup_017",
-          "nombre": "Jersey Negro Invierno",
-          "nombre_corto": "jersey negro",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "casual",
-            "formal"
-          ],
-          "clima": [
-            "frio"
-          ],
-          "estacion": [
-            "Invierno"
-          ],
-          "fit": "normal",
-          "imagen": "superior/jersey_negro.jpg",
-          "tipo": "superior"
-        },
-        "inferior": {
-          "id": "inf_014",
-          "nombre": "Pantalón Negro Invierno",
-          "nombre_corto": "pantalón negro",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "casual",
-            "formal"
-          ],
-          "clima": [
-            "frio",
-            "templado"
-          ],
-          "estacion": [
-            "Invierno",
-            "Otoño"
-          ],
-          "fit": "normal",
-          "imagen": "inferior/pantalon_negro.jpg",
-          "tipo": "inferior"
-        },
-        "calzado": {
-          "id": "cal_010",
-          "nombre": "Botas Negras Invierno",
-          "nombre_corto": "botas negras",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "casual",
-            "formal"
-          ],
-          "clima": [
-            "frio"
-          ],
-          "estacion": [
-            "Invierno"
-          ],
-          "fit": "normal",
-          "imagen": "calzado/botas_negras.jpg",
-          "tipo": "calzado"
-        },
-        "complemento": {
-          "id": "com_012",
-          "nombre": "Bolso Negro Invierno",
-          "nombre_corto": "bolso negro",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "casual",
-            "formal"
-          ],
-          "clima": [
-            "frio",
-            "templado"
-          ],
-          "estacion": [
-            "Invierno",
-            "Otoño"
-          ],
-          "fit": "normal",
-          "imagen": "complemento/bolso_negro.jpg",
-          "tipo": "complemento"
-        }
-      },
-      "outfit_source": "database",
-      "clima": "A Coruña, Junio",
-      "temperatura": 14,
-      "prob_lluvia": 19,
-      "ocasion": "Formal",
-      "preferencia": "Normal",
-      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1764152944.675221.mp3",
-      "confidence": 0.9,
-      "colorimetry_saved": true,
-      "skin_analysis": {
-        "undertone": "neutral",
-        "lightness": 160,
-        "description": "Subtono neutral"
-      },
-      "eye_analysis": {
-        "category": "marrón",
-        "hue": 11,
-        "description": "Ojos marrón"
-      },
-      "hair_analysis": {
-        "category": "rubio",
-        "hue": 106,
-        "description": "Cabello rubio"
-      },
-      "detailed_explanation": {
-        "skin": "Subtono neutral",
-        "eyes": "Ojos marrón",
-        "hair": "Cabello rubio",
-        "conclusion": "Clasificación: Invierno"
-      }
-    }
-  },
-  {
-    "timestamp": "2025-11-26T12:47:07.080412",
-    "result": {
-      "success": true,
-      "usuario": "LU",
-      "colorimetria": "Invierno",
-      "paleta": [
-        "#000000",
-        "#FFFFFF",
-        "#C0C0C0",
-        "#000080",
-        "#4682B4",
-        "#2E8B57",
-        "#696969",
-        "#191970"
-      ],
-      "outfit_narrative": "Hola LU. Para tu actividad deportiva, lo ideal es:\n\nCombina una camiseta blanca con unas leggings negros. Complétalo con unas zapatillas blancas. Y no olvides una mochila negra. \n\nEste outfit es perfecto para este clima agradable. \n\nTu colorimetría de Invierno brilla con colores intensos y fríos que realzan tu contraste natural. Apuesta por colores como negro, blanco, gris. Un corte regular te permitirá jugar con diferentes estilos.",
-      "outfit_simple": "camiseta blanca + leggings negros + zapatillas blancas + mochila negra",
-      "outfit_items": {
-        "superior": {
-          "id": "sup_001",
-          "nombre": "Camiseta Blanca Básica",
-          "nombre_corto": "camiseta blanca",
-          "color": [
-            "blanco"
-          ],
-          "ocasion": [
-            "casual",
-            "deportiva"
-          ],
-          "clima": [
-            "calor",
-            "templado"
-          ],
-          "estacion": [
-            "Primavera",
-            "Verano",
-            "Invierno"
-          ],
-          "fit": "normal",
-          "imagen": "superior/camiseta_blanca.jpg",
-          "tipo": "superior"
-        },
-        "inferior": {
-          "id": "inf_019",
-          "nombre": "Leggings Deportivos Negros",
-          "nombre_corto": "leggings negros",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "deportiva"
-          ],
-          "clima": [
-            "calor",
-            "templado",
-            "frio"
-          ],
-          "estacion": [
-            "Primavera",
-            "Verano",
-            "Otoño",
-            "Invierno"
-          ],
-          "fit": "ajustada",
-          "imagen": "inferior/leggings_negros.jpg",
-          "tipo": "inferior"
-        },
-        "calzado": {
-          "id": "cal_001",
-          "nombre": "Zapatillas Blancas Básicas",
-          "nombre_corto": "zapatillas blancas",
-          "color": [
-            "blanco"
-          ],
-          "ocasion": [
-            "casual",
-            "deportiva"
-          ],
-          "clima": [
-            "calor",
-            "templado"
-          ],
-          "estacion": [
-            "Primavera",
-            "Verano"
-          ],
-          "fit": "normal",
-          "imagen": "calzado/zapatillas_blancas.jpg",
-          "tipo": "calzado"
-        },
-        "complemento": {
-          "id": "com_018",
-          "nombre": "Mochila Negra Deportiva",
-          "nombre_corto": "mochila negra",
-          "color": [
-            "negro"
-          ],
-          "ocasion": [
-            "deportiva",
-            "casual"
-          ],
-          "clima": [
-            "calor",
-            "templado",
-            "frio"
-          ],
-          "estacion": [
-            "Primavera",
-            "Verano",
-            "Otoño",
-            "Invierno"
-          ],
-          "fit": "normal",
-          "imagen": "complemento/mochila_negra.jpg",
-          "tipo": "complemento"
-        }
-      },
-      "outfit_source": "database",
-      "clima": "Ávila, Julio",
-      "temperatura": 22,
-      "prob_lluvia": 26,
-      "ocasion": "Deportiva",
-      "preferencia": "Normal",
-      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1764157623.156303.mp3",
-      "confidence": 0.9,
-      "colorimetry_saved": true,
-      "skin_analysis": {
-        "undertone": "neutral",
-        "lightness": 160,
-        "description": "Subtono neutral"
-      },
-      "eye_analysis": {
-        "category": "marrón",
-        "hue": 11,
-        "description": "Ojos marrón"
-      },
-      "hair_analysis": {
-        "category": "rubio",
-        "hue": 106,
-        "description": "Cabello rubio"
-      },
-      "detailed_explanation": {
-        "skin": "Subtono neutral",
-        "eyes": "Ojos marrón",
-        "hair": "Cabello rubio",
-        "conclusion": "Clasificación: Invierno"
-      }
-    }
-  },
-  {
     "timestamp": "2025-11-26T12:48:57.556154",
     "result": {
       "success": true,
@@ -2554,6 +1737,699 @@
       "ocasion": "Casual",
       "preferencia": "Normal",
       "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1776804533.95581.mp3",
+      "confidence": 0.9,
+      "colorimetry_saved": true,
+      "skin_analysis": {
+        "undertone": "warm",
+        "lightness": 172,
+        "description": "Undertone: warm"
+      },
+      "eye_analysis": {
+        "category": "brown",
+        "hue": 177,
+        "description": "Eyes: brown"
+      },
+      "hair_analysis": {
+        "category": "blonde",
+        "hue": 1,
+        "description": "Hair: blonde"
+      },
+      "detailed_explanation": {
+        "skin": "Undertone: warm",
+        "eyes": "Eyes: brown",
+        "hair": "Hair: blonde",
+        "conclusion": "Season: Otono"
+      }
+    }
+  },
+  {
+    "timestamp": "2026-04-22T15:26:54.527596",
+    "result": {
+      "success": true,
+      "usuario": "lucia",
+      "colorimetria": "Spring",
+      "paleta": [
+        "#FFD700",
+        "#FF6347",
+        "#90EE90",
+        "#FFB6C1",
+        "#FFDAB9",
+        "#98FB98",
+        "#F0E68C",
+        "#FFA07A"
+      ],
+      "outfit_narrative": "Hello lucia. My casual recommendation for you is:\n\nPair a sweatshirt grey with some jeans. Complete the look with some boots marrones. Don't forget a handbag brown. \n\nThis outfit is perfect for this cold day. Consider bringing an umbrella, there is a 44% chance of rain. \n\nAs a Spring type, warm and vibrant tones brighten your complexion. Go for colours like golden yellow, coral orange, light green. A regular fit will let you play with different styles.",
+      "outfit_simple": "sweatshirt grey + jeans + boots marrones + handbag brown",
+      "outfit_items": {
+        "superior": {
+          "id": "sup_025",
+          "nombre": "Sudadera Deportiva Gris",
+          "nombre_corto": "sudadera gris",
+          "color": [
+            "gris"
+          ],
+          "ocasion": [
+            "deportiva",
+            "casual"
+          ],
+          "clima": [
+            "frio",
+            "templado"
+          ],
+          "estacion": [
+            "Otoño",
+            "Invierno",
+            "Primavera"
+          ],
+          "fit": "holgada",
+          "imagen": "superior/sudadera_gris.jpg",
+          "tipo": "superior"
+        },
+        "inferior": {
+          "id": "inf_015",
+          "nombre": "Vaqueros Azul Oscuro",
+          "nombre_corto": "vaqueros",
+          "color": [
+            "azul"
+          ],
+          "ocasion": [
+            "casual"
+          ],
+          "clima": [
+            "frio",
+            "templado"
+          ],
+          "estacion": [
+            "Invierno",
+            "Otoño",
+            "Primavera"
+          ],
+          "fit": "ajustada",
+          "imagen": "inferior/vaqueros.jpg",
+          "tipo": "inferior"
+        },
+        "calzado": {
+          "id": "cal_007",
+          "nombre": "Botas Marrones Otoño",
+          "nombre_corto": "botas marrones",
+          "color": [
+            "marrón"
+          ],
+          "ocasion": [
+            "casual"
+          ],
+          "clima": [
+            "frio",
+            "templado"
+          ],
+          "estacion": [
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "calzado/botas_marrones.jpg",
+          "tipo": "calzado"
+        },
+        "complemento": {
+          "id": "com_008",
+          "nombre": "Bolso Marrón Otoño",
+          "nombre_corto": "bolso marrón",
+          "color": [
+            "marrón"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "complemento/bolso_marron.jpg",
+          "tipo": "complemento"
+        }
+      },
+      "outfit_source": "database",
+      "clima": "A Coruña, Abril",
+      "temperatura": 12,
+      "prob_lluvia": 44,
+      "ocasion": "Casual",
+      "preferencia": "Normal",
+      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1776864408.429139.mp3",
+      "confidence": 0.9,
+      "colorimetry_saved": true,
+      "skin_analysis": {
+        "undertone": "warm",
+        "lightness": 156,
+        "description": "Undertone: warm"
+      },
+      "eye_analysis": {
+        "category": "brown",
+        "hue": 5,
+        "description": "Eyes: brown"
+      },
+      "hair_analysis": {
+        "category": "red",
+        "hue": 16,
+        "description": "Hair: red"
+      },
+      "detailed_explanation": {
+        "skin": "Undertone: warm",
+        "eyes": "Eyes: brown",
+        "hair": "Hair: red",
+        "conclusion": "Season: Primavera"
+      }
+    }
+  },
+  {
+    "timestamp": "2026-04-22T15:38:23.265484",
+    "result": {
+      "success": true,
+      "usuario": "lucia",
+      "colorimetria": "Autumn",
+      "paleta": [
+        "#8B4513",
+        "#FF8C00",
+        "#556B2F",
+        "#F5DEB3",
+        "#CD853F",
+        "#A0522D",
+        "#DC143C",
+        "#B8860B"
+      ],
+      "outfit_narrative": "Hello lucia. For your everyday look, here is a comfortable yet stylish suggestion:\n\nPair a blouse with a skirt. Complete the look with an ankle boots beige. Don't forget a handbag brown. \n\nThis outfit is perfect for this cold day. Consider bringing an umbrella, there is a 44% chance of rain. \n\nAs an Autumn type, earthy and warm tones enhance your natural warmth. Go for colours like brown, orange, olive green. A regular fit will let you play with different styles.",
+      "outfit_simple": "blouse + skirt + ankle boots beige + handbag brown",
+      "outfit_items": {
+        "calzado": {
+          "id": "cal_009",
+          "nombre": "Botines Beige Otoño",
+          "nombre_corto": "botines beige",
+          "color": [
+            "beige"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Otoño"
+          ],
+          "fit": "normal",
+          "imagen": "calzado/botines_beige.jpg",
+          "tipo": "calzado"
+        },
+        "complemento": {
+          "id": "com_008",
+          "nombre": "Bolso Marrón Otoño",
+          "nombre_corto": "bolso marrón",
+          "color": [
+            "marrón"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "complemento/bolso_marron.jpg",
+          "tipo": "complemento"
+        },
+        "superior": {
+          "nombre": "basic blouse",
+          "nombre_corto": "blouse",
+          "color": "white"
+        },
+        "inferior": {
+          "nombre": "black skirt",
+          "nombre_corto": "skirt",
+          "color": "black"
+        }
+      },
+      "outfit_source": "database",
+      "clima": "A Coruña, Abril",
+      "temperatura": 12,
+      "prob_lluvia": 44,
+      "ocasion": "Casual",
+      "preferencia": "Normal",
+      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1776865095.989162.mp3",
+      "confidence": 0.9,
+      "colorimetry_saved": true,
+      "skin_analysis": {
+        "undertone": "warm",
+        "lightness": 151,
+        "description": "Undertone: warm"
+      },
+      "eye_analysis": {
+        "category": "brown",
+        "hue": 5,
+        "description": "Eyes: brown"
+      },
+      "hair_analysis": {
+        "category": "dark brown",
+        "hue": 18,
+        "description": "Hair: dark brown"
+      },
+      "detailed_explanation": {
+        "skin": "Undertone: warm",
+        "eyes": "Eyes: brown",
+        "hair": "Hair: dark brown",
+        "conclusion": "Season: Otono"
+      }
+    }
+  },
+  {
+    "timestamp": "2026-04-22T15:39:12.754333",
+    "result": {
+      "success": true,
+      "usuario": "lucia",
+      "colorimetria": "Autumn",
+      "paleta": [
+        "#8B4513",
+        "#FF8C00",
+        "#556B2F",
+        "#F5DEB3",
+        "#CD853F",
+        "#A0522D",
+        "#DC143C",
+        "#B8860B"
+      ],
+      "outfit_narrative": "Hello lucia. For your sports activity, the ideal outfit is:\n\nPair a blouse with a skirt. Complete the look with some trainers running. Don't forget a backpack negra. \n\nThis outfit is perfect for this cold day. Consider bringing an umbrella, there is a 44% chance of rain. \n\nAs an Autumn type, earthy and warm tones enhance your natural warmth. Go for colours like brown, orange, olive green. A regular fit will let you play with different styles.",
+      "outfit_simple": "blouse + skirt + trainers running + backpack negra",
+      "outfit_items": {
+        "calzado": {
+          "id": "cal_014",
+          "nombre": "Zapatillas Running Deportivas",
+          "nombre_corto": "zapatillas running",
+          "color": [
+            "negro",
+            "blanco"
+          ],
+          "ocasion": [
+            "deportiva"
+          ],
+          "clima": [
+            "calor",
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Primavera",
+            "Verano",
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "ajustada",
+          "imagen": "calzado/zapatillas_running.jpg",
+          "tipo": "calzado"
+        },
+        "complemento": {
+          "id": "com_018",
+          "nombre": "Mochila Negra Deportiva",
+          "nombre_corto": "mochila negra",
+          "color": [
+            "negro"
+          ],
+          "ocasion": [
+            "deportiva",
+            "casual"
+          ],
+          "clima": [
+            "calor",
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Primavera",
+            "Verano",
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "complemento/mochila_negra.jpg",
+          "tipo": "complemento"
+        },
+        "superior": {
+          "nombre": "basic blouse",
+          "nombre_corto": "blouse",
+          "color": "white"
+        },
+        "inferior": {
+          "nombre": "black skirt",
+          "nombre_corto": "skirt",
+          "color": "black"
+        }
+      },
+      "outfit_source": "database",
+      "clima": "A Coruña, Abril",
+      "temperatura": 12,
+      "prob_lluvia": 44,
+      "ocasion": "Sport",
+      "preferencia": "Normal",
+      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1776865146.262378.mp3",
+      "confidence": 0.9,
+      "colorimetry_saved": true,
+      "skin_analysis": {
+        "undertone": "warm",
+        "lightness": 172,
+        "description": "Undertone: warm"
+      },
+      "eye_analysis": {
+        "category": "brown",
+        "hue": 177,
+        "description": "Eyes: brown"
+      },
+      "hair_analysis": {
+        "category": "blonde",
+        "hue": 1,
+        "description": "Hair: blonde"
+      },
+      "detailed_explanation": {
+        "skin": "Undertone: warm",
+        "eyes": "Eyes: brown",
+        "hair": "Hair: blonde",
+        "conclusion": "Season: Otono"
+      }
+    }
+  },
+  {
+    "timestamp": "2026-04-22T15:47:11.113730",
+    "result": {
+      "success": true,
+      "usuario": "LUCIA",
+      "colorimetria": "Autumn",
+      "paleta": [
+        "#8B4513",
+        "#FF8C00",
+        "#556B2F",
+        "#F5DEB3",
+        "#CD853F",
+        "#A0522D",
+        "#DC143C",
+        "#B8860B"
+      ],
+      "outfit_narrative": "Hello LUCIA. To look impeccable on this formal occasion:\n\nPair a blouse with a skirt. Complete the look with an ankle boots beige. Don't forget a handbag brown. \n\nThis outfit is perfect for this cold day. Consider bringing an umbrella, there is a 44% chance of rain. \n\nAs an Autumn type, earthy and warm tones enhance your natural warmth. Go for colours like brown, orange, olive green. A regular fit will let you play with different styles.",
+      "outfit_simple": "blouse + skirt + ankle boots beige + handbag brown",
+      "outfit_items": {
+        "calzado": {
+          "id": "cal_009",
+          "nombre": "Botines Beige Otoño",
+          "nombre_corto": "botines beige",
+          "color": [
+            "beige"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Otoño"
+          ],
+          "fit": "normal",
+          "imagen": "calzado/botines_beige.jpg",
+          "tipo": "calzado"
+        },
+        "complemento": {
+          "id": "com_008",
+          "nombre": "Bolso Marrón Otoño",
+          "nombre_corto": "bolso marrón",
+          "color": [
+            "marrón"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "complemento/bolso_marron.jpg",
+          "tipo": "complemento"
+        },
+        "superior": {
+          "nombre": "basic blouse",
+          "nombre_corto": "blouse",
+          "color": "white"
+        },
+        "inferior": {
+          "nombre": "black skirt",
+          "nombre_corto": "skirt",
+          "color": "black"
+        }
+      },
+      "outfit_source": "database",
+      "clima": "A Coruña, Abril",
+      "temperatura": 12,
+      "prob_lluvia": 44,
+      "ocasion": "Formal",
+      "preferencia": "Normal",
+      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1776865623.622828.mp3",
+      "confidence": 0.9,
+      "colorimetry_saved": true,
+      "skin_analysis": {
+        "undertone": "warm",
+        "lightness": 154,
+        "description": "Undertone: warm"
+      },
+      "eye_analysis": {
+        "category": "brown",
+        "hue": 5,
+        "description": "Eyes: brown"
+      },
+      "hair_analysis": {
+        "category": "dark brown",
+        "hue": 19,
+        "description": "Hair: dark brown"
+      },
+      "detailed_explanation": {
+        "skin": "Undertone: warm",
+        "eyes": "Eyes: brown",
+        "hair": "Hair: dark brown",
+        "conclusion": "Season: Otono"
+      }
+    }
+  },
+  {
+    "timestamp": "2026-04-22T15:47:56.578458",
+    "result": {
+      "success": true,
+      "usuario": "LUCIA",
+      "colorimetria": "Autumn",
+      "paleta": [
+        "#8B4513",
+        "#FF8C00",
+        "#556B2F",
+        "#F5DEB3",
+        "#CD853F",
+        "#A0522D",
+        "#DC143C",
+        "#B8860B"
+      ],
+      "outfit_narrative": "Hello LUCIA. A perfect set for your workout:\n\nPair a blouse with a skirt. Complete the look with some trainers running. Don't forget a backpack black. \n\nThis outfit is perfect for this cold day. Consider bringing an umbrella, there is a 54% chance of rain. \n\nAs an Autumn type, earthy and warm tones enhance your natural warmth. Go for colours like brown, orange, olive green. A regular fit will let you play with different styles.",
+      "outfit_simple": "blouse + skirt + trainers running + backpack black",
+      "outfit_items": {
+        "calzado": {
+          "id": "cal_014",
+          "nombre": "Zapatillas Running Deportivas",
+          "nombre_corto": "zapatillas running",
+          "color": [
+            "negro",
+            "blanco"
+          ],
+          "ocasion": [
+            "deportiva"
+          ],
+          "clima": [
+            "calor",
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Primavera",
+            "Verano",
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "ajustada",
+          "imagen": "calzado/zapatillas_running.jpg",
+          "tipo": "calzado"
+        },
+        "complemento": {
+          "id": "com_018",
+          "nombre": "Mochila Negra Deportiva",
+          "nombre_corto": "mochila negra",
+          "color": [
+            "negro"
+          ],
+          "ocasion": [
+            "deportiva",
+            "casual"
+          ],
+          "clima": [
+            "calor",
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Primavera",
+            "Verano",
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "complemento/mochila_negra.jpg",
+          "tipo": "complemento"
+        },
+        "superior": {
+          "nombre": "basic blouse",
+          "nombre_corto": "blouse",
+          "color": "white"
+        },
+        "inferior": {
+          "nombre": "black skirt",
+          "nombre_corto": "skirt",
+          "color": "black"
+        }
+      },
+      "outfit_source": "database",
+      "clima": "A Coruña, Diciembre",
+      "temperatura": 6,
+      "prob_lluvia": 54,
+      "ocasion": "Sport",
+      "preferencia": "Normal",
+      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1776865668.957864.mp3",
+      "confidence": 0.9,
+      "colorimetry_saved": true,
+      "skin_analysis": {
+        "undertone": "warm",
+        "lightness": 153,
+        "description": "Undertone: warm"
+      },
+      "eye_analysis": {
+        "category": "brown",
+        "hue": 4,
+        "description": "Eyes: brown"
+      },
+      "hair_analysis": {
+        "category": "dark brown",
+        "hue": 19,
+        "description": "Hair: dark brown"
+      },
+      "detailed_explanation": {
+        "skin": "Undertone: warm",
+        "eyes": "Eyes: brown",
+        "hair": "Hair: dark brown",
+        "conclusion": "Season: Otono"
+      }
+    }
+  },
+  {
+    "timestamp": "2026-04-22T15:48:40.768262",
+    "result": {
+      "success": true,
+      "usuario": "LUCIA",
+      "colorimetria": "Autumn",
+      "paleta": [
+        "#8B4513",
+        "#FF8C00",
+        "#556B2F",
+        "#F5DEB3",
+        "#CD853F",
+        "#A0522D",
+        "#DC143C",
+        "#B8860B"
+      ],
+      "outfit_narrative": "Hello LUCIA. To stay relaxed and on trend:\n\nPair a blouse with a skirt. Complete the look with an ankle boots beige. Don't forget a handbag brown. \n\nThis outfit is perfect for this cold day. Consider bringing an umbrella, there is a 50% chance of rain. \n\nAs an Autumn type, earthy and warm tones enhance your natural warmth. Go for colours like brown, orange, olive green. A regular fit will let you play with different styles.",
+      "outfit_simple": "blouse + skirt + ankle boots beige + handbag brown",
+      "outfit_items": {
+        "calzado": {
+          "id": "cal_009",
+          "nombre": "Botines Beige Otoño",
+          "nombre_corto": "botines beige",
+          "color": [
+            "beige"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Otoño"
+          ],
+          "fit": "normal",
+          "imagen": "calzado/botines_beige.jpg",
+          "tipo": "calzado"
+        },
+        "complemento": {
+          "id": "com_008",
+          "nombre": "Bolso Marrón Otoño",
+          "nombre_corto": "bolso marrón",
+          "color": [
+            "marrón"
+          ],
+          "ocasion": [
+            "casual",
+            "formal"
+          ],
+          "clima": [
+            "templado",
+            "frio"
+          ],
+          "estacion": [
+            "Otoño",
+            "Invierno"
+          ],
+          "fit": "normal",
+          "imagen": "complemento/bolso_marron.jpg",
+          "tipo": "complemento"
+        },
+        "superior": {
+          "nombre": "basic blouse",
+          "nombre_corto": "blouse",
+          "color": "white"
+        },
+        "inferior": {
+          "nombre": "black skirt",
+          "nombre_corto": "skirt",
+          "color": "black"
+        }
+      },
+      "outfit_source": "database",
+      "clima": "A Coruña, Febrero",
+      "temperatura": 5,
+      "prob_lluvia": 50,
+      "ocasion": "Casual",
+      "preferencia": "Normal",
+      "audio_url": "/static/audio/recommendation_lucia.nistal.01@uie.edu_1776865714.925965.mp3",
       "confidence": 0.9,
       "colorimetry_saved": true,
       "skin_analysis": {
