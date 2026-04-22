@@ -213,7 +213,7 @@ class OutfitGenerator:
         """
         Generates the audio narrative by applying KBS rules in sequence:
           1. Occasion rule  — selects the introductory phrase.
-          2. Climate rules  — adds temperature context and rain warning (threshold > 60%).
+          2. Climate rules  — adds temperature context and rain warning (threshold >= 60%).
           3. Colorimetry rule — appends palette explanation based on detected season.
           4. Fit rule       — appends style advice based on fit preference.
         """
@@ -253,7 +253,7 @@ class OutfitGenerator:
         narrative += f"\n\nThis outfit is perfect for {temp_desc}. "
 
         # Rain threshold rule (Knowledge Base rule)
-        if prob_lluvia > 60:
+        if prob_lluvia >= 60:
             narrative += f"Important: there is a {prob_lluvia}% chance of rain — bring an umbrella. "
         elif prob_lluvia > 30:
             narrative += f"Consider bringing an umbrella, there is a {prob_lluvia}% chance of rain. "
@@ -359,4 +359,4 @@ class OutfitGenerator:
             }
         }
 
-        return generic_outfits.get(ocasion, generic_outfits['casual']).get(gender_key, {}).get(temp_cat, {}) 
+        return generic_outfits.get(ocasion, generic_outfits['casual']).get(gender_key, {}).get(temp_cat, {})
