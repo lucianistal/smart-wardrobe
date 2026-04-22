@@ -383,53 +383,53 @@ def generate_smart_outfit(user_items, db_items, ocasion, clima, temperatura, pro
 
     masculine_pref = detect_masculine_preference(no_vestidos, no_faldas, no_tops, genero)
 
-    def match_item(item, ocasion, clima, estacion, palette_colors):
+    def _normalize_field(value):
+        """Normalise a garment field value to a list of lowercase strings."""
+        if isinstance(value, str):
+            try:
+                import json as _json
+                value = _json.loads(value)
+            except:
+                value = [value]
+        if not isinstance(value, list):
+            value = [value]
+        return [str(v).lower() for v in value]
+
+    def score_garment(item, ocasion, clima, estacion):
         """
-        Forward-chaining rule evaluation for a single garment.
-        Returns True only if occasion matches (score >= 50).
-        Climate and season add bonus points but are not mandatory.
+        Forward-chaining scoring function (KBS Inference Engine).
+
+        Scoring rules:
+            +50 pts  occasion match  — mandatory; garment is discarded if score < 50
+            +30 pts  climate match   — bonus
+            +20 pts  season match    — bonus
+        Maximum possible score: 100 pts.
+
+        A garment is selected only if score >= 50 (i.e. occasion must match).
+        Climate and season add bonus points that determine ranking priority
+        but do not discard an otherwise valid garment on their own.
         """
+        score = 0
+
         # --- Occasion rule (mandatory, +50 pts) ---
-        item_ocasiones = item.get('ocasion', [])
-        if isinstance(item_ocasiones, str):
-            try:
-                import json
-                item_ocasiones = json.loads(item_ocasiones)
-            except:
-                item_ocasiones = [item_ocasiones]
-        if not isinstance(item_ocasiones, list):
-            item_ocasiones = [item_ocasiones]
-        if ocasion.lower() not in [o.lower() for o in item_ocasiones]:
-            return False  # score < 50 — discard
+        item_ocasiones = _normalize_field(item.get('ocasion', []))
+        if ocasion.lower() in item_ocasiones:
+            score += 50
+        else:
+            return 0  # discard immediately — occasion is mandatory
 
-        # --- Climate rule (+30 pts) ---
-        item_climas = item.get('clima_apropiado', item.get('clima', []))
-        if isinstance(item_climas, str):
-            try:
-                import json
-                item_climas = json.loads(item_climas)
-            except:
-                item_climas = [item_climas]
-        if not isinstance(item_climas, list):
-            item_climas = [item_climas]
-        if clima.lower() not in [c.lower() for c in item_climas]:
-            return False
+        # --- Climate rule (+30 pts bonus) ---
+        item_climas = _normalize_field(item.get('clima_apropiado', item.get('clima', [])))
+        if clima.lower() in item_climas:
+            score += 30
 
-        # --- Season rule (+20 pts, optional) ---
+        # --- Season rule (+20 pts bonus) ---
         if 'estacion' in item:
-            item_estaciones = item.get('estacion', [])
-            if isinstance(item_estaciones, str):
-                try:
-                    import json
-                    item_estaciones = json.loads(item_estaciones)
-                except:
-                    item_estaciones = [item_estaciones]
-            if not isinstance(item_estaciones, list):
-                item_estaciones = [item_estaciones]
-            if estacion not in item_estaciones:
-                return False
+            item_estaciones = _normalize_field(item.get('estacion', []))
+            if estacion.lower() in item_estaciones:
+                score += 20
 
-        return True
+        return score  # range: 50 / 80 / 100 (or 0 if discarded)
 
     def color_match_score(item, palette_colors):
         """
@@ -457,7 +457,7 @@ def generate_smart_outfit(user_items, db_items, ocasion, clima, temperatura, pro
     # --- Rule 1: DRESS (only for formal/casual; skipped if no_vestidos) ---
     if not no_vestidos and ocasion in ['formal', 'casual']:
         dresses_user = [i for i in user_items
-                        if i.get('tipo') == 'vestido' and match_item(i, ocasion, clima, estacion, palette_colors)]
+                        if i.get('tipo') == 'vestido' and score_garment(i, ocasion, clima, estacion) >= 50]
         if dresses_user:
             dresses_user.sort(key=lambda x: color_match_score(x, palette_colors), reverse=True)
             outfit['vestido'] = dresses_user[0]
@@ -472,7 +472,7 @@ def generate_smart_outfit(user_items, db_items, ocasion, clima, temperatura, pro
     if 'vestido' not in outfit:
         # TOP
         tops_user = [i for i in user_items
-                     if i.get('tipo') == 'superior' and match_item(i, ocasion, clima, estacion, palette_colors)]
+                     if i.get('tipo') == 'superior' and score_garment(i, ocasion, clima, estacion) >= 50]
         if tops_user:
             tops_user.sort(key=lambda x: color_match_score(x, palette_colors), reverse=True)
             outfit['superior'] = tops_user[0]
@@ -485,7 +485,7 @@ def generate_smart_outfit(user_items, db_items, ocasion, clima, temperatura, pro
 
         # BOTTOM
         bottoms_user = [i for i in user_items
-                        if i.get('tipo') == 'inferior' and match_item(i, ocasion, clima, estacion, palette_colors)]
+                        if i.get('tipo') == 'inferior' and score_garment(i, ocasion, clima, estacion) >= 50]
         if no_faldas:
             bottoms_user = [i for i in bottoms_user if 'falda' not in i.get('nombre', '').lower()]
         if no_pantalones:
@@ -503,10 +503,10 @@ def generate_smart_outfit(user_items, db_items, ocasion, clima, temperatura, pro
 
     # --- Rule 3: FOOTWEAR (rain rule: prob > 60% → prefer boots) ---
     footwear_user = [i for i in user_items
-                     if i.get('tipo') == 'calzado' and match_item(i, ocasion, clima, estacion, palette_colors)]
+                     if i.get('tipo') == 'calzado' and score_garment(i, ocasion, clima, estacion) >= 50]
     if masculine_pref:
         footwear_user = filter_feminine_garments(footwear_user, 'calzado')
-    if prob_lluvia > 60 and footwear_user:
+    if prob_lluvia >= 60 and footwear_user:
         boots = [i for i in footwear_user if 'bota' in i.get('nombre', '').lower()]
         if boots:
             footwear_user = boots
@@ -527,7 +527,7 @@ def generate_smart_outfit(user_items, db_items, ocasion, clima, temperatura, pro
 
     # --- Rule 4: ACCESSORY (cold rule: temp < 10°C → prefer scarf/hat) ---
     acc_user = [i for i in user_items
-                if i.get('tipo') == 'complemento' and match_item(i, ocasion, clima, estacion, palette_colors)]
+                if i.get('tipo') == 'complemento' and score_garment(i, ocasion, clima, estacion) >= 50]
     if masculine_pref:
         acc_user = filter_feminine_garments(acc_user, 'complemento')
     if temperatura < 10 and acc_user:
@@ -928,4 +928,4 @@ if __name__ == '__main__':
     print("  Access at: http://localhost:5003")
     print("=" * 60)
 
-    app.run(debug=True, port=5003) 
+    app.run(debug=True, port=5003)
