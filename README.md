@@ -22,8 +22,8 @@ See `requirements.txt`
 
 ```bash
 # Clone the repository
-git clone https://github.com/lucianistal/armario-inteligente.git
-cd armario-inteligente
+git clone https://github.com/lucianistal/smart-wardrobe.git
+cd smart-wardrobe
 
 # Create virtual environment
 python3 -m venv venv
