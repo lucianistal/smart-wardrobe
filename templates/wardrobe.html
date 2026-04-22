@@ -37,9 +37,9 @@
     <nav class="navbar">
         <h1 class="nav-logo">My Virtual Wardrobe</h1>
         <div>
-            <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
-            <a href="/recommendation" class="btn btn-primary">New Query</a>
-            <a href="/logout" class="btn-logout">Log Out</a>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Dashboard</a>
+            <a href="{{ url_for('recommendation') }}" class="btn btn-primary">New Query</a>
+            <a href="{{ url_for('logout') }}" class="btn-logout">Log Out</a>
         </div>
     </nav>
 
